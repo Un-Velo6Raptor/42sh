@@ -13,6 +13,7 @@
 #include <signal.h>
 #include "main.h"
 #include "basic.h"
+#include "globing.h"
 
 static void	prompt(int nb)
 {
@@ -37,6 +38,7 @@ t_shell		*set_shell(char **env)
   shell = malloc(sizeof(t_shell));
   if (!shell)
     exit (84);
+  shell->status = 0;
   shell->env = create_env(env);
   shell->oldpwd = getvar(shell->env, "OLDPWD=*");
   shell->pwd = getvar(shell->env, "PWD=*");
@@ -64,6 +66,7 @@ int		main(int __attribute__ ((unused)) ac,
   signal(2, catch);
   while ((shell->command = getnextline_(0)))
     {
+      shell->command = globing(shell->command, shell);
       shell->status = 0;
       tmp = getvar(shell->env, "PATH=*");
       shell->path = parse_(tmp, ':');

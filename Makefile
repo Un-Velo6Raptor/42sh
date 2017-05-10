@@ -5,7 +5,7 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Mon Apr 24 15:08:13 2017 Sahel Lucas--Saoudi
+## Last update Wed May 10 12:10:02 2017 Sahel Lucas--Saoudi
 ##
 
 SRC	=	src/main.c			\
@@ -38,7 +38,9 @@ SRC	=	src/main.c			\
 		src/setup.c			\
 		src/command/command_validity.c	\
 		src/close.c			\
-		src/command/end.c
+		src/command/end.c		\
+		src/globing/globing.c
+
 
 OBJ	=	$(SRC:.c=.o)
 

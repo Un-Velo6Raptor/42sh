@@ -10,13 +10,14 @@ file(GLOB helloworld_SRC
         "src/*.c"
         "src/command/*.c"
         "src/parseur/*.c"
+        "src/globing/*.c"
         )
 
 file(GLOB lib_SRC
         "lib/src/*.c"
         "lib/basic.h")
 
-add_library(basic STATIC ${lib_SRC})
+add_library(basic STATIC ${lib_SRC} src/globing/globing.c include/globing.h)
 
 add_executable(PSU_2016_42sh ${helloworld_SRC})
 
