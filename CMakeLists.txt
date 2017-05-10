@@ -11,6 +11,7 @@ file(GLOB helloworld_SRC
         "src/command/*.c"
         "src/parseur/*.c"
         "src/globing/*.c"
+        "src/builtins/*.c"
         )
 
 file(GLOB lib_SRC
@@ -19,6 +20,6 @@ file(GLOB lib_SRC
 
 add_library(basic STATIC ${lib_SRC} src/globing/globing.c include/globing.h)
 
-add_executable(PSU_2016_42sh ${helloworld_SRC})
+add_executable(PSU_2016_42sh ${helloworld_SRC} src/builtins/echo.c)
 
 target_link_libraries(PSU_2016_42sh basic)

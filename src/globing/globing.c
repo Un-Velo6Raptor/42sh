@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 11:26:04 2017 Sahel Lucas--Saoudi
-** Last update Wed May 10 12:26:09 2017 Sahel Lucas--Saoudi
+** Last update Wed May 10 14:07:37 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdlib.h>
@@ -29,6 +29,13 @@ char	*take_word(char *str)
   return (word);
 }
 
+int	is_inhib(char *str, int i)
+{
+  if (i > 0 && str[i - 1] == '\\')
+    return (1);
+  return (0);
+}
+
 char	*globing(char *command, t_shell *shell)
 {
   char	*new_command;
@@ -46,42 +53,34 @@ char	*globing(char *command, t_shell *shell)
     return (command);
   while (command[idx])
   {
-    if (command[idx] == '\"')
-    {
-      new_command[nidx++] = command[idx++];
-      while (command[idx] && command[idx] != '\"')
+    if (command[idx] == '\\')
+      idx++;
+    else if (!is_inhib(command, idx) && command[idx] == '$')
       {
-	new_command[nidx++] = command[idx++];
-	idx++;
+	varname = take_word(&command[idx + 1]);
+	    varname = add_char(varname, 2, "=*");
+	    var = getvar(shell->env, varname);
+	    if (var)
+	      {
+		new_command[nidx] = '\0';
+		new_command = realloc(new_command, strlen(new_command) + strlen(var) + 1);
+		strcat(new_command, var);
+		idx += strlen(varname) - 2;
+		nidx += strlen(var);
+	      }
+	    else
+	      {
+		if (command[idx + 1] && command[idx + 1] == '?')
+		  {
+		    new_command[nidx] = '\0';
+		    new_command = add_char(new_command, strlen(ret_value), ret_value);
+		    nidx += strlen(ret_value);
+		    idx++;
+		  }
+		else
+		  new_command[nidx++] = '$';
+	      }
       }
-      new_command[nidx++] = command[idx];
-    }
-    else if (command[idx] == '$')
-    {
-      varname = take_word(&command[idx + 1]);
-      varname = add_char(varname, 2, "=*");
-      var = getvar(shell->env, varname);
-      if (var)
-      {
-	new_command[nidx] = '\0';
-	new_command = realloc(new_command, strlen(new_command) + strlen(var) + 1);
-	strcat(new_command, var);
-	idx += strlen(varname) - 2;
-	nidx += strlen(var);
-      }
-      else
-      {
-	if (command[idx + 1] && command[idx + 1] == '?')
-	{
-	  new_command[nidx] = '\0';
-	  new_command = add_char(new_command, strlen(ret_value), ret_value);
-	  nidx += strlen(ret_value);
-	  idx++;
-	}
-	else
-	  new_command[nidx++] = '$';
-      }
-    }
     else
       new_command[nidx++] = command[idx];
     idx++;

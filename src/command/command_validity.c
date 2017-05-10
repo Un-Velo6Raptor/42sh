@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Thu Apr 20 22:27:34 2017 Sahel Lucas--Saoudi
-** Last update Tue Apr 25 17:06:22 2017 Sahel Lucas--Saoudi
+** Last update Wed May 10 14:56:27 2017 Sahel Lucas--Saoudi
 */
 
 #include "basic.h"
@@ -43,8 +43,10 @@ static int	pipe_validity(char *command)
   i = 0;
   while (command && command[i])
     {
-      if (command[i] == '|' && check_one_pipe(command, i))
+      if (!match(&command[i], "||*") && command[i] == '|' && check_one_pipe(command, i))
 	return (1);
+      if (match(&command[i], "||*"))
+	i++;
       i++;
     }
   return (0);
