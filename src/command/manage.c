@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 17:04:35 2017 Sahel Lucas--Saoudi
-** Last update Fri Apr 28 17:59:37 2017 Sahel Lucas--Saoudi
+** Last update Wed May 10 09:13:05 2017 Sahel Lucas--Saoudi
 */
 
 #include <fcntl.h>
@@ -68,7 +68,11 @@ void		part2_exec(char **argv, t_shell *shell)
 	exec_error(argv, shell);
     }
   else if (set_path(argv, shell) == 1)
-    exec_error(argv, shell);
+    {
+      putstr_(argv[0], 2);
+      putstr_(": Command not found.\n", 2);
+      shell->status = 1;
+    }
   else
     exec(argv, shell);
 }

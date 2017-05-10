@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Mon Apr  3 15:31:27 2017 Sahel Lucas--Saoudi
-** Last update Fri Apr 28 21:05:40 2017 Sahel Lucas--Saoudi
+** Last update Wed May 10 09:22:46 2017 Sahel Lucas--Saoudi
 */
 
 #include <unistd.h>
@@ -105,7 +105,7 @@ void	pipe_end(t_shell *shell, int **pipefd, int *pid, int i)
   i--;
   while (i >= 0)
     {
-      if (pipefd && pipefd[i])
+      if (pipefd && pipefd[i] && pid[i] != -1)
 	{
 	  close_(pipefd[i][0]);
 	  close_(pipefd[i][1]);
@@ -139,7 +139,13 @@ void	exec_pipe_manager(char **tab, int tab_i, t_shell *shell)
   if (!pid || !pipefd)
     return ;
   while (command[++i])
-    pipefd[i] = command_loop(pid, command, i, shell);
+    if (match(command[i], "exit *"))
+      {
+	pipefd[i] = (int[2]) {-1, -1};
+	pid[i] = -1;
+      }
+    else
+      pipefd[i] = command_loop(pid, command, i, shell);
   pipe_end(shell, pipefd, pid, tablen_(command) - 1);
   free(pipefd);
   free(pid);
