@@ -35,10 +35,9 @@ static char	*get_(char *str, int *i)
   int		j;
 
   j = 0;
-  while (str[j] && (match(&str[j], "||*") == 0 || (match(&str[j], "&&*") == 0)))
+  while (str[j] && (match(&str[j], "||*") == 0 && match(&str[j], "&&*") == 0))
     j += 1;
-  if (str[j] != '\0')
-    str[j + 1] = '\0';
+  str[j] = '\0';
   *i += j;
   return (str);
 }
@@ -60,9 +59,9 @@ char		**parse_and_or(char *str)
   {
     new[i] = get_(strdup_(&str[j]), &j);
     if (str[j] && str[j + 1] == '|')
-	 new[i + 1] = strdup_("||");
+      new[i + 1] = strdup_("||");
     if (str[j] && str[j + 1] == '&')
-	 new[i + 1] = strdup_("&&");
+      new[i + 1] = strdup_("&&");
     j += 3;
     i += 2;
   }

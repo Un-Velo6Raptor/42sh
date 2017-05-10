@@ -5,7 +5,7 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Wed May 10 15:22:44 2017 Thomas GRANDJEAN
+## Last update Wed May 10 18:09:24 2017 Thomas GRANDJEAN
 ##
 
 SRC	=	src/main.c			\
@@ -49,7 +49,7 @@ CFLAGS	=	-Wall -Wextra -Iinclude
 
 LIB	=	-Llib -lbasic
 
-NAME	=	mysh
+NAME	=	42sh
 
 MLIB	=	basic
 
