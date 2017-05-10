@@ -5,12 +5,12 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Wed May 10 12:10:02 2017 Sahel Lucas--Saoudi
+## Last update Wed May 10 15:22:44 2017 Thomas GRANDJEAN
 ##
 
 SRC	=	src/main.c			\
-		src/env.c			\
-		src/setenv.c			\
+		src/builtins/env.c		\
+		src/builtins/setenv.c		\
 		src/parseur/parse_.c		\
 		src/free_tab.c			\
 		src/epur.c			\
@@ -28,18 +28,19 @@ SRC	=	src/main.c			\
 		src/only_before.c		\
 		src/command/double_redir.c	\
 		src/command/error.c		\
-		src/cd.c			\
-		src/setenv_isValid.c		\
-		src/unsetenv.c			\
+		src/builtins/cd.c		\
+		src/builtins/setenv_isValid.c	\
+		src/builtins/unsetenv.c		\
 		src/dico.c			\
 		src/command/pipe.c		\
-		src/exit.c			\
+		src/builtins/exit.c		\
 		src/command/redir.c		\
 		src/setup.c			\
 		src/command/command_validity.c	\
 		src/close.c			\
 		src/command/end.c		\
-		src/globing/globing.c
+		src/globing/globing.c		\
+		src/command/parser_and_or.c
 
 
 OBJ	=	$(SRC:.c=.o)

@@ -8,6 +8,7 @@
 ** Last update Fri Apr 28 17:03:20 2017 Sahel Lucas--Saoudi
 */
 
+#include <stdio.h>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -108,21 +109,51 @@ void	exec_manage(char **tab, t_shell *shell)
   end_manage(fd, file_name, av, tab);
 }
 
+static void	send_to_exec(char **argv, int argv_i, t_shell *shell)
+{
+  if (*argv[argv_i] && howmany_(argv[argv_i], ' ') +
+		       howmany_(argv[argv_i], '\t') !=
+		       strlen_(argv[argv_i]))
+  {
+    if (sp_len_(argv[argv_i], '|') != strlen_(argv[argv_i]))
+      exec_pipe_manager(argv, argv_i, shell);
+    else
+      exec_manage(parse__redir(argv[argv_i]), shell);
+  }
+}
+
+int	check_next(int status, char *next)
+{
+  if (next == NULL)
+    return (0);
+  if (status == 0 && next[0] == '&')
+    return (1);
+  if (status != 0 && next[0] == '|')
+    return (1);
+  return (0);
+}
+
 void	lexer(char **argv, t_shell *shell)
 {
   int	argv_i;
+  char	**new;
+  int	new_i;
 
   argv_i = 0;
   while (argv[argv_i])
+  {
+    new_i = 0;
+    new = parse_and_or(argv[argv_i]);
+    send_to_exec(new, new_i, shell);
+    new_i = 1;
+    while (check_next(shell->status, new[new_i]))
     {
-      if (*argv[argv_i] && howmany_(argv[argv_i], ' ') +
-	  howmany_(argv[argv_i], '\t') != strlen_(argv[argv_i]))
-	{
-	  if (sp_len_(argv[argv_i], '|') != strlen_(argv[argv_i]))
-	    exec_pipe_manager(argv, argv_i, shell);
-	  else
-	    exec_manage(parse__redir(argv[argv_i]), shell);
-	}
-      argv_i++;
+      //printf("%s\n", argv[argv_i]);
+      new_i += 1;
+      send_to_exec(new, new_i, shell);
+      new_i += 1;
     }
+    free_tab(new);
+    argv_i++;
+  }
 }

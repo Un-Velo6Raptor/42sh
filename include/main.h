@@ -66,5 +66,6 @@ void		reset01(int);
 void		close_(int);
 void		end_manage(int *, char **, char **, char **);
 int		check_file(char *, char);
+char		**parse_and_or(char *);
 
 #endif /* !MAIN_H_ */
