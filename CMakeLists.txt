@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.6)
+project(PSU_2016_42sh)
+
+set(CMAKE_CXX_STANDARD 11)
+
+include_directories(include)
+
+file(GLOB helloworld_SRC
+        "include/*.h"
+        "src/*.c"
+        "src/command/*.c"
+        "src/parseur/*.c"
+        )
+
+file(GLOB lib_SRC
+        "lib/src/*.c"
+        "lib/basic.h")
+
+add_library(basic STATIC ${lib_SRC})
+
+add_executable(PSU_2016_42sh ${helloworld_SRC})
+
+target_link_libraries(PSU_2016_42sh basic)
