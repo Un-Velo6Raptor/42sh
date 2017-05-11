@@ -8,10 +8,20 @@
 ** Last update Wed May 10 14:27:18 2017 Sahel Lucas--Saoudi
 */
 
+#include <stdio.h>
 #include "main.h"
 
-int	echo(char **argv, t_shell *shell)
+int	call_echo(char **argv, __attribute__ ((unused)) t_shell *shell)
 {
+  int	i;
 
+  i = 1;
+  while (argv && argv[i])
+  {
+    printf("%s", argv[i]);
+    i++;
+  }
+  printf("\n");
+  fflush(stdout);
   return (0);
 }

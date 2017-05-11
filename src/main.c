@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Mon Apr 24 16:08:09 2017 Sahel Lucas--Saoudi
+** Last update Thu May 11 12:48:07 2017 Sahel Lucas--Saoudi
 */
 
 #include <unistd.h>
@@ -14,6 +14,7 @@
 #include "main.h"
 #include "basic.h"
 #include "globing.h"
+#include "alias.h"
 
 static void	prompt(int nb)
 {
@@ -63,6 +64,7 @@ int		main(int __attribute__ ((unused)) ac,
   if (isatty(0) == 1)
     write(1, "$$$ >", 5);
   shell = set_shell(env);
+  source(NULL, shell);
   signal(2, catch);
   while ((shell->command = getnextline_(0)))
     {

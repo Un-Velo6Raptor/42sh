@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:17:58 2017 Sahel Lucas--Saoudi
-** Last update Fri Apr 28 17:03:20 2017 Sahel Lucas--Saoudi
+** Last update Thu May 11 12:47:08 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdio.h>
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include "main.h"
 #include "basic.h"
+#include "alias.h"
 
 int		good_file(char *path)
 {
@@ -73,7 +74,7 @@ int	*get_fd(char **file_name, char **buffer)
 	  fd[i] = -1;
 	}
       else if (match(file_name[i], "<*"))
-	fd[i] = open(&file_name[i][1], O_RDWR, 00644);
+	fd[i] = open(&file_name[i][1], O_RDONLY);
       else if (match(file_name[i], ">*"))
 	fd[i] = open(&file_name[i][1], O_CREAT | O_TRUNC | O_RDWR, 00644);
       i++;
@@ -95,6 +96,7 @@ void	exec_manage(char **tab, t_shell *shell)
       return ;
     }
   av = take_redir(tab, 0);
+  av = alias(av, shell);
   if (!av || !*av)
     {
       putstr_("Invalid null command.\n", 2);

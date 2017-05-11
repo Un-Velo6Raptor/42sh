@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 17:04:35 2017 Sahel Lucas--Saoudi
-** Last update Wed May 10 09:13:05 2017 Sahel Lucas--Saoudi
+** Last update Thu May 11 11:40:36 2017 Sahel Lucas--Saoudi
 */
 
 #include <fcntl.h>
@@ -15,6 +15,8 @@
 #include <stdlib.h>
 #include "main.h"
 #include "basic.h"
+#include "alias.h"
+#include "builtins.h"
 
 static void		exec_error(char **argv, t_shell *shell)
 {
@@ -81,12 +83,12 @@ void		exec_manager(char **argv, t_shell *shell)
 {
   static char	**dico;
   int		i;
-  int		(*func[5])(char **, t_shell *) =
-    {call_cd, call_setenv, call_unsetenv, call_env, call_exit};
+  int		(*func[8])(char **, t_shell *) =
+    {call_cd, call_setenv, call_unsetenv, call_env, call_exit, call_echo, call_alias, source};
 
   i = 0;
   if (!dico)
-    dico = c_dico(5, "cd", "setenv", "unsetenv", "env", "exit");
+    dico = c_dico(8, "cd", "setenv", "unsetenv", "env", "exit", "echo", "alias", "source");
   if (!argv || !*argv)
     return ;
   while (dico[i])

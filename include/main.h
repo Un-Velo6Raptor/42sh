@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri Mar 24 10:58:31 2017 Sahel Lucas--Saoudi
-** Last update Fri Apr 28 17:04:10 2017 Sahel Lucas--Saoudi
+** Last update Thu May 11 11:32:44 2017 Sahel Lucas--Saoudi
 */
 
 #ifndef MAIN_H_
@@ -15,6 +15,7 @@ typedef struct	s_shell
 {
   char		**env;
   char		**path;
+  char		**alias;
   char		*command;
   char		*oldpwd;
   char		*pwd;
@@ -42,11 +43,6 @@ char		*stralloc_(char *, char *);
 int		set_path(char **, t_shell *);
 int		validity(char **);
 int		setnenv(char **, t_shell *);
-int		call_cd(char **, t_shell *);
-int		call_setenv(char **, t_shell *);
-int		call_exit(char **, t_shell *);
-int		call_env(char **, t_shell *);
-int		call_unsetenv(char **, t_shell *);
 int		is_valid(char *);
 int		check_filename(char **);
 int		howmany_(char *, char);

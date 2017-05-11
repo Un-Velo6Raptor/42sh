@@ -5,7 +5,7 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Wed May 10 18:09:24 2017 Thomas GRANDJEAN
+## Last update Thu May 11 13:31:32 2017 Sahel Lucas--Saoudi
 ##
 
 SRC	=	src/main.c			\
@@ -15,7 +15,6 @@ SRC	=	src/main.c			\
 		src/free_tab.c			\
 		src/epur.c			\
 		src/set_var.c			\
-		src/get_next_line.c		\
 		src/get_next_line2.c		\
 		src/add_str.c			\
 		src/command/manage.c		\
@@ -40,8 +39,10 @@ SRC	=	src/main.c			\
 		src/close.c			\
 		src/command/end.c		\
 		src/globing/globing.c		\
-		src/command/parser_and_or.c
-
+		src/command/parser_and_or.c	\
+		src/alias/alias.c		\
+		src/builtins/echo.c		\
+		src/get_input.c
 
 OBJ	=	$(SRC:.c=.o)
 

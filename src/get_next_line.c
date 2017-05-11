@@ -1,11 +1,11 @@
 /*
 ** get_next_line.c for minishell2 in /home/sahel/rendu/PSU/PSU_2016_minishell2
-** 
+**
 ** Made by Sahel Lucas--Saoudi
 ** Login   <sahel.lucas-saoudi@epitech.eu>
-** 
+**
 ** Started on  Wed Apr  5 20:26:00 2017 Sahel Lucas--Saoudi
-** Last update Wed Apr  5 20:31:44 2017 Sahel Lucas--Saoudi
+** Last update Thu May 11 13:31:13 2017 Sahel Lucas--Saoudi
 */
 
 #include <unistd.h>
@@ -47,7 +47,7 @@ static t_buffer	*init_(int fd, t_buffer *previous)
     buffer->previous = NULL;
   return (buffer);
 }
-
+/*
 static t_buffer	*take_buffer(int fd, t_buffer *actual)
 {
   t_buffer	*new;
@@ -107,3 +107,4 @@ char			*getnextline_(int fd)
   fd_->buffer = strdupn_(fd_->buffer, sp_len_(fd_->buffer, '\n') + 1);
   return (line);
 }
+*/
