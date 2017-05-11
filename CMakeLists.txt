@@ -20,6 +20,6 @@ file(GLOB lib_SRC
 
 add_library(basic STATIC ${lib_SRC} src/globing/globing.c include/globing.h)
 
-add_executable(PSU_2016_42sh ${helloworld_SRC} src/builtins/echo.c)
+add_executable(PSU_2016_42sh ${helloworld_SRC} src/builtins/echo.c src/command/file.c)
 
 target_link_libraries(PSU_2016_42sh basic)

@@ -20,5 +20,22 @@ int	call_exit(char **argv, t_shell *shell)
   else
     shell->status = 0;
   exit(shell->status % 255);
-  return (0);
+}
+
+void	check_exit_pipe(char **command, int **pipefd, int *pid, t_shell *shell)
+{
+  int i;
+
+  i = 0;
+  while (command[i])
+  {
+    if (match(command[i], "exit *"))
+    {
+      pipefd[i] = (int[2]) {-1, -1};
+      pid[i] = -1;
+    }
+    else
+      pipefd[i] = command_loop(pid, command, i, shell);
+    i++;
+  }
 }

@@ -67,5 +67,9 @@ void		close_(int);
 void		end_manage(int *, char **, char **, char **);
 int		check_file(char *, char);
 char		**parse_and_or(char *);
+int		check_next(int , char *);
+int		*get_fd(char **, char **);
+int		*command_loop(int *, char **, int, t_shell *);
+void		check_exit_pipe(char **, int **, int *, t_shell *);
 
 #endif /* !MAIN_H_ */

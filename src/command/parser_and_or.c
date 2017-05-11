@@ -68,3 +68,14 @@ char		**parse_and_or(char *str)
   new[i - 1] = NULL;
   return (new);
 }
+
+int	check_next(int status, char *next)
+{
+  if (next == NULL)
+    return (0);
+  if (status == 0 && next[0] == '&')
+    return (1);
+  if (status != 0 && next[0] == '|')
+    return (1);
+  return (0);
+}

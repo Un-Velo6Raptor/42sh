@@ -124,7 +124,6 @@ void	exec_pipe_manager(char **tab, int tab_i, t_shell *shell)
   char	**command;
   int	**pipefd;
   int	*pid;
-  int	i;
 
   command = parse_(tab[tab_i], '|');
   if (check_pipe(command, 0))
@@ -133,19 +132,11 @@ void	exec_pipe_manager(char **tab, int tab_i, t_shell *shell)
       return ;
     }
   shell->fd0 = 0;
-  i = -1;
   pipefd = malloc(sizeof(int *) * (tablen_(command) + 1));
   pid = malloc(sizeof(int) * (tablen_(command) + 1));
   if (!pid || !pipefd)
     return ;
-  while (command[++i])
-    if (match(command[i], "exit *"))
-      {
-	pipefd[i] = (int[2]) {-1, -1};
-	pid[i] = -1;
-      }
-    else
-      pipefd[i] = command_loop(pid, command, i, shell);
+  check_exit_pipe(command, pipefd, pid, shell);
   pipe_end(shell, pipefd, pid, tablen_(command) - 1);
   free(pipefd);
   free(pid);

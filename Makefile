@@ -40,6 +40,7 @@ SRC	=	src/main.c			\
 		src/close.c			\
 		src/command/end.c		\
 		src/globing/globing.c		\
+		src/command/file.c		\
 		src/command/parser_and_or.c
 
 
