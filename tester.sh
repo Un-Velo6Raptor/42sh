@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MYSHELL="$PWD/mysh"
+MYSHELL="$PWD/42sh"
 REFER="/bin/tcsh -f"
 TRAPSIG=0
 note=0
@@ -87,7 +87,7 @@ load_test()
     $WRAPPER
     g=`$DIFF /tmp/.refer.$$ /tmp/.shell.$$ | $WC -l`
     $MKDIR -p /tmp/test.$$/$id 2>/dev/null
-    $CP /tmp/.shell.$$ /tmp/test.$$/$id/mysh.out
+    $CP /tmp/.shell.$$ /tmp/test.$$/$id/42sh.out
     $CP /tmp/.refer.$$ /tmp/test.$$/$id/tcsh.out
     if [ $g -eq 0 ]
     then

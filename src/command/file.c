@@ -70,7 +70,7 @@ int	*get_fd(char **file_name, char **buffer)
       fd[i] = -1;
     }
     else if (match(file_name[i], "<*"))
-      fd[i] = open(&file_name[i][1], O_RDWR, 00644);
+      fd[i] = open(&file_name[i][1], O_RDONLY);
     else if (match(file_name[i], ">*"))
       fd[i] = open(&file_name[i][1], O_CREAT | O_TRUNC | O_RDWR, 00644);
     i++;

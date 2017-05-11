@@ -5,12 +5,13 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:17:58 2017 Sahel Lucas--Saoudi
-** Last update Fri Apr 28 17:03:20 2017 Sahel Lucas--Saoudi
+** Last update Thu May 11 12:47:08 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdlib.h>
 #include "main.h"
 #include "basic.h"
+#include "alias.h"
 
 void	exec_manage(char **tab, t_shell *shell)
 {
@@ -26,6 +27,7 @@ void	exec_manage(char **tab, t_shell *shell)
       return ;
     }
   av = take_redir(tab, 0);
+  av = alias(av, shell);
   if (!av || !*av)
     {
       putstr_("Invalid null command.\n", 2);
