@@ -1,11 +1,11 @@
 /*
-** get_next_line2.c for minishell2 in /home/sahel/rendu/PSU/PSU_2016_minishell2
-** 
+** concat_free.c for minishell2 in /home/sahel/rendu/PSU/PSU_2016_minishell2
+**
 ** Made by Sahel Lucas--Saoudi
 ** Login   <sahel.lucas-saoudi@epitech.eu>
-** 
+**
 ** Started on  Wed Apr  5 20:14:48 2017 Sahel Lucas--Saoudi
-** Last update Wed Apr  5 20:15:29 2017 Sahel Lucas--Saoudi
+** Last update Thu May 11 15:40:45 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdlib.h>

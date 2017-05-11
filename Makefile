@@ -5,7 +5,7 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Thu May 11 13:31:32 2017 Sahel Lucas--Saoudi
+## Last update Thu May 11 15:41:16 2017 Sahel Lucas--Saoudi
 ##
 
 SRC	=	src/main.c			\
@@ -15,7 +15,7 @@ SRC	=	src/main.c			\
 		src/free_tab.c			\
 		src/epur.c			\
 		src/set_var.c			\
-		src/get_next_line2.c		\
+		src/concat_free.c		\
 		src/add_str.c			\
 		src/command/manage.c		\
 		src/path.c			\
