@@ -17,7 +17,8 @@ char	*add_str(char *str, int size, char *str2)
   int	res_i;
   int	str2_i;
 
-  if ((res = malloc(strlen_(str) + size + 1)) == NULL)
+  res = malloc(strlen_(str) + size + 1);
+    if (!res)
     return (NULL);
   res_i = 0;
   str2_i = 0;

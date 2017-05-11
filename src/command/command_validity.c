@@ -43,7 +43,8 @@ static int	pipe_validity(char *command)
   i = 0;
   while (command && command[i])
     {
-      if (!match(&command[i], "||*") && command[i] == '|' && check_one_pipe(command, i))
+      if (!match(&command[i], "||*") &&
+	command[i] == '|' && check_one_pipe(command, i))
 	return (1);
       if (match(&command[i], "||*"))
 	i++;
