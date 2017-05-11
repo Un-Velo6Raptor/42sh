@@ -71,18 +71,20 @@ static t_buffer	*take_buffer(int fd, t_buffer *actual)
 static int		update_actual(t_buffer *actual)
 {
   char			*buffer;
-  int			size;
+  ssize_t		size;
 
   if ((actual->buffer && sp_len_(actual->buffer, '\n') !=
        strlen_(actual->buffer)) ||
       !(buffer = malloc(sizeof(char) * (READSIZE + 1))))
     return (0);
-  while ((size = read(actual->fd, buffer, READSIZE)) > 0)
+  size = read(actual->fd, buffer, READSIZE);
+  while (size > 0)
     {
       buffer[size] = '\0';
       actual->buffer = concat_free(actual->buffer, buffer);
       if (sp_len_(actual->buffer, '\n') != strlen_(actual->buffer))
 	return (0);
+      size = read(actual->fd, buffer, READSIZE);
     }
   if (size <= 0 && (!actual->buffer || size == -1 || !*actual->buffer))
     return (1);

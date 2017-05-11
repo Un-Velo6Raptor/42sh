@@ -20,7 +20,8 @@ char		*add_and_free(char *str, int size, char *add)
 
   str_i = 0;
   add_i = 0;
-  if ((save = malloc((sizeof(char) * (strlen_(str) + size + 2)))) == NULL)
+  save = malloc((sizeof(char) * (strlen_(str) + size + 2)));
+  if (!save)
     return (NULL);
   while (str[str_i])
     {

@@ -148,7 +148,6 @@ void	lexer(char **argv, t_shell *shell)
     new_i = 1;
     while (check_next(shell->status, new[new_i]))
     {
-      //printf("%s\n", argv[argv_i]);
       new_i += 1;
       send_to_exec(new, new_i, shell);
       new_i += 1;

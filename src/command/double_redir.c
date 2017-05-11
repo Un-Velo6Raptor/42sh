@@ -21,8 +21,8 @@ char	*stralloc_(char *str, char *s2)
 
   str_i = 0;
   str_j = 0;
-  if (!(ret = malloc((str) ? (strlen_(str) + strlen_(s2) + 1) :
-		     (strlen_(s2) + 1))))
+  ret = malloc(strlen_(str) + strlen_(s2) + 1);
+  if (!ret)
     return (NULL);
   while (str && str[str_i])
     {
@@ -46,7 +46,8 @@ char	*double_redir(char *word)
   ret = NULL;
   if (isatty(0) == 1)
     putstr_("heredoc >", 1);
-  while ((buffer = getnextline_(0)))
+  buffer = getnextline_(0);
+  while (buffer)
     {
       if (match(buffer, word))
 	return (ret);
@@ -55,6 +56,7 @@ char	*double_redir(char *word)
       free_(buffer);
       if (isatty(0) == 1)
 	putstr_("heredoc >", 1);
+      buffer = getnextline_(0);
     }
   return (NULL);
 }
