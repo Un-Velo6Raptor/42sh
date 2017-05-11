@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 15:49:05 2017 Sahel Lucas--Saoudi
-** Last update Thu May 11 13:37:47 2017 Sahel Lucas--Saoudi
+** Last update Thu May 11 15:28:21 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdio.h>
@@ -46,44 +46,49 @@ int		source(__attribute__ ((unused)) char **argv, t_shell *shell)
   return (0);
 }
 
-char		**alias(char **argv, t_shell *shell)
+char		**remake_argv_with_alias(char *alias, char **argv)
 {
-  char		**new_argv;
-  char		*alias;
+  char		**new;
   int		i;
   int		j;
+
+  i = 1;
+  new = parse_(alias, ' ');
+  j = tablen_(new);
+  while (argv && argv[i])
+    {
+      new = realloc(new, sizeof(char *) * (j + 1));
+      new[j] = strdup(argv[i]);
+      i++;
+      j++;
+    }
+  new = realloc(new, sizeof(char *) * (j + 1));
+  new[j] = NULL;
+  free_tab(argv);
+  return (new);
+}
+
+char		**alias(char **argv, t_shell *shell)
+{
+  char		*alias;
   char		*aliasname;
+  int		i;
 
   i = 0;
   alias = NULL;
   if (!argv || !*argv || !shell->alias)
     return (argv);
   while (shell->alias && shell->alias[i])
-  {
-    aliasname = only_before(shell->alias[i], '=');
-    if (!strcmp(argv[0], aliasname))
-      alias = without_before_(shell->alias[i], '=');
-    i++;
-  }
-  new_argv = parse_(alias, ' ');
-  i = 1;
-  j = tablen_(new_argv);
-  if (!new_argv)
-  {
-    new_argv = malloc(sizeof(char *) * 1);
-    new_argv[0] = strdup(argv[0]);
-    j++;
-  }
-  while (argv && argv[i])
-  {
-    new_argv = realloc(new_argv, sizeof(char *) * (j + 1));
-    new_argv[j] = strdup(argv[i]);
-    j++;
-    i++;
-  }
-  new_argv = realloc(new_argv, sizeof(char *) * (j + 1));
-  new_argv[j] = NULL;
-  return (new_argv);
+    {
+      aliasname = only_before(shell->alias[i], '=');
+      if (!strcmp(argv[0], aliasname))
+	{
+	  alias = without_before_(shell->alias[i], '=');
+	  argv = remake_argv_with_alias(alias, argv);
+	}
+      i++;
+    }
+  return (argv);
 }
 
 int	call_alias(char **argv, t_shell *shell)
