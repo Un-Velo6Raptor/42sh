@@ -11,6 +11,7 @@ file(GLOB helloworld_SRC
         "src/command/*.c"
         "src/parseur/*.c"
         "src/globing/*.c"
+        "src/alias/*.c"
         "src/builtins/*.c"
         )
 
