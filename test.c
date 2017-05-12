@@ -5,25 +5,21 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri May 12 14:05:48 2017 Sahel Lucas--Saoudi
-** Last update Fri May 12 14:11:57 2017 Sahel Lucas--Saoudi
+** Last update Fri May 12 14:56:00 2017 Sahel Lucas--Saoudi
 */
 
 #include <unistd.h>
 #include <signal.h>
 #include <stdio.h>
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **env)
 {
   int	pid;
 
   pid = fork();
   if (pid == 0)
     {
-      while (1)
-	{
-	  printf("Je suis en vie <3\n");
-	  usleep(10000);
-	}
+      execve("/bin/ls", (char *[4]) {"/bin/ls", "-Rl", "/", NULL}, env);
     }
   else
     {

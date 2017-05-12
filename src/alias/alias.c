@@ -17,16 +17,30 @@
 #include "main.h"
 #include "alias.h"
 
-int		source(__attribute__ ((unused)) char **argv, t_shell *shell)
+int		source(char **argv, t_shell *shell)
 {
   char		**tab;
   char		*buff;
+  char		*path;
   int		i;
   int		fd;
 
-  fd = open(".42shrc", O_RDONLY);
+  if (tablen_(argv) > 1)
+    path = argv[1];
+  else
+  {
+    path = strdup(shell->sh);
+    path = realloc(path, strlen(path) + strlen(ALIAS_FILE) + 2);
+    path = strcat(path, "/");
+    path = strcat(path, ALIAS_FILE);
+  }
+  printf("%s\n", path);
+  fd = open(path, O_RDONLY);
   if (fd == -1)
     return (1);
+  path[strrchr(path, '/') - path] = '\0';
+  free(shell->sh);
+  shell->sh = path;
   tab = malloc(sizeof(char *) * 1);
   tab[0] = NULL;
   i = 0;

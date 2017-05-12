@@ -19,7 +19,7 @@ file(GLOB lib_SRC
         "lib/src/*.c"
         "lib/basic.h")
 
-add_library(basic STATIC ${lib_SRC} src/globing/globing.c include/globing.h)
+add_library(basic STATIC ${lib_SRC} src/globing/globing.c include/globing.h src/history/history.c include/history.h)
 
 add_executable(PSU_2016_42sh ${helloworld_SRC} src/builtins/echo.c src/command/file.c)
 

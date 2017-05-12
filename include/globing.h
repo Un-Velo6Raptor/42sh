@@ -14,5 +14,6 @@
 #include "main.h"
 
 char	*globing(char *, t_shell *);
+char	*file_globing(char *);
 
 #endif /* !GLOBING_H_ */

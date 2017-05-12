@@ -20,7 +20,10 @@ typedef struct	s_shell
   char		*oldpwd;
   char		*pwd;
   char		*home;
+  char		*sh;
   int		fd0;
+  int		id_command;
+  int		idmax;
   int		status;
 }		t_shell;
 

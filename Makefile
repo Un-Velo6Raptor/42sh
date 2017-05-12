@@ -5,7 +5,7 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Thu May 11 15:41:16 2017 Sahel Lucas--Saoudi
+## Last update Fri May 12 16:34:20 2017 Sahel Lucas--Saoudi
 ##
 
 SRC	=	src/main.c			\
@@ -43,7 +43,8 @@ SRC	=	src/main.c			\
 		src/command/parser_and_or.c	\
 		src/alias/alias.c		\
 		src/builtins/echo.c		\
-		src/get_input.c
+		src/get_input.c			\
+		src/history/history.c
 
 OBJ	=	$(SRC:.c=.o)
 

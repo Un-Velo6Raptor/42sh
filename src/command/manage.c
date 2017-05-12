@@ -17,6 +17,7 @@
 #include "basic.h"
 #include "alias.h"
 #include "builtins.h"
+#include "history.h"
 
 static void		exec_error(char **argv, t_shell *shell)
 {
@@ -83,14 +84,14 @@ void		exec_manager(char **argv, t_shell *shell)
 {
   static char	**dico;
   int		i;
-  int		(*func[8])(char **, t_shell *) =
+  int		(*func[9])(char **, t_shell *) =
     {call_cd, call_setenv, call_unsetenv, call_env,
-     call_exit, call_echo, call_alias, source};
+     call_exit, call_echo, call_alias, source, call_history};
 
   i = 0;
   if (!dico)
-    dico = c_dico(8, "cd", "setenv", "unsetenv", "env",
-		  "exit", "echo", "alias", "source");
+    dico = c_dico(9, "cd", "setenv", "unsetenv", "env",
+		  "exit", "echo", "alias", "source", "history");
   if (!argv || !*argv)
     return ;
   while (dico[i])

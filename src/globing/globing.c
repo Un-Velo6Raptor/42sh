@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <globing.h>
 #include "main.h"
 
 char	*take_word(char *str)
@@ -81,6 +82,9 @@ char	*globing(char *command, t_shell *shell)
 		  new_command[nidx++] = '$';
 	      }
       }
+//    else if (command[idx] == '[' || command[idx] == '?' || command[idx] ==
+// '*')
+//      file_globing("/bin/cat/sdf/lklk*.s");
     else
       new_command[nidx++] = command[idx];
     idx++;

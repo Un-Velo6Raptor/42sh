@@ -19,6 +19,13 @@ int	call_exit(char **argv, t_shell *shell)
     shell->status = getnbr_(argv[1]);
   else
     shell->status = 0;
+  free_tab(shell->env);
+  free_tab(shell->path);
+  free_tab(shell->alias);
+  free(shell->command);
+  free(shell->oldpwd);
+  free(shell->pwd);
+  free(shell->home);
   exit(shell->status % 255);
 }
 

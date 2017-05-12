@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Thu May 11 12:48:07 2017 Sahel Lucas--Saoudi
+** Last update Fri May 12 15:05:50 2017 Sahel Lucas--Saoudi
 */
 
 #include <unistd.h>
@@ -15,6 +15,7 @@
 #include "basic.h"
 #include "globing.h"
 #include "alias.h"
+#include "history.h"
 
 static void	prompt(int nb)
 {
@@ -40,6 +41,7 @@ t_shell		*set_shell(char **env)
   if (!shell)
     exit (84);
   shell->status = 0;
+  shell->sh = getcwd(NULL, 0);
   shell->env = create_env(env);
   shell->oldpwd = getvar(shell->env, "OLDPWD=*");
   shell->pwd = getvar(shell->env, "PWD=*");
@@ -56,7 +58,7 @@ void		free_shell(t_shell *shell)
 }
 
 int		main(int __attribute__ ((unused)) ac,
-		     char __attribute__ ((unused)) **av, char **env)
+		     __attribute__ ((unused)) char **av, char **env)
 {
   t_shell	*shell;
   char		*tmp;
@@ -75,6 +77,7 @@ int		main(int __attribute__ ((unused)) ac,
       free_(tmp);
       if (shell->command && *(shell->command) && !check_flexibility(shell))
 	manage_command(shell);
+      add_to_history(shell->command, shell);
       free_tab(shell->path);
       free_(shell->command);
       prompt(shell->status % 255);
