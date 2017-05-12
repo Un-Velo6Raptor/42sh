@@ -19,21 +19,29 @@
 #include "history.h"
 #include "basic.h"
 
-char	**get_history(t_shell *shell)
+int	get_history_file(t_shell *shell)
 {
-  char	**tab;
-  char	*buff;
   char	*path;
-  int	i;
   int	fd;
 
-  i = 0;
   path = strdup(shell->sh);
   path = realloc(path, strlen(path) + strlen(HISTORY_FILE) + 2);
   strcat(path, "/");
   strcat(path, HISTORY_FILE);
   fd = open(path, O_RDONLY);
-  if (fd == -1)
+  return (fd);
+}
+
+char	**get_history(t_shell *shell)
+{
+  char	**tab;
+  char	*buff;
+  int	i;
+  int	fd;
+
+  i = 0;
+  fd = get_history_file(shell);
+  if (fd < 0)
     return (NULL);
   buff = getnextline_(fd);
   tab = NULL;
