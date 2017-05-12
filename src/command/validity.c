@@ -37,17 +37,17 @@ static int	check_point(char **argv)
 
   ac = 0;
   while (argv[ac])
+  {
+    if (argv[ac][0] == ';')
     {
-      if (argv[ac][0] == ';')
-	{
-	  if (ac == tablen_(argv) - 1 || ac == 0 || argv[ac + 1][0] == '|' ||
-	      argv[ac + 1][0] == ';' || argv[ac - 1][0] == ';' ||
-	      argv[ac + 1][0] == '>' || argv[ac - 1][0] == '>' ||
-	      argv[ac + 1][0] == '<' || argv[ac - 1][0] == '<')
-	    return (1);
-	}
-      ac++;
+      if (ac == tablen_(argv) - 1 || ac == 0 || argv[ac + 1][0] == '|' ||
+	  argv[ac + 1][0] == ';' || argv[ac - 1][0] == ';' ||
+	  argv[ac + 1][0] == '>' || argv[ac - 1][0] == '>' ||
+	  argv[ac + 1][0] == '<' || argv[ac - 1][0] == '<')
+	return (1);
     }
+    ac++;
+  }
   return (0);
 }
 

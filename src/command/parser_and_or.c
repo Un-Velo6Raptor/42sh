@@ -64,6 +64,8 @@ char		**parse_and_or(char *str)
       new[i + 1] = strdup_("&&");
     j += 3;
     i += 2;
+    if ((str[j - 3] == '\0') || (str[j - 2] == '\0') || (str[j - 1] == '\0'))
+      return (NULL);
   }
   new[i - 1] = NULL;
   return (new);

@@ -67,7 +67,8 @@ int	check_flexibility(t_shell *shell)
       shell->status = 1;
       return (1);
     }
-  if (pipe_validity(shell->command) || check_flex_redir(shell->command))
+  if (pipe_validity(shell->command) || check_flex_redir(shell->command)
+    || match(shell->command, "*&&&*"))
     {
       putstr_("Invalid null command.\n", 2);
       shell->status = 1;

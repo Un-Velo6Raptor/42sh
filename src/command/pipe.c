@@ -99,7 +99,7 @@ void	pipe_end(t_shell *shell, int **pipefd, int *pid, int i)
   st = 0;
   waitpid(pid[i], &shell->status, 0);
   if (shell->status % 255 == 141)
-    putstr_("Borken pipe\n", 2);
+    putstr_("Broken pipe\n", 2);
   if (shell->status > 255)
     st = shell->status % 255;
   i--;

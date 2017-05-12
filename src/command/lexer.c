@@ -66,6 +66,12 @@ void	lexer(char **argv, t_shell *shell)
   {
     new_i = 0;
     new = parse_and_or(argv[argv_i]);
+    if (!new)
+    {
+      putstr_("Invalid null command.\n", 2);
+      shell->status = 1;
+      return ;
+    }
     send_to_exec(new, new_i, shell);
     new_i = 1;
     while (check_next(shell->status, new[new_i]))
