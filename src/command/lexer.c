@@ -77,9 +77,8 @@ void	lexer(char **argv, t_shell *shell)
     while (check_next(shell->status, new[new_i]))
     {
       new_i += 1;
-      send_to_exec(new, new_i, shell);
-      new_i += 1;
-    }
+      send_to_exec(new, new_i++, shell);
+     }
     free_tab(new);
     argv_i++;
   }

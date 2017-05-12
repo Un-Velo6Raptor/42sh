@@ -62,10 +62,10 @@ char		**parse_and_or(char *str)
       new[i + 1] = strdup_("||");
     if (str[j] && str[j + 1] == '&')
       new[i + 1] = strdup_("&&");
+    if (!new[i] || !*new[i])
+      return (NULL);
     j += 3;
     i += 2;
-    if ((str[j - 3] == '\0') || (str[j - 2] == '\0') || (str[j - 1] == '\0'))
-      return (NULL);
   }
   new[i - 1] = NULL;
   return (new);

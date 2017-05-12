@@ -17,13 +17,10 @@
 #include "main.h"
 #include "alias.h"
 
-int		source(char **argv, t_shell *shell)
+static int		get_rc_file(char **argv, t_shell *shell)
 {
-  char		**tab;
-  char		*buff;
-  char		*path;
-  int		i;
   int		fd;
+  char		*path;
 
   if (tablen_(argv) > 1)
     path = argv[1];
@@ -34,13 +31,25 @@ int		source(char **argv, t_shell *shell)
     path = strcat(path, "/");
     path = strcat(path, ALIAS_FILE);
   }
-  printf("%s\n", path);
   fd = open(path, O_RDONLY);
   if (fd == -1)
     return (1);
   path[strrchr(path, '/') - path] = '\0';
   free(shell->sh);
   shell->sh = path;
+  return (fd);
+}
+
+int		source(char **argv, t_shell *shell)
+{
+  char		**tab;
+  char		*buff;
+  int		i;
+  int		fd;
+
+  fd = get_rc_file(argv, shell);
+  if (fd < 0)
+    return (84);
   tab = malloc(sizeof(char *) * 1);
   tab[0] = NULL;
   i = 0;
