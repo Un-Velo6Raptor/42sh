@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri May 12 14:39:29 2017 Sahel Lucas--Saoudi
-** Last update Fri May 12 14:39:29 2017 Sahel Lucas--Saoudi
+** Last update Fri May 12 17:49:21 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdlib.h>
@@ -24,10 +24,12 @@ int	get_history_file(t_shell *shell)
   char	*path;
   int	fd;
 
+  printf("YOLO\n");
   path = strdup(shell->sh);
   path = realloc(path, strlen(path) + strlen(HISTORY_FILE) + 2);
   strcat(path, "/");
   strcat(path, HISTORY_FILE);
+  printf("%s\n", path);
   fd = open(path, O_RDONLY);
   return (fd);
 }
@@ -41,6 +43,7 @@ char	**get_history(t_shell *shell)
 
   i = 0;
   fd = get_history_file(shell);
+  printf("%i\n", fd);
   if (fd < 0)
     return (NULL);
   buff = getnextline_(fd);

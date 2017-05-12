@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Fri May 12 15:05:50 2017 Sahel Lucas--Saoudi
+** Last update Fri May 12 17:53:04 2017 Sahel Lucas--Saoudi
 */
 
 #include <unistd.h>
@@ -40,6 +40,7 @@ t_shell		*set_shell(char **env)
   shell = malloc(sizeof(t_shell));
   if (!shell)
     exit (84);
+  shell->alias = NULL;
   shell->status = 0;
   shell->sh = getcwd(NULL, 0);
   shell->env = create_env(env);

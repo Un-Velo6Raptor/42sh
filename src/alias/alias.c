@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 15:49:05 2017 Sahel Lucas--Saoudi
-** Last update Thu May 11 15:28:21 2017 Sahel Lucas--Saoudi
+** Last update Fri May 12 17:50:46 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdio.h>
@@ -33,7 +33,7 @@ static int		get_rc_file(char **argv, t_shell *shell)
   }
   fd = open(path, O_RDONLY);
   if (fd == -1)
-    return (1);
+    return (-1);
   path[strrchr(path, '/') - path] = '\0';
   free(shell->sh);
   shell->sh = path;
