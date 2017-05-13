@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Fri May 12 17:53:04 2017 Sahel Lucas--Saoudi
+** Last update Sat May 13 09:08:05 2017 Benoit Hoffman
 */
 
 #include <unistd.h>
@@ -62,7 +62,6 @@ int		main(int __attribute__ ((unused)) ac,
 		     __attribute__ ((unused)) char **av, char **env)
 {
   t_shell	*shell;
-  char		*tmp;
 
   if (isatty(0) == 1)
     write(1, "$$$ >", 5);
@@ -73,9 +72,8 @@ int		main(int __attribute__ ((unused)) ac,
     {
       shell->command = globing(shell->command, shell);
       shell->status = 0;
-      tmp = getvar(shell->env, "PATH=*");
-      shell->path = parse_(tmp, ':');
-      free_(tmp);
+      if (put_minimalist(shell) != 0)
+	return (84);
       if (shell->command && *(shell->command) && !check_flexibility(shell))
 	manage_command(shell);
       add_to_history(shell->command, shell);
