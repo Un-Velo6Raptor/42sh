@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 11:26:04 2017 Sahel Lucas--Saoudi
-** Last update Wed May 10 14:07:37 2017 Sahel Lucas--Saoudi
+** Last update Sat May 13 10:33:34 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdlib.h>
@@ -64,7 +64,7 @@ char	*globing(char *command, t_shell *shell)
 	    if (var)
 	      {
 		new_command[nidx] = '\0';
-		new_command = realloc(new_command, strlen(new_command) + strlen(var) + 1);
+		new_command = realloc(new_command, nidx + strlen(var) + 1);
 		strcat(new_command, var);
 		idx += strlen(varname) - 2;
 		nidx += strlen(var);
@@ -73,20 +73,28 @@ char	*globing(char *command, t_shell *shell)
 	      {
 		if (command[idx + 1] && command[idx + 1] == '?')
 		  {
+		    new_command = realloc(new_command, nidx + strlen(ret_value) + 2);
 		    new_command[nidx] = '\0';
-		    new_command = add_char(new_command, strlen(ret_value), ret_value);
+		    strcat(new_command, ret_value);
 		    nidx += strlen(ret_value);
 		    idx++;
 		  }
 		else
-		  new_command[nidx++] = '$';
+		  {
+		    new_command = realloc(new_command, nidx + 2);
+		    new_command[nidx++] = '$';
+		  }
+
 	      }
       }
 //    else if (command[idx] == '[' || command[idx] == '?' || command[idx] ==
 // '*')
 //      file_globing("/bin/cat/sdf/lklk*.s");
     else
-      new_command[nidx++] = command[idx];
+      {
+	new_command = realloc(new_command, nidx + 2);
+	new_command[nidx++] = command[idx];
+      }
     idx++;
   }
   new_command[nidx] = '\0';
