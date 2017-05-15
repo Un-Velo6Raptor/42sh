@@ -5,7 +5,7 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Sat May 13 09:05:58 2017 Benoit Hoffman
+## Last update Mon May 15 11:37:39 2017 Benoit Hoffman
 ##
 
 SRC	=	src/main.c			\
@@ -45,7 +45,8 @@ SRC	=	src/main.c			\
 		src/builtins/echo.c		\
 		src/get_input.c			\
 		src/history/history.c		\
-		src/put_minimalist.c
+		src/put_minimalist.c		\
+		src/builtins/where.c
 
 OBJ	=	$(SRC:.c=.o)
 

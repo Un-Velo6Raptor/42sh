@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 17:04:35 2017 Sahel Lucas--Saoudi
-** Last update Fri May 12 17:18:28 2017 Sahel Lucas--Saoudi
+** Last update Mon May 15 11:47:11 2017 Benoit Hoffman
 */
 
 #include <fcntl.h>
@@ -84,14 +84,14 @@ void		exec_manager(char **argv, t_shell *shell)
 {
   static char	**dico;
   int		i;
-  int		(*func[9])(char **, t_shell *) =
+  int		(*func[10])(char **, t_shell *) =
     {call_cd, call_setenv, call_unsetenv, call_env,
-     call_exit, call_echo, call_alias, source, call_history};
+     call_exit, call_echo, call_alias, source, call_history, call_where};
 
   i = 0;
   if (!dico)
-    dico = c_dico(9, "cd", "setenv", "unsetenv", "env",
-		  "exit", "echo", "alias", "source", "history");
+    dico = c_dico(10, "cd", "setenv", "unsetenv", "env",
+		  "exit", "echo", "alias", "source", "history", "where");
   if (!argv || !*argv)
     return ;
   while (dico[i])
