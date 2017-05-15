@@ -5,12 +5,13 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 15:29:48 2017 Sahel Lucas--Saoudi
-** Last update Mon May 15 11:46:01 2017 Benoit Hoffman
+** Last update Mon May 15 13:00:00 2017 Benoit Hoffman
 */
 
 #ifndef BUILTINS_H_
 # define BUILTINS_H_
 
+int	call_repeat(char **, t_shell *);
 int	call_where(char **, t_shell *);
 int	call_echo(char **, t_shell *);
 int	call_cd(char **, t_shell *);
