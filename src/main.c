@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Mon May 15 11:36:03 2017 Benoit Hoffman
+** Last update Mon May 15 15:25:14 2017 Sahel Lucas--Saoudi
 */
 
 #include <unistd.h>
@@ -66,7 +66,6 @@ int		main(int __attribute__ ((unused)) ac,
   if (isatty(0) == 1)
     write(1, "$$$ >", 5);
   shell = set_shell(env);
-  source(NULL, shell);
   signal(2, catch);
   while ((shell->command = getnextline_(0)))
     {

@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 15:49:05 2017 Sahel Lucas--Saoudi
-** Last update Mon May 15 15:20:03 2017 Sahel Lucas--Saoudi
+** Last update Mon May 15 15:26:02 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdio.h>
@@ -58,7 +58,7 @@ int		source(char **argv, t_shell *shell)
   int		fd;
   int		error;
 
-  if (tablen_(argv) == 1)
+  if (!argv || tablen_(argv) == 1)
     {
       dprintf(2, "source: Too few arguments.\n");
       return (1);
@@ -71,7 +71,7 @@ int		source(char **argv, t_shell *shell)
       //fd = get_fd();
       if (fd != -1)
 	{
-	  exec_file(fd);
+	  //exec_file(fd);
 	}
       else
 	error = 1;
