@@ -5,7 +5,7 @@
 ** Login   <benoit.hoffman@epitech.eu>
 ** 
 ** Started on  Mon May 15 11:33:46 2017 Benoit Hoffman
-** Last update Mon May 15 12:25:04 2017 Benoit Hoffman
+** Last update Mon May 15 12:38:00 2017 Benoit Hoffman
 */
 
 #include	<sys/types.h>
@@ -54,31 +54,46 @@ static int	check_errors(char *str)
   return (0);
 }
 
+int		do_where(char *path, int *found, int *i)
+{
+  if (!path)
+    return (1);
+  if (check_access(path) == 1)
+    {
+      printf("%s\n", path);
+      *found = 1;
+    }
+  *i += 1;
+  free(path);
+  path = NULL;
+  return (0);
+}
+
 int	        call_where(char **command, t_shell *shell)
 {
   int		i;
   int		j;
   char		*buffer;
+  int		error;
+  int		found;
 
+  error = 0;
   j = 1;
-  buffer = NULL;
   if (check_errors(command[1]) == 1)
     return (1);
   while (command[j])
     {
+      found = 0;
       i = 0;
       while (shell->path && shell->path[i])
 	{
 	  buffer = cat_all(command[j], shell->path[i]);
-	  if (!buffer)
+	  if (do_where(buffer, &found, &i) == 1)
 	    return (1);
-	  if (check_access(buffer) == 1)
-	    printf("%s\n", buffer);
-	  i += 1;
-	  free(buffer);
-	  buffer = NULL;
 	}
+      if (found == 0)
+	error = 1;
       j += 1;
     }
-  return (0);
+  return (error);
 }
