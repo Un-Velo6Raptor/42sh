@@ -6,8 +6,12 @@ TRAPSIG=0
 note=0
 sur=0
 debug=1
-ARG=$1
-
+if [ $# = 0 ]
+then
+    ARG="lol"
+else
+    ARG=$1
+fi
 CAT=`which cat`
 GREP=`which grep`
 SED=`which sed`
@@ -35,7 +39,6 @@ make re
 clear
 cat /dev/urandom | tr -dc 'A-Za-z0-9\t ' | head -c 10000 > .tmp
 cat /dev/urandom | tr -dc '\n' | head -c 10000 > .tmp2
-echo $MYSHELL
 
 disp_test()
 {
@@ -71,7 +74,13 @@ prepare_test()
   echo "$CLEAN" >> $runnerfn
   echo "$SETUP" >> $runnerfn
   echo "$TCSHUPDATE" >> $runnerfn
-  echo "/bin/bash -c '"$testfn" | "$REFER" ; echo Shell exit with code \$?' > "$refoutfn" 2>&1" >> $runnerfn
+  if [ "$ARG" = "-i" ]
+  then
+      echo "/bin/bash -c '"$testfn" | env -i "$REFER" ; echo Shell exit with code \$?' > "$refoutfn" 2>&1" >> $runnerfn
+  else
+      echo "/bin/bash -c '"$testfn" | "$REFER" ; echo Shell exit with code \$?' > "$refoutfn" 2>&1" >> $runnerfn
+  fi
+  
   echo "$CLEAN" >> $runnerfn
 
   echo "#!/bin/bash" > $testfn
