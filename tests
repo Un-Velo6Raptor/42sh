@@ -926,3 +926,96 @@ TESTS=
   echo 'mysh'
   echo 'ls'
 [101-END]
+
+[102]
+NAME="env -i et ls"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls'
+  env -i
+[102-END]
+
+[103]
+NAME="WHERE 1"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'where ls'
+[103-END]
+
+[104]
+NAME="WHERE 2"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'where ls grep ls'
+[104-END]
+
+[105]
+NAME="WHERE 3"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'where sdf ls grep sdf'
+[105-END]
+
+[106]
+NAME="WHERE 4"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'where sdf'
+[106-END]
+
+[107]
+NAME="ALIAS 1"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'alias ls ls -l'
+  echo 'ls'
+[107-END]
+
+[108]
+NAME="ALIAS 2"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'alias a ls'
+  echo 'a'
+[108-END]
+
+[109]
+NAME="ALIAS 3"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'alias ls ll'
+  echo 'ls'
+[109-END]
+
+[110]
+NAME="REPEAT 1"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'repeat 4 ls'
+[110-END]
+
+[111]
+NAME="REPEAT 2"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'repeat 4e ls'
+[111-END]
+
+[112]
+NAME="REPEAT 3"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'repeat 2 sdf'
+[112-END]
+

@@ -6,6 +6,7 @@ TRAPSIG=0
 note=0
 sur=0
 debug=1
+ARG=$1
 
 CAT=`which cat`
 GREP=`which grep`
@@ -34,6 +35,7 @@ make re
 clear
 cat /dev/urandom | tr -dc 'A-Za-z0-9\t ' | head -c 10000 > .tmp
 cat /dev/urandom | tr -dc '\n' | head -c 10000 > .tmp2
+echo $MYSHELL
 
 disp_test()
 {
@@ -60,7 +62,12 @@ prepare_test()
 
   echo "#!/bin/bash" > $runnerfn
   echo "$SETUP" >> $runnerfn
-  echo "/bin/bash -c '"$testfn" | "$MYSHELL" ; echo Shell exit with code \$?' > "$shoutfn" 2>&1" >> $runnerfn
+  if [ "$ARG" = "-i" ]
+  then
+      echo "/bin/bash -c '"$testfn" | env -i "$MYSHELL" ; echo Shell exit with code \$?' > "$shoutfn" 2>&1" >> $runnerfn
+  else
+      echo "/bin/bash -c '"$testfn" | "$MYSHELL" ; echo Shell exit with code \$?' > "$shoutfn" 2>&1" >> $runnerfn
+  fi
   echo "$CLEAN" >> $runnerfn
   echo "$SETUP" >> $runnerfn
   echo "$TCSHUPDATE" >> $runnerfn
@@ -132,36 +139,21 @@ then
     echo ""
 fi
 
-if [ $# -eq 0 ]
+for lst in `cat tests | grep "^\[.*\]$" | grep -vi end | sed s/'\['// | sed s/'\]'//`
+do
+    path_backup=$PATH
+    load_test $lst 1
+    export PATH=$path_backup
+done
+echo -e "\033[34mTester modifié par \033[32mSahel"
+echo -e "\033[34mTests fourni par \033[32m$BY"
+echo -e "\033[34mDe la ville de \033[32m$AT"
+echo -e "\033[34mVersion : \033[32m$VERSION\033[00m"
+if [ $note -eq $sur ]
 then
-    for lst in `cat tests | grep "^\[.*\]$" | grep -vi end | sed s/'\['// | sed s/'\]'//`
-    do
-	path_backup=$PATH
-	load_test $lst 1
-	export PATH=$path_backup
-    done
-    echo -e "\033[34mTester modifié par \033[32mSahel"
-    echo -e "\033[34mTests fourni par \033[32m$BY"
-    echo -e "\033[34mDe la ville de \033[32m$AT"
-    echo -e "\033[34mVersion : \033[32m$VERSION\033[00m"
-    if [ $note -eq $sur ]
-    then
-	echo -e "\033[32mMark : $note / $sur\033[00m"
-    else
-	echo -e "\033[31mMark : $note / $sur\033[00m"
-    fi
-    rm -rf .tmp
-    rm -rf .tmp2
+    echo -e "\033[32mMark : $note / $sur\033[00m"
 else
-    if [ $# -eq 1 ]
-    then
-	load_test $1 0
-    else
-	if [ "X$1" = "X-d" ]
-	then
-	    load_test $2 2
-	else
-	    load_test $1 2
-	fi
-    fi
+    echo -e "\033[31mMark : $note / $sur\033[00m"
 fi
+rm -rf .tmp
+rm -rf .tmp2

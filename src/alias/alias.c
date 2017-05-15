@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 15:49:05 2017 Sahel Lucas--Saoudi
-** Last update Fri May 12 17:50:46 2017 Sahel Lucas--Saoudi
+** Last update Mon May 15 15:06:55 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdio.h>
@@ -42,17 +42,25 @@ static int		get_rc_file(char **argv, t_shell *shell)
 
 int		source(char **argv, t_shell *shell)
 {
-  char		**tab;
-  char		*buff;
   int		i;
   int		fd;
 
-  fd = get_rc_file(argv, shell);
-  if (fd < 0)
-    return (84);
-  tab = malloc(sizeof(char *) * 1);
-  tab[0] = NULL;
-  i = 0;
+  if (tablen_(argv) == 1)
+    {
+      dprintf(2, "source: Too few arguments.\n");
+      return (1);
+    }
+  i = 1;
+  while (argv[i])
+    {
+      fd = get_fd();
+      if (fd != -1)
+	{
+
+	}
+      else
+	dprintf(2, "%s: Permission denied.\n", argv[i]);
+    }
   buff = getnextline_(fd);
   while (buff)
   {
@@ -65,7 +73,6 @@ int		source(char **argv, t_shell *shell)
     }
     buff = getnextline_(fd);
   }
-  shell->alias = tab;
   return (0);
 }
 
@@ -103,10 +110,10 @@ char		**alias(char **argv, t_shell *shell)
     return (argv);
   while (shell->alias && shell->alias[i])
     {
-      aliasname = only_before(shell->alias[i], '=');
+      aliasname = only_before(shell->alias[i], ' ');
       if (!strcmp(argv[0], aliasname))
 	{
-	  alias = without_before_(shell->alias[i], '=');
+	  alias = without_before_(shell->alias[i], ' ');
 	  argv = remake_argv_with_alias(alias, argv);
 	}
       i++;
@@ -116,18 +123,34 @@ char		**alias(char **argv, t_shell *shell)
 
 int	call_alias(char **argv, t_shell *shell)
 {
-  int	fd;
+  char	*alias;
+  int	i;
+  int	argv_i;
 
-  if (tablen_(argv) != 2)
-  {
-    fprintf(stderr, "alias:\n\talias [\"]<aliasname>=<alias>[\"]\n");
-    shell->status = 1;
+  i = tablen_(shell->alias);
+  shell->alias = realloc(shell->alias, i + 2);
+  if (!shell->alias)
     return (1);
-  }
-  fd = open(".42shrc", O_CREAT | O_APPEND | O_RDWR, 0644);
-  if (fd < 0)
+  if (tablen_(argv) < 3)
+    return (0);
+  argv_i = 2;
+  alias = strdup(argv[1]);
+  if (!alias)
     return (1);
-  dprintf(fd, "alias %s\n", argv[1]);
-  close(fd);
-  return (source(NULL, shell));
+  alias = realloc(alias, strlen(alias) + 2);
+  if (!alias)
+    return (1);
+  strcat(alias, " ");
+  while (argv[argv_i])
+    {
+      alias = realloc(alias, strlen(alias) + strlen(argv[argv_i] + 3));
+      if (!alias)
+	return (1);
+      strcat(alias, argv[argv_i]);
+      strcat(alias, " ");
+      argv_i++;
+    }
+  shell->alias[i] = alias;
+  shell->alias[i + 1] = NULL;
+  return (0);
 }
