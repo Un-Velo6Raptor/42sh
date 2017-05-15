@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 15:49:05 2017 Sahel Lucas--Saoudi
-** Last update Mon May 15 15:06:55 2017 Sahel Lucas--Saoudi
+** Last update Mon May 15 15:20:03 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdio.h>
@@ -40,10 +40,23 @@ static int		get_rc_file(char **argv, t_shell *shell)
   return (fd);
 }
 
+void		exec_file(const int fd)
+{
+  char		*buf;
+
+  buf = getnextline_(fd);
+  while (buf)
+    {
+
+      buf = getnextline_(fd);
+    }
+}
+
 int		source(char **argv, t_shell *shell)
 {
   int		i;
   int		fd;
+  int		error;
 
   if (tablen_(argv) == 1)
     {
@@ -51,29 +64,19 @@ int		source(char **argv, t_shell *shell)
       return (1);
     }
   i = 1;
+  error = 0;
   while (argv[i])
     {
-      fd = get_fd();
+      fd = 0;
+      //fd = get_fd();
       if (fd != -1)
 	{
-
+	  exec_file(fd);
 	}
       else
-	dprintf(2, "%s: Permission denied.\n", argv[i]);
+	error = 1;
     }
-  buff = getnextline_(fd);
-  while (buff)
-  {
-    if (match(buff, "alias *"))
-    {
-      tab = realloc(tab, sizeof(char *) * (i + 2));
-      tab[i] = strdup(&buff[6]);
-      tab[i + 1] = NULL;
-      i++;
-    }
-    buff = getnextline_(fd);
-  }
-  return (0);
+  return (error);
 }
 
 char		**remake_argv_with_alias(char *alias, char **argv)
