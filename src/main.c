@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Tue May 16 13:54:46 2017 Sahel Lucas--Saoudi
+** Last update Tue May 16 17:50:09 2017 Sahel Lucas--Saoudi
 */
 
 #include <unistd.h>
@@ -51,12 +51,15 @@ t_shell		*set_shell(char **env)
     exit (84);
   shell->alias = NULL;
   shell->path = NULL;
+  shell->history = NULL;
   shell->status = 0;
   shell->sh = getcwd(NULL, 0);
   shell->env = create_env(env);
   shell->oldpwd = getvar(shell->env, "OLDPWD=*");
   shell->pwd = getvar(shell->env, "PWD=*");
   shell->home = getvar(shell->env, "HOME=*");
+  shell->id_command = 0;
+  shell->idmax = 0;
   return (shell);
 }
 
@@ -68,6 +71,7 @@ int		free_shell(t_shell *shell)
   free_tab(shell->env);
   free_tab(shell->alias);
   free_tab(shell->path);
+  free_tab(shell->history);
   free(shell->pwd);
   free(shell->oldpwd);
   free(shell->home);
@@ -76,10 +80,10 @@ int		free_shell(t_shell *shell)
   return (return_value);
 }
 
-int		main(int __attribute__ ((unused)) ac,
-		     __attribute__ ((unused)) char **av, char **env)
+int			main(int __attribute__ ((unused)) ac,
+			     __attribute__ ((unused)) char **av, char **env)
 {
-  t_shell	*shell;
+  t_shell		*shell;
   struct termios	new;
   struct termios	save;
   t_key			keys;

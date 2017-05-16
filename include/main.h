@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri Mar 24 10:58:31 2017 Sahel Lucas--Saoudi
-** Last update Sat May 13 09:09:47 2017 Benoit Hoffman
+** Last update Tue May 16 17:02:23 2017 Sahel Lucas--Saoudi
 */
 
 #ifndef MAIN_H_
@@ -16,6 +16,7 @@ typedef struct	s_shell
   char		**env;
   char		**path;
   char		**alias;
+  char		**history;
   char		*command;
   char		*oldpwd;
   char		*pwd;
@@ -81,5 +82,6 @@ int		check_alias_where(char *, t_shell *);
 int		check_path_which(char *, t_shell *);
 int		check_builtin_which(char *);
 int		check_alias_which(char *, t_shell *);
+int		free_shell(t_shell *);
 
 #endif /* !MAIN_H_ */

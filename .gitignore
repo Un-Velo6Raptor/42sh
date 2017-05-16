@@ -11,6 +11,8 @@ cmake-build-debug
 .idea/tasks.xml
 .42shrc
 .42shhistory
+.lol
+vgcore*
 # Sensitive or high-churn files:
 .idea/dataSources/
 .idea/dataSources.ids

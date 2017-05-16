@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 15:49:05 2017 Sahel Lucas--Saoudi
-** Last update Tue May 16 14:23:14 2017 Sahel Lucas--Saoudi
+** Last update Tue May 16 16:25:27 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdio.h>
@@ -17,7 +17,7 @@
 #include "main.h"
 #include "alias.h"
 
-static int		get_rc_file(char **argv, t_shell *shell)
+/*static int		get_rc_file(char **argv, t_shell *shell)
 {
   int		fd;
   char		*path;
@@ -38,7 +38,7 @@ static int		get_rc_file(char **argv, t_shell *shell)
   free(shell->sh);
   shell->sh = path;
   return (fd);
-}
+  }*/
 
 void		exec_file(const int fd)
 {
@@ -58,6 +58,7 @@ int		source(char **argv, t_shell *shell)
   int		fd;
   int		error;
 
+  (void) shell; // a changer
   if (!argv || tablen_(argv) == 1)
     {
       dprintf(2, "source: Too few arguments.\n");

@@ -5,12 +5,13 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri May 12 14:39:29 2017 Sahel Lucas--Saoudi
-** Last update Tue May 16 13:35:54 2017 Sahel Lucas--Saoudi
+** Last update Tue May 16 17:53:53 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <time.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -19,115 +20,84 @@
 #include "history.h"
 #include "basic.h"
 
-int	get_history_file(t_shell *shell)
+static char	*take_command_in_history(char *history_line)
 {
-  char	*path;
-  int	fd;
-
-  printf("YOLO\n");
-  path = strdup(shell->sh);
-  path = realloc(path, strlen(path) + strlen(HISTORY_FILE) + 2);
-  strcat(path, "/");
-  strcat(path, HISTORY_FILE);
-  printf("%s\n", path);
-  fd = open(path, O_RDONLY);
-  return (fd);
-}
-
-char	**get_history(t_shell *shell)
-{
-  char	**tab;
-  char	*buff;
-  int	i;
-  int	fd;
+  int		i;
+  int		j;
 
   i = 0;
-  fd = get_history_file(shell);
-  printf("%i\n", fd);
-  if (fd < 0)
-    return (NULL);
-  buff = getnextline_(fd);
-  tab = NULL;
-  while (buff)
-  {
-    tab = realloc(tab, sizeof(char *) * (i + 1));
-    tab[i] = strdup(buff);
-    buff = getnextline_(fd);
-    i++;
-  }
-  tab = realloc(tab, sizeof(char *) * (i + 1));
-  tab[i] = NULL;
-  return (tab);
+  j = 0;
+  while (j != 2)
+    {
+      if (history_line[i] == '\t')
+	j++;
+      i++;
+    }
+  return (&history_line[i]);
 }
 
 char	*history(char *command, t_shell *shell, int incr)
 {
+  char	*history_command;
   char	*com;
-  char	**list;
   int	i;
 
-  list = get_history(shell);
-  if (!list || shell->id_command >= tablen_(list))
-  {
-    dprintf(2, "42sh: no such event\n");
-    return (NULL);
-  }
-  com = strdup(shell->command);
-  com = realloc(com, strlen(com) + 1);
+  com = strdup(command);
+  com = realloc(com, strlen(com) + 2);
   strcat(com, "*");
   i = shell->id_command;
-  while (i >= 0 && list[i])
+  if (!shell->history)
+    return (shell->command);
+  while (i >= 0 && shell->history[i])
   {
-    if (match(list[i], com))
+    history_command = take_command_in_history(shell->history[i]);
+    printf("line : %s\n", history_command);
+    if (match(history_command, com))
     {
       free(command);
-      free_tab(list);
-      return (strdup(list[i]));
+      free(com);
+      shell->id_command = i - 1;
+      return (strdup(history_command));
     }
     i += incr;
   }
-  free_tab(list);
-  return (command);
+  free(com);
+  return (shell->command);
 }
 
 int	call_history(char **argv, t_shell *shell)
 {
-  char	**list;
   int	i;
 
-  i = 0;
-  list = get_history(shell);
-  if (!list || tablen_(argv) != 1)
-    return (1);
-  while (list[i])
-  {
-    dprintf(1, " %i  %s\n", i + 1, list[i]);
-    i++;
-  }
-  free_tab(list);
+  if (tablen_(argv) != 1)
+    i = tablen_(shell->history) - atoi(argv[1]);
+  if (tablen_(argv) == 1 || i < 0)
+    i = 0;
+  while (shell->history && shell->history[i])
+    {
+      dprintf(1, "%s\n", shell->history[i]);
+      i++;
+    }
   fflush(stdout);
   return (0);
 }
 
-void	add_to_history(char *command, t_shell *shell)
+void		add_to_history(char *command, t_shell *shell)
 {
-  char	*path;
-  int	fd;
+  char		*buff;
+  int		i;
+  time_t	t;
+  struct tm	*now_tm;
 
-  path = strdup(shell->sh);
-  if (!path)
+  t = time(NULL);
+  now_tm = localtime(&t);
+  i = tablen_(shell->history);
+  shell->history = realloc(shell->history, sizeof(char *) * (i + 2));
+  if (!shell->history)
     return ;
-  path = realloc(path, strlen(path) + strlen(HISTORY_FILE) + 2);
-  if (!path)
-    return ;
-  strcat(path, "/");
-  strcat(path, HISTORY_FILE);
-  fd = open(path, O_WRONLY | O_CREAT | O_APPEND, 0644);
-  if (fd == -1)
-    return ;
-  dprintf(fd, "%s\n", command);
-  close(fd);
+  buff = malloc(sizeof(char) * (16 + strlen_(command) + 3));
+  sprintf(buff, "%6i\t%02i:%02i\t%s", i + 1, now_tm->tm_hour, now_tm->tm_min, command);
+  shell->history[i] = strdup(buff);
+  shell->history[i + 1] = NULL;
   shell->id_command = shell->idmax + 1;
-  shell->idmax++;
-  free(path);
 }
