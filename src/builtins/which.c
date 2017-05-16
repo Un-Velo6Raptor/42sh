@@ -60,7 +60,10 @@ int	        call_which(char **command, t_shell *shell)
 	return (0);
       if (found == 0)
 	if (check_alias_which(command[j], shell) == 0)
+	{
+	  dprintf(2, "%s: Command not found.\n", command[j]);
 	  error = 1;
+	}
     }
     j += 1;
   }

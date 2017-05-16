@@ -63,7 +63,7 @@ int	check_alias_which(char *arg, t_shell *shell)
   {
     if (strncmp(shell->alias[i], arg, strlen(arg)) == 0)
     {
-      dprintf(1, "%s:\taliased to%s\n", arg, strchr(shell->alias[i], ' '));
+      dprintf(1, "%s: \t aliased to%s\n", arg, strchr(shell->alias[i], ' '));
       return (1);
     }
     i++;
