@@ -13,6 +13,7 @@ file(GLOB helloworld_SRC
         "src/globing/*.c"
         "src/alias/*.c"
         "src/builtins/*.c"
+        "martin/*.c"
         )
 
 file(GLOB lib_SRC

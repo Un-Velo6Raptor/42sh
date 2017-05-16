@@ -25,7 +25,7 @@ char			*my_reset(char *tmp, t_key *keys)
   return (NULL);
 }
 
-static int		loop_read(t_key *keys, char *tmp, char *str)
+char		*loop_read(t_key *keys, char *tmp, char *str)
 {
   int			idx;
   int			max;
@@ -34,39 +34,28 @@ static int		loop_read(t_key *keys, char *tmp, char *str)
   idx = my_strlen(str);
   max = 0;
   while (read(0, &keys->c, 1) > 0 && keys->c[0] != '\n')
+  {
+    keys->c[1] = '\0';
+    if (keys->c[0] == 4)
     {
-      keys->c[1] = '\0';
-      if (my_strlen(str) > max)
-	max = my_strlen(str);
-      if (check_is_key(keys, keys->c, keys->check) == 1)
-	keys->check += 1;
-      else if (is_not_a_key(&str, &tmp, &idx, keys) == 84)
-	return (84);
-      keys->width = my_strlen(str);
-      if (keys->check != 0)
-	is_a_key(keys, &tmp, &idx, &str);
-      else if ((str = my_realloc_idx(str, keys->c, idx)) == NULL)
-	return (84);
-      reset_line(max, str, idx, keys);
+      write(1, "\n", 1);
+      return (str);
     }
-  return (my_putstr("\n"));
-}
-
-int			main(int __attribute__ ((unused)) argc,
-			     char __attribute__ ((unused)) **argv,
-			     char **env)
-{
-  struct termios	new;
-  struct termios	save;
-  t_key			keys;
-  int			pos;
-
-  if ((pos = found_term(env)) < 0)
-    return (84);
-  if (ini_keys(&keys, &env[pos][5]) == 84)
-    return (84);
-  if (start_edit_line(&env[pos][5], &new, &save, &keys) == 84)
-    return (84);
-  loop_read(&keys, NULL, NULL);
-  return (end_edit_line(&save, &keys));
+    if (my_strlen(str) > max)
+      max = my_strlen(str);
+    if (check_is_key(keys, keys->c, keys->check) == 1)
+	keys->check += 1;
+    else if (is_not_a_key(&str, &tmp, &idx, keys) == 84)
+      return (NULL);
+    keys->width = my_strlen(str);
+    if (keys->check != 0)
+      is_a_key(keys, &tmp, &idx, &str);
+    else if ((str = my_realloc_idx(str, keys->c, idx)) == NULL)
+      return (NULL);
+    reset_line(max, str, idx, keys);
+    }
+  my_putstr("\n");
+  if (keys->c[0] == '\n' && str == NULL)
+    return (strdup(""));
+  return (str);
 }

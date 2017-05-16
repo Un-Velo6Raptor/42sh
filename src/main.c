@@ -11,6 +11,15 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
+#include	<sys/ioctl.h>
+#include	<termios.h>
+#include	<unistd.h>
+#include	<stdio.h>
+#include	<string.h>
+#include	<stdlib.h>
+#include	<curses.h>
+#include	<term.h>
+#include	"my.h"
 #include "main.h"
 #include "basic.h"
 #include "globing.h"
@@ -71,12 +80,26 @@ int		main(int __attribute__ ((unused)) ac,
 		     __attribute__ ((unused)) char **av, char **env)
 {
   t_shell	*shell;
+  struct termios	new;
+  struct termios	save;
+  t_key			keys;
+  int			pos;
+  char			*check;
 
+  if ((pos = found_term(env)) < 0)
+    check = NULL;
+  else if (ini_keys(&keys, &env[pos][5]) == 84)
+    return (84);
+  if (check != NULL)
+    check = start_edit_line(&env[pos][5], &new, &save, &keys);
   if (isatty(0) == 1)
     write(1, "$$$ >", 5);
   shell = set_shell(env);
   signal(2, catch);
-  shell->command = getnextline_(0);
+  if (check != NULL)
+    shell->command = loop_read(&keys, NULL, NULL);
+  else
+    shell->command = getnextline_(0);
   while (shell->command)
     {
       shell->command = globing(shell->command, shell);
@@ -88,9 +111,13 @@ int		main(int __attribute__ ((unused)) ac,
       add_to_history(shell->command, shell);
       free_(shell->command);
       prompt(shell->status % 255);
-      shell->command = getnextline_(0);
+      if (check != NULL)
+	shell->command = loop_read(&keys, NULL, NULL);
+      else
+	shell->command = getnextline_(0);
     }
   if (isatty(0) == 1)
     write(1, "\n", 1);
+  end_edit_line(&save, &keys);
   return (free_shell(shell));
 }

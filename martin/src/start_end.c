@@ -18,24 +18,24 @@
 #include        <term.h>
 #include	"my.h"
 
-int		start_edit_line(char *term, struct termios *new,
+char		*start_edit_line(char *term, struct termios *new,
 				struct termios *save, t_key *keys)
 {
   if (tgetent(NULL, term) < 0 ||
       tcgetattr(0, new) < 0 ||
       tcgetattr(0, save) < 0)
-    return (my_puterror("Init term\n"));
+    return (NULL);
   new->c_lflag &= ~(ICANON | ECHO);
   if (tcsetattr(0, TCSANOW, new) == -1)
-    return (my_puterror("Ini Term 2\n"));
-  my_putstr(keys->civis);
+    return (NULL);
+  dprintf(0, "%s", keys->civis);
   fflush(stdout);
-  return (0);
+  return ("Ok");
 }
 
 int		end_edit_line(struct termios *save, t_key *keys)
 {
-  my_putstr(keys->cvvis);
+  dprintf(0, "%s", keys->cvvis);
   fflush(stdout);
   tcsetattr(0, TCSANOW, save);
   return (0);

@@ -47,7 +47,7 @@ int		ini_keys(t_key *, char *);
 int		check_is_key(t_key *, char *, int);
 int		same_key(t_key *, char *, int *);
 char		*my_reset(char *, t_key *);
-int		start_edit_line(char *, struct termios *,
+char		*start_edit_line(char *, struct termios *,
 				struct termios *, t_key *);
 int		end_edit_line(struct termios *, t_key *);
 int		is_a_key(t_key *, char **, int *, char **);

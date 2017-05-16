@@ -5,7 +5,7 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Tue May 16 11:42:24 2017 Thomas GRANDJEAN
+## Last update Tue May 16 14:08:56 2017 Thomas GRANDJEAN
 ##
 
 SRC	=	src/main.c			\
@@ -50,7 +50,17 @@ SRC	=	src/main.c			\
 		src/builtins/which.c		\
 		src/builtins/check_where.c	\
 		src/builtins/check_which.c	\
-		src/builtins/repeat.c
+		src/builtins/repeat.c		\
+		martin/src/main.c		\
+		martin/src/found_term.c		\
+		martin/src/check_is_key.c	\
+		martin/src/reset_line.c		\
+		martin/src/is_a_key.c		\
+		martin/src/start_end.c		\
+		martin/src/ini_keys.c		\
+		martin/basics/my_free.c		\
+		martin/basics/my_realloc.c	\
+		martin/basics/my_putstr.c
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -68,7 +78,7 @@ $(MLIB):
 	make -C lib
 
 $(NAME):	 $(MLIB) $(OBJ)
-	gcc -o $(NAME) $(OBJ) $(LIB)
+	gcc -o $(NAME) $(OBJ) $(LIB) -lncurses
 
 clean:
 	make clean -C lib

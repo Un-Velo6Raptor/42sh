@@ -10,6 +10,7 @@
 
 #include	<curses.h>
 #include	<term.h>
+#include	<unistd.h>
 #include	"my.h"
 
 int		keys_pattern(t_key *keys)
@@ -31,7 +32,7 @@ int		ini_keys(t_key *keys, char *term)
   if (setupterm(term, 1, &ret) == ERR)
     return (my_puterror("Can't set the term.\n"));
   tmp = tigetstr("smkx");
-  my_putstr(tmp);
+  dprintf(0, "%s", tmp);
   if ((keys->key_l = tigetstr("kcub1")) == (char *) -1)
     return (84);
   if ((keys->key_r = tigetstr("kcuf1")) == (char *) -1)
