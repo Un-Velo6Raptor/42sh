@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri May 12 14:39:29 2017 Sahel Lucas--Saoudi
-** Last update Fri May 12 17:49:21 2017 Sahel Lucas--Saoudi
+** Last update Tue May 16 13:35:54 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdlib.h>
@@ -115,7 +115,11 @@ void	add_to_history(char *command, t_shell *shell)
   int	fd;
 
   path = strdup(shell->sh);
+  if (!path)
+    return ;
   path = realloc(path, strlen(path) + strlen(HISTORY_FILE) + 2);
+  if (!path)
+    return ;
   strcat(path, "/");
   strcat(path, HISTORY_FILE);
   fd = open(path, O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -125,4 +129,5 @@ void	add_to_history(char *command, t_shell *shell)
   close(fd);
   shell->id_command = shell->idmax + 1;
   shell->idmax++;
+  free(path);
 }
