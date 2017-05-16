@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Mon May 15 15:25:14 2017 Sahel Lucas--Saoudi
+** Last update Tue May 16 09:42:02 2017 Benoit Hoffman
 */
 
 #include <unistd.h>
@@ -41,6 +41,7 @@ t_shell		*set_shell(char **env)
   if (!shell)
     exit (84);
   shell->alias = NULL;
+  shell->path = NULL;
   shell->status = 0;
   shell->sh = getcwd(NULL, 0);
   shell->env = create_env(env);
@@ -50,12 +51,19 @@ t_shell		*set_shell(char **env)
   return (shell);
 }
 
-void		free_shell(t_shell *shell)
+int		free_shell(t_shell *shell)
 {
+  int		return_value;
+
+  return_value = shell->status % 255;
   free_tab(shell->env);
-  free_(shell->pwd);
-  free_(shell->oldpwd);
-  free_(shell->home);
+  free_tab(shell->path);
+  free(shell->pwd);
+  free(shell->oldpwd);
+  free(shell->home);
+  free(shell->sh);
+  free(shell);
+  return (return_value);
 }
 
 int		main(int __attribute__ ((unused)) ac,
@@ -76,12 +84,10 @@ int		main(int __attribute__ ((unused)) ac,
       if (shell->command && *(shell->command) && !check_flexibility(shell))
 	manage_command(shell);
       add_to_history(shell->command, shell);
-      free_tab(shell->path);
       free_(shell->command);
       prompt(shell->status % 255);
     }
-  free_shell(shell);
   if (isatty(0) == 1)
     write(1, "\n", 1);
-  return (shell->status % 255);
+  return (free_shell(shell));
 }

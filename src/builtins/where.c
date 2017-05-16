@@ -5,7 +5,7 @@
 ** Login   <benoit.hoffman@epitech.eu>
 ** 
 ** Started on  Mon May 15 11:33:46 2017 Benoit Hoffman
-** Last update Mon May 15 12:38:00 2017 Benoit Hoffman
+** Last update Tue May 16 08:48:21 2017 Benoit Hoffman
 */
 
 #include	<sys/types.h>
@@ -22,6 +22,7 @@ static char		*cat_all(char *cmd, char *path)
 {
   char		*buffer;
 
+  
   buffer = malloc(sizeof(char) * (strlen_(path) +
 				  2 + strlen_(cmd)));
   if (!buffer || !cmd)

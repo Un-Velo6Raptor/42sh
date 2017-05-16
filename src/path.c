@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 ** 
 ** Started on  Wed Apr  5 20:25:19 2017 Sahel Lucas--Saoudi
-** Last update Wed Apr  5 20:25:20 2017 Sahel Lucas--Saoudi
+** Last update Tue May 16 09:11:18 2017 Benoit Hoffman
 */
 
 #include <fcntl.h>
@@ -31,6 +31,7 @@ int		set_path(char **argv, t_shell *shell)
 	{
 	  free(argv[0]);
 	  argv[0] = strdup_(new_path);
+	  free(new_path);
 	  return (0);
 	}
       free(new_path);

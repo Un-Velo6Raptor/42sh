@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 17:04:35 2017 Sahel Lucas--Saoudi
-** Last update Mon May 15 12:48:36 2017 Benoit Hoffman
+** Last update Tue May 16 09:48:15 2017 Benoit Hoffman
 */
 
 #include <fcntl.h>
@@ -105,6 +105,7 @@ void		exec_manager(char **argv, t_shell *shell)
 	}
       i++;
     }
+  free_tab(dico);
   part2_exec(argv, shell);
 }
 

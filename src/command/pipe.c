@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Mon Apr  3 15:31:27 2017 Sahel Lucas--Saoudi
-** Last update Wed May 10 09:22:46 2017 Sahel Lucas--Saoudi
+** Last update Tue May 16 09:46:11 2017 Benoit Hoffman
 */
 
 #include <unistd.h>
@@ -36,7 +36,8 @@ int	*command_loop(int *pid, char **command, int i, t_shell *shell)
       close_(fd[0]);
       exec_manage(parse__redir(command[i]), shell);
       close_(fd[1]);
-      exit(shell->status);
+      free_tab(command);
+      exit(free_shell(shell));
     }
   close_(fd[1]);
   shell->fd0 = fd[0];

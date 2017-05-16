@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 ** 
 ** Started on  Wed Apr  5 16:48:26 2017 Sahel Lucas--Saoudi
-** Last update Wed Apr  5 20:02:20 2017 Sahel Lucas--Saoudi
+** Last update Tue May 16 09:12:11 2017 Benoit Hoffman
 */
 
 #include <unistd.h>
@@ -35,14 +35,14 @@ void	check_exit_pipe(char **command, int **pipefd, int *pid, t_shell *shell)
 
   i = 0;
   while (command[i])
-  {
-    if (match(command[i], "exit *"))
     {
-      pipefd[i] = (int[2]) {-1, -1};
-      pid[i] = -1;
+      if (match(command[i], "exit *"))
+	{
+	  pipefd[i] = (int[2]) {-1, -1};
+	  pid[i] = -1;
+	}
+      else
+	pipefd[i] = command_loop(pid, command, i, shell);
+      i++;
     }
-    else
-      pipefd[i] = command_loop(pid, command, i, shell);
-    i++;
-  }
 }

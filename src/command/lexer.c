@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:17:58 2017 Sahel Lucas--Saoudi
-** Last update Thu May 11 12:47:08 2017 Sahel Lucas--Saoudi
+** Last update Tue May 16 09:50:36 2017 Benoit Hoffman
 */
 
 #include <stdlib.h>
@@ -45,14 +45,14 @@ void	exec_manage(char **tab, t_shell *shell)
 static void	send_to_exec(char **argv, int argv_i, t_shell *shell)
 {
   if (*argv[argv_i] && howmany_(argv[argv_i], ' ') +
-		       howmany_(argv[argv_i], '\t') !=
-		       strlen_(argv[argv_i]))
-  {
-    if (sp_len_(argv[argv_i], '|') != strlen_(argv[argv_i]))
-      exec_pipe_manager(argv, argv_i, shell);
-    else
-      exec_manage(parse__redir(argv[argv_i]), shell);
-  }
+      howmany_(argv[argv_i], '\t') !=
+      strlen_(argv[argv_i]))
+    {
+      if (sp_len_(argv[argv_i], '|') != strlen_(argv[argv_i]))
+	exec_pipe_manager(argv, argv_i, shell);
+      else
+	exec_manage(parse__redir(argv[argv_i]), shell);
+    }
 }
 
 void	lexer(char **argv, t_shell *shell)
@@ -63,23 +63,23 @@ void	lexer(char **argv, t_shell *shell)
 
   argv_i = 0;
   while (argv[argv_i])
-  {
-    new_i = 0;
-    new = parse_and_or(argv[argv_i]);
-    if (!new)
     {
-      putstr_("Invalid null command.\n", 2);
-      shell->status = 1;
-      return ;
+      new_i = 0;
+      new = parse_and_or(argv[argv_i]);
+      if (!new)
+	{
+	  putstr_("Invalid null command.\n", 2);
+	  shell->status = 1;
+	  return ;
+	}
+      send_to_exec(new, new_i, shell);
+      new_i = 1;
+      while (check_next(shell->status, new[new_i]))
+	{
+	  new_i += 1;
+	  send_to_exec(new, new_i++, shell);
+	}
+      free_tab(new);
+      argv_i++;
     }
-    send_to_exec(new, new_i, shell);
-    new_i = 1;
-    while (check_next(shell->status, new[new_i]))
-    {
-      new_i += 1;
-      send_to_exec(new, new_i++, shell);
-     }
-    free_tab(new);
-    argv_i++;
-  }
 }

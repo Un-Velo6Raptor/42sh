@@ -5,7 +5,7 @@
 ** Login   <benoit.hoffman@epitech.eu>
 **
 ** Started on  Wed Apr 26 08:26:01 2017 Benoit Hoffman
-** Last update Thu May 11 13:35:53 2017 Sahel Lucas--Saoudi
+** Last update Tue May 16 09:34:35 2017 Benoit Hoffman
 */
 
 #include	<stdlib.h>
@@ -76,3 +76,20 @@ char		*getnextline_(int fd)
   result[my_strlen(result) - 1] = '\0';
   return (result);
 }
+
+/*int	main(int ac, char **av)
+{
+  int	fd;
+  char *buffer;
+
+  fd = 0;
+  if (ac == 2)
+    fd = open(av[1], O_RDONLY);
+  buffer = getnextline_(fd);
+  while (buffer)
+    {
+      printf("%s\n", buffer);
+      free(buffer);
+      buffer = getnextline_(fd);
+    }
+    }*/
