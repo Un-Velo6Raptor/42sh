@@ -59,7 +59,7 @@ int	check_alias_which(char *arg, t_shell *shell)
   int		i;
 
   i = 0;
-  while (shell->alias[i])
+  while (shell->alias && shell->alias[i])
   {
     if (strncmp(shell->alias[i], arg, strlen(arg)) == 0)
     {
