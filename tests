@@ -905,7 +905,7 @@ TESTS=
 [99]
 NAME="< Makefile cat >> .lol -e"
 SETUP=""
-CLEAN="rm .lol"
+CLEAN=""
 TESTS=
   echo '< Makefile cat >> .lol -e'
 [99-END]

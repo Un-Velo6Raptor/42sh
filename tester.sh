@@ -65,22 +65,22 @@ prepare_test()
 
   echo "#!/bin/bash" > $runnerfn
   echo "$SETUP" >> $runnerfn
-  if [ "$ARG" = "-i" ]
-  then
-      echo "/bin/bash -c '"$testfn" | env -i "$MYSHELL" ; echo Shell exit with code \$?' > "$shoutfn" 2>&1" >> $runnerfn
-  else
-      echo "/bin/bash -c '"$testfn" | "$MYSHELL" ; echo Shell exit with code \$?' > "$shoutfn" 2>&1" >> $runnerfn
-  fi
   echo "$CLEAN" >> $runnerfn
   echo "$SETUP" >> $runnerfn
   echo "$TCSHUPDATE" >> $runnerfn
-  if [ "$ARG" = "-i" ]
+  if [ "$ARG" = "-v" ]
   then
-      echo "/bin/bash -c '"$testfn" | env -i "$REFER" ; echo Shell exit with code \$?' > "$refoutfn" 2>&1" >> $runnerfn
+      echo "/bin/bash -c '"$testfn" | valgrind "$MYSHELL" ; echo Shell exit with code \$?' > "$shoutfn" 2>&1" >> $runnerfn
   else
-      echo "/bin/bash -c '"$testfn" | "$REFER" ; echo Shell exit with code \$?' > "$refoutfn" 2>&1" >> $runnerfn
+      if [ "$ARG" = "-i" ]
+      then
+	  echo "/bin/bash -c '"$testfn" | env -i "$REFER" ; echo Shell exit with code \$?' > "$refoutfn" 2>&1" >> $runnerfn
+	  echo "/bin/bash -c '"$testfn" | env -i "$MYSHELL" ; echo Shell exit with code \$?' > "$shoutfn" 2>&1" >> $runnerfn
+      else
+	  echo "/bin/bash -c '"$testfn" | "$REFER" ; echo Shell exit with code \$?' > "$refoutfn" 2>&1" >> $runnerfn
+	  echo "/bin/bash -c '"$testfn" | "$MYSHELL" ; echo Shell exit with code \$?' > "$shoutfn" 2>&1" >> $runnerfn
+      fi
   fi
-  
   echo "$CLEAN" >> $runnerfn
 
   echo "#!/bin/bash" > $testfn
@@ -88,6 +88,36 @@ prepare_test()
 
   chmod 755 $testfn
   chmod 755 $runnerfn
+}
+
+load_test_valgrind()
+{
+    id=$1
+    ((sur++))
+    SETUP=`disp_test "$id" | $GREP "SETUP=" | $SED s/'SETUP='// | $SED s/'"'//g`
+    CLEAN=`disp_test "$id" | $GREP "CLEAN=" | $SED s/'CLEAN='// | $SED s/'"'//g`
+    NAME=`disp_test "$id" | $GREP "NAME=" | $SED s/'NAME='// | $SED s/'"'//g`
+    TCSHUPDATE=`disp_test "$id" | $GREP "TCSHUPDATE=" | $SED s/'TCSHUPDATE='// | $SED s/'"'//g`
+    TESTS=`disp_test "$id" | $GREP -v "SETUP=" | $GREP -v "CLEAN=" | $GREP -v "NAME=" | $GREP -v "TCSHUPDATE=" | $GREP -v "TESTS=" | $TR "\n" "²" | $SED s/"²$"//`
+    prepare_test
+    $WRAPPER
+    Ir=`cat /tmp/.shell.$$ | $GREP "Invalid read" -2`
+    Iw=`cat /tmp/.shell.$$ | $GREP "Invalid write" -2`
+    Cond=`cat /tmp/.shell.$$ | $GREP Conditionnal -2`
+    echo -ne "$Ir $Iw $Cond" > .lolilol 
+    g=`cat .lolilol | $WC -l`
+    $MKDIR -p /tmp/test.$$/$id 2>/dev/null
+    $CP /tmp/.shell.$$ /tmp/test.$$/$id/42sh.out
+    if [ $g -eq 0 ]
+    then
+	((note++))
+	echo -e "Test $id ($NAME) : \033[32mOK\033[00m"
+    else
+	echo -e "Test $id ($NAME) : \033[31mKO\033[00m - Check output in /tmp/test.$$/$id/"
+	di=`cat .lolilol`
+	echo -e "\033[31m$di\033[00m"
+    fi
+    rm -rf .lolilol
 }
 
 load_test()
@@ -140,18 +170,15 @@ then
     exit 1
 fi
 
-if [ $# -eq 2 ]
-then
-    echo "Debug mode" >&2
-    echo "Shell : $MYSHELL" >&2
-    echo "Reference : $REFER" >&2
-    echo ""
-fi
-
 for lst in `cat tests | grep "^\[.*\]$" | grep -vi end | sed s/'\['// | sed s/'\]'//`
 do
     path_backup=$PATH
-    load_test $lst 1
+    if [ "$ARG" = "-v" ]
+    then
+	load_test_valgrind $lst 1
+    else
+	load_test $lst 1
+    fi
     export PATH=$path_backup
 done
 echo -e "\033[34mTester modifié par \033[32mSahel"
