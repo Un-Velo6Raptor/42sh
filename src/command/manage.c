@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 17:04:35 2017 Sahel Lucas--Saoudi
-** Last update Tue May 16 09:58:57 2017 Benoit Hoffman
+** Last update Tue May 16 11:26:08 2017 Benoit Hoffman
 */
 
 #include <fcntl.h>
@@ -69,7 +69,7 @@ void		part2_exec(char **argv, t_shell *shell)
 	exec(argv, shell);
       else
 	exec_error(argv, shell);
-    }
+  }
   else if (set_path(argv, shell) == 1)
     {
       putstr_(argv[0], 2);
@@ -82,7 +82,7 @@ void		part2_exec(char **argv, t_shell *shell)
 
 void		exec_manager(char **argv, t_shell *shell)
 {
-  static char	**dico;
+  char		**dico;
   int		i;
   int		(*func[12])(char **, t_shell *) =
     {call_cd, call_setenv, call_unsetenv, call_env,
@@ -90,10 +90,9 @@ void		exec_manager(char **argv, t_shell *shell)
      call_where, call_repeat, call_which};
 
   i = 0;
-  if (!dico)
-    dico = c_dico(12, "cd", "setenv", "unsetenv", "env",
-		  "exit", "echo", "alias", "source", "history",
-		  "where", "repeat", "which");
+  dico = c_dico(12, "cd", "setenv", "unsetenv", "env",
+		"exit", "echo", "alias", "source", "history",
+		"where", "repeat", "which");
   if (!argv || !*argv)
     return ;
   while (dico[i])
@@ -105,6 +104,7 @@ void		exec_manager(char **argv, t_shell *shell)
 	}
       i++;
     }
+  free(dico);
   part2_exec(argv, shell);
 }
 

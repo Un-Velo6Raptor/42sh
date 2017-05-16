@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:24:54 2017 Sahel Lucas--Saoudi
-** Last update Tue May 16 09:36:59 2017 Benoit Hoffman
+** Last update Tue May 16 11:29:26 2017 Benoit Hoffman
 */
 
 #include <stdlib.h>
@@ -38,7 +38,8 @@ static char	*manage_str(char *str, int *str_i, char c)
   int		new_i;
 
   new_i = 0;
-  if (!(new = malloc(strlen_(str) + 1)))
+  new = malloc(strlen_(str) + 1);
+  if (!new)
     return (NULL);
   while (str[*str_i] && str[*str_i] == c)
     (*str_i)++;
@@ -62,8 +63,10 @@ char	**parse_(char *str, char c)
   int	tab_i;
   int	str_i;
 
-  if (!str || !*str || !(tab = malloc(sizeof(char *) *
-				      (nb_word(str, c) + 10))))
+  if (!str || !*str)
+    return (NULL);
+  tab = malloc(sizeof(char *) * (nb_word(str, c) + 1));
+  if (!tab)
     return (NULL);
   tab_i = 0;
   str_i = 0;

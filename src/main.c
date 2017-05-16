@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Tue May 16 09:42:02 2017 Benoit Hoffman
+** Last update Tue May 16 11:12:37 2017 Benoit Hoffman
 */
 
 #include <unistd.h>
@@ -57,6 +57,7 @@ int		free_shell(t_shell *shell)
 
   return_value = shell->status % 255;
   free_tab(shell->env);
+  free_tab(shell->alias);
   free_tab(shell->path);
   free(shell->pwd);
   free(shell->oldpwd);
