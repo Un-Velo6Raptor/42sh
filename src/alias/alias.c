@@ -151,7 +151,8 @@ int	call_alias(char **argv, t_shell *shell)
       if (!alias)
 	return (1);
       strcat(alias, argv[argv_i]);
-      strcat(alias, " ");
+      if (argv[argv_i + 1] != NULL)
+	strcat(alias, " ");
       argv_i++;
     }
   shell->alias[i] = alias;
