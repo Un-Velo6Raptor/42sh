@@ -1019,3 +1019,57 @@ TESTS=
   echo 'repeat 2 sdf'
 [112-END]
 
+[113]
+NAME="WHICH 1"
+TESTS=
+  echo 'which ls'
+[113-END]
+
+[114]
+NAME="WHICH 2"
+TESTS=
+  echo 'alias ll ls -l'
+  echo 'which ll'
+[114-END]
+
+[115]
+NAME="WHICH 3"
+TESTS=
+  echo 'setenv PATH'
+  echo 'which ls'
+[115-END]
+
+[116]
+NAME="WHICH 4"
+TESTS=
+  echo 'unsetenv PATH'
+  echo 'which ls'
+[116-END]
+
+[117]
+NAME="WHERE 1"
+TESTS=
+  echo 'where ls'
+[117-END]
+
+[118]
+NAME="WHERE 2"
+TESTS=
+  echo 'alias ll ls -l'
+  echo 'where ll'
+[118-END]
+
+[119]
+NAME="WHERE 3"
+TESTS=
+  echo 'setenv PATH'
+  echo 'where ls'
+[119-END]
+
+[120]
+NAME="WHERE 4"
+TESTS=
+  echo 'unsetenv PATH'
+  echo 'where ls'
+[120-END]
+
