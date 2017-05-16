@@ -25,13 +25,12 @@ int		put_minimalist(t_shell *shell)
     {
       if (!shell->path)
 	{
-	  shell->path = malloc(sizeof(char *) * 3);
+	  shell->path = malloc(sizeof(char *) * 2);
 	  if (!shell->path)
 	    return (84);
 	  shell->path[i++] = strdup("/usr/bin");
-	  shell->path[i++] = strdup("/bin");
 	  shell->path[i] = NULL;
-	  if (!shell->path[i - 1] || !shell->path[i - 2])
+	  if (!shell->path[i - 1])
 	    return (84);
 	}
     }
