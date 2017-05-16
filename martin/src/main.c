@@ -5,7 +5,7 @@
 ** Login   <martin.januario@epitech.eu>
 ** 
 ** Started on  Wed May 10 13:58:43 2017 Martin Januario
-** Last update Tue May 16 13:40:27 2017 Martin Januario
+** Last update Tue May 16 15:35:25 2017 Thomas GRANDJEAN
 */
 
 #include	<sys/ioctl.h>
@@ -38,7 +38,8 @@ char		*loop_read(t_key *keys, char *tmp, char *str)
     keys->c[1] = '\0';
     if (keys->c[0] == 4)
     {
-      write(1, "\n", 1);
+      if (str)
+	write(1, "\n", 1);
       return (str);
     }
     if (my_strlen(str) > max)

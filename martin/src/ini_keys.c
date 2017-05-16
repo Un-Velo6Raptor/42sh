@@ -13,14 +13,10 @@
 #include	<unistd.h>
 #include	"my.h"
 
-int		keys_pattern(t_key *keys)
+static int	check(char *str)
 {
-  if ((keys->cvvis = tigetstr("cvvis")) == (char *) -1)
-    return (84);
-  if ((keys->civis = tigetstr("civis")) == (char *) -1)
-    return (84);
-  if ((keys->bold = tigetstr("bold")) == (char *) -1)
-    return (84);
+  if (str == (char *) -1)
+    return (1);
   return (0);
 }
 
@@ -32,16 +28,19 @@ int		ini_keys(t_key *keys, char *term)
   if (setupterm(term, 1, &ret) == ERR)
     return (my_puterror("Can't set the term.\n"));
   tmp = tigetstr("smkx");
-  dprintf(0, "%s", tmp);
-  if ((keys->key_l = tigetstr("kcub1")) == (char *) -1)
+  keys->key_l = tigetstr("kcub1");
+  keys->key_r = tigetstr("kcuf1");
+  keys->key_sup = tigetstr("kdch1");
+  keys->key_b = tigetstr("kcuu1");
+  keys->key_t = tigetstr("kcud1");
+  keys->cvvis = tigetstr("cvvis");
+  keys->civis = tigetstr("civis");
+  keys->bold = tigetstr("bold");
+  if (check(tmp) || check(keys->key_l) || check(keys->key_r) ||
+    check(keys->key_sup) || check(keys->key_b) || check(keys->key_t) ||
+    check(keys->cvvis) || check(keys->civis) || check(keys->bold))
     return (84);
-  if ((keys->key_r = tigetstr("kcuf1")) == (char *) -1)
-    return (84);
-  if ((keys->key_sup = tigetstr("kdch1")) == (char *) -1)
-    return (84);
-  if ((keys->key_b = tigetstr("kcuu1")) == (char *) -1)
-    return (84);
-  if ((keys->key_t = tigetstr("kcud1")) == (char *) -1)
-    return (84);
-  return (keys_pattern(keys));
+  if (isatty(0) == 1)
+    my_putstr(tmp);
+  return (0);
 }

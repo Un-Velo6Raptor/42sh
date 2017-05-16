@@ -86,9 +86,10 @@ int		main(int __attribute__ ((unused)) ac,
   int			pos;
   char			*check;
 
+  check = strdup("JE SUIS PAS NULL");
   if ((pos = found_term(env)) < 0)
     check = NULL;
-  else if (ini_keys(&keys, &env[pos][5]) == 84)
+  if (check != NULL && ini_keys(&keys, &env[pos][5]) == 84)
     return (84);
   if (check != NULL)
     check = start_edit_line(&env[pos][5], &new, &save, &keys);

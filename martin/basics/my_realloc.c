@@ -8,30 +8,24 @@
 ** Last update Fri May 12 17:37:51 2017 Martin Januario
 */
 
+#include	<string.h>
 #include	<stdlib.h>
 #include	"my.h"
+#include	"basic.h"
 
 char		*my_realloc(char *str, char *add_str)
 {
   char		*new_str;
-  int		idx;
-  int		idx2;
 
-  idx = 0;
-  idx2 = 0;
-  if ((new_str = malloc(my_strlen(str) + my_strlen(add_str) + 3)) == NULL)
+  if (!str)
+    return (strdup(add_str));
+  new_str = strdup(str);
+  if (!new_str)
     return (NULL);
-  while (str != NULL && str[idx] != '\0')
-    {
-      new_str[idx] = str[idx];
-      idx++;
-    }
-  while (add_str != NULL && add_str[idx2] != '\0')
-    {
-      new_str[idx + idx2] = add_str[idx2];
-      idx2++;
-    }
-  new_str[idx + idx2] = '\0';
+  new_str = realloc(new_str, strlen_(str) + strlen_(add_str) + 3);
+  if (!new_str)
+    return (NULL);
+  strcat(new_str, add_str);
   my_free(str);
   return (new_str);
 }
@@ -43,7 +37,8 @@ char		*my_realloc_idx(char *str, char *add_str, int max)
 
   idx[0] = 0;
   idx[1] = 0;
-  if ((new_str = malloc(my_strlen(str) + my_strlen(add_str) + 3)) == NULL)
+  new_str = malloc(strlen_(str) + strlen_(add_str) + 3);
+  if (!new_str)
     return (NULL);
   while (str != NULL && str[idx[0]] != '\0' && idx[0] < max - 1)
     {
@@ -65,7 +60,8 @@ char		*my_realloc_idx(char *str, char *add_str, int max)
   return (new_str);
 }
 
-char		*my_realloc_sup(char *str, int tmp, int opt)
+char		*my_realloc_sup(char *str, int tmp,
+				    __attribute__ ((unused)) int opt)
 {
   char		*new_str;
   int		idx;
@@ -73,8 +69,8 @@ char		*my_realloc_sup(char *str, int tmp, int opt)
 
   idx = 0;
   check = 0;
-  (void) opt;
-  if ((new_str = malloc(my_strlen(str) + 3)) == NULL)
+  new_str = malloc(my_strlen(str) + 3);
+  if (!new_str)
     return (NULL);
   while (str != NULL && str[idx] != '\0' && str[idx + check] != '\0')
     {

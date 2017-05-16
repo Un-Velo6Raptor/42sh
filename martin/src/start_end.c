@@ -28,14 +28,16 @@ char		*start_edit_line(char *term, struct termios *new,
   new->c_lflag &= ~(ICANON | ECHO);
   if (tcsetattr(0, TCSANOW, new) == -1)
     return (NULL);
-  dprintf(0, "%s", keys->civis);
+  if (isatty(0) == 1)
+    my_putstr(keys->civis);
   fflush(stdout);
   return ("Ok");
 }
 
 int		end_edit_line(struct termios *save, t_key *keys)
 {
-  dprintf(0, "%s", keys->cvvis);
+  if (isatty(0) == 1)
+    my_putstr(keys->cvvis);
   fflush(stdout);
   tcsetattr(0, TCSANOW, save);
   return (0);
