@@ -5,7 +5,11 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
+<<<<<<< HEAD
 ** Last update Tue May 16 13:54:46 2017 Sahel Lucas--Saoudi
+=======
+** Last update Tue May 16 11:12:37 2017 Benoit Hoffman
+>>>>>>> e7cba7e900b7b974f7191f7db8ee869bfc45f0b9
 */
 
 #include <unistd.h>
@@ -57,6 +61,7 @@ int		free_shell(t_shell *shell)
 
   return_value = shell->status % 255;
   free_tab(shell->env);
+  free_tab(shell->alias);
   free_tab(shell->path);
   free(shell->pwd);
   free(shell->oldpwd);
@@ -75,7 +80,8 @@ int		main(int __attribute__ ((unused)) ac,
     write(1, "$$$ >", 5);
   shell = set_shell(env);
   signal(2, catch);
-  while ((shell->command = getnextline_(0)))
+  shell->command = getnextline_(0);
+  while (shell->command)
     {
       shell->command = globing(shell->command, shell);
       shell->status = 0;
@@ -86,6 +92,7 @@ int		main(int __attribute__ ((unused)) ac,
       add_to_history(shell->command, shell);
       free_(shell->command);
       prompt(shell->status % 255);
+      shell->command = getnextline_(0);
     }
   if (isatty(0) == 1)
     write(1, "\n", 1);

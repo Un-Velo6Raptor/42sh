@@ -21,7 +21,8 @@ char	*add_char(char *str, int size, char *add)
 
   str_i = 0;
   add_i = 0;
-  if (!(save = malloc(strlen_(str) + size + 2)))
+  save = malloc(strlen_(str) + size + 2);
+  if (!save)
     return (NULL);
   while (str[str_i])
     {

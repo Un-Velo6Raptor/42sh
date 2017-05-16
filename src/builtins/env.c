@@ -32,7 +32,8 @@ char	**create_env(char **old)
   int	env_i;
 
   env_i = 0;
-  if (!(new = malloc(sizeof(char *) * (tablen_(old) + 3))))
+  new = malloc(sizeof(char *) * (tablen_(old) + 3));
+  if (!new)
     return (NULL);
   while (old[env_i])
     {

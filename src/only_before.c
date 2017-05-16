@@ -19,7 +19,8 @@ char		*only_before(char *str, char c)
   int		str_i;
   char		*new;
 
-  if (!(new = malloc(strlen_(str) + 1)))
+  new = malloc(strlen_(str) + 1);
+  if (!new)
     return (NULL);
   str_i = 0;
   while (str && str[str_i] && str[str_i] != c)
