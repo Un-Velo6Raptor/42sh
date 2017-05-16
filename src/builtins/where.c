@@ -22,7 +22,6 @@ char		*cat_all(char *cmd, char *path)
 {
   char		*buffer;
 
-  
   buffer = malloc(sizeof(char) * (strlen_(path) +
 				  2 + strlen_(cmd)));
   if (!buffer || !cmd)

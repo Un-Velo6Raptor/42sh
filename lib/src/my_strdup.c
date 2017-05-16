@@ -16,7 +16,8 @@ char	*strdup_(char *str)
   char	*new;
   int	str_i;
 
-  if (!(new = malloc(sizeof(char) * strlen_(str) + 1)))
+  new = malloc(sizeof(char) * strlen_(str) + 1);
+  if (!new)
     return (NULL);
   str_i = 0;
   while (str[str_i])
@@ -33,7 +34,8 @@ char	*strndup_(char *str, int limit)
   char	*new;
   int	new_i;
 
-  if (!(new = malloc(sizeof(char) * (limit + 1))))
+  new = malloc(sizeof(char) * (limit + 1));
+  if (!new)
     return (NULL);
   new_i = 0;
   while (new_i < limit && str[new_i])
@@ -52,7 +54,8 @@ char	*strdupn_(char *str, int start)
 
   if (strlen_(str) - start + 1 == 0)
     return (NULL);
-  if (!(new = malloc(sizeof(char) * (strlen_(str) - start + 1))))
+  new = malloc(sizeof(char) * (strlen_(str) - start + 1));
+  if (!new)
     return (NULL);
   new_i = 0;
   while (str[start])

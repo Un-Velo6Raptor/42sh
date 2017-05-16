@@ -15,7 +15,8 @@ char		**set_var(char *arg1, char *arg2)
 {
   char	**arg;
 
-  if (!(arg = malloc(sizeof(char *) * 3)))
+  arg = malloc(sizeof(char *) * 3);
+  if (!arg)
     return (NULL);
   arg[1] = strdup_(arg1);
   arg[2] = strdup_(arg2);

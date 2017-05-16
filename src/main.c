@@ -76,7 +76,8 @@ int		main(int __attribute__ ((unused)) ac,
     write(1, "$$$ >", 5);
   shell = set_shell(env);
   signal(2, catch);
-  while ((shell->command = getnextline_(0)))
+  shell->command = getnextline_(0);
+  while (shell->command)
     {
       shell->command = globing(shell->command, shell);
       shell->status = 0;
@@ -87,6 +88,7 @@ int		main(int __attribute__ ((unused)) ac,
       add_to_history(shell->command, shell);
       free_(shell->command);
       prompt(shell->status % 255);
+      shell->command = getnextline_(0);
     }
   if (isatty(0) == 1)
     write(1, "\n", 1);
