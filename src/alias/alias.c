@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 15:49:05 2017 Sahel Lucas--Saoudi
-** Last update Mon May 15 15:26:02 2017 Sahel Lucas--Saoudi
+** Last update Tue May 16 14:23:14 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdio.h>
@@ -131,7 +131,7 @@ int	call_alias(char **argv, t_shell *shell)
   int	argv_i;
 
   i = tablen_(shell->alias);
-  shell->alias = realloc(shell->alias, i + 2);
+  shell->alias = realloc(shell->alias, sizeof(char *) * (i + 2));
   if (!shell->alias)
     return (1);
   if (tablen_(argv) < 3)
@@ -146,7 +146,7 @@ int	call_alias(char **argv, t_shell *shell)
   strcat(alias, " ");
   while (argv[argv_i])
     {
-      alias = realloc(alias, strlen(alias) + strlen(argv[argv_i] + 3));
+      alias = realloc(alias, strlen_(alias) + strlen_(argv[argv_i]) + 3);
       if (!alias)
 	return (1);
       strcat(alias, argv[argv_i]);
