@@ -13,6 +13,7 @@
 
 int	call_repeat(char **, t_shell *);
 int	call_where(char **, t_shell *);
+int	call_which(char **, t_shell *);
 int	call_echo(char **, t_shell *);
 int	call_cd(char **, t_shell *);
 int	call_env(char **, t_shell *);

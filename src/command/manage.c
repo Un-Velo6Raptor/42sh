@@ -84,16 +84,16 @@ void		exec_manager(char **argv, t_shell *shell)
 {
   static char	**dico;
   int		i;
-  int		(*func[11])(char **, t_shell *) =
+  int		(*func[12])(char **, t_shell *) =
     {call_cd, call_setenv, call_unsetenv, call_env,
      call_exit, call_echo, call_alias, source, call_history,
-     call_where, call_repeat};
+     call_where, call_repeat, call_which};
 
   i = 0;
   if (!dico)
-    dico = c_dico(11, "cd", "setenv", "unsetenv", "env",
+    dico = c_dico(12, "cd", "setenv", "unsetenv", "env",
 		  "exit", "echo", "alias", "source", "history",
-		  "where", "repeat");
+		  "where", "repeat", "which");
   if (!argv || !*argv)
     return ;
   while (dico[i])

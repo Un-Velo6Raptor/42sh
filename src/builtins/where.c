@@ -18,7 +18,7 @@
 #include	"basic.h"
 #include	"main.h"
 
-static char		*cat_all(char *cmd, char *path)
+char		*cat_all(char *cmd, char *path)
 {
   char		*buffer;
 
@@ -33,7 +33,7 @@ static char		*cat_all(char *cmd, char *path)
   return (buffer);
 }
 
-static int	check_access(const char *path)
+int	check_access(const char *path)
 {
   struct stat	st;
 
@@ -71,9 +71,7 @@ int		do_where(char *path, int *found, int *i)
 
 int	        call_where(char **command, t_shell *shell)
 {
-  int		i;
   int		j;
-  char		*buffer;
   int		error;
   int		found;
 
@@ -83,16 +81,15 @@ int	        call_where(char **command, t_shell *shell)
     return (1);
   while (command[j])
     {
-      found = 0;
-      i = 0;
-      while (shell->path && shell->path[i])
-	{
-	  buffer = cat_all(command[j], shell->path[i]);
-	  if (do_where(buffer, &found, &i) == 1)
-	    return (1);
-	}
-      if (found == 0)
-	error = 1;
+      if (check_builtin_where(command[j]) == 0)
+      {
+	found = check_path_where(command[j], shell);
+	if (found < 0)
+	  return (1);
+	if (found == 0)
+	  if (check_alias_where(command[j], shell) == 0)
+	    error = 1;
+      }
       j += 1;
     }
   return (error);

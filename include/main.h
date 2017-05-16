@@ -71,5 +71,15 @@ int		check_next(int , char *);
 int		*get_fd(char **, char **);
 int		*command_loop(int *, char **, int, t_shell *);
 void		check_exit_pipe(char **, int **, int *, t_shell *);
+char		*cat_all(char *, char *);
+int		check_access(const char *);
+int		do_where(char *, int *, int *);
+int		do_which(char *, int *, int *);
+int		check_path_where(char *, t_shell *);
+int		check_builtin_where(char *);
+int		check_alias_where(char *, t_shell *);
+int		check_path_which(char *, t_shell *);
+int		check_builtin_which(char *);
+int		check_alias_which(char *, t_shell *);
 
 #endif /* !MAIN_H_ */
