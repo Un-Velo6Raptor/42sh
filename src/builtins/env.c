@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:19:52 2017 Sahel Lucas--Saoudi
-** Last update Thu Apr 27 15:28:07 2017 Sahel Lucas--Saoudi
+** Last update Tue May 16 13:21:02 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdlib.h>
@@ -50,7 +50,7 @@ void	showtab_(char **tab)
   int	tab_i;
 
   tab_i = 0;
-  while (tab[tab_i])
+  while (tab && tab[tab_i])
     {
       putstr_(tab[tab_i], 1);
       putstr_("\n", 1);
