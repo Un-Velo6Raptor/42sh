@@ -16,11 +16,12 @@
 #include	<stdlib.h>
 #include	<curses.h>
 #include	<term.h>
+#include	"basic.h"
 #include	"my.h"
 
 char			*my_reset(char *tmp, t_key *keys)
 {
-  my_free(tmp);
+  free_(tmp);
   keys->check = 0;
   return (NULL);
 }
@@ -55,7 +56,7 @@ char		*loop_read(t_key *keys, char *tmp, char *str)
       return (NULL);
     reset_line(max, str, idx, keys);
     }
-  my_putstr("\n");
+  putstr_("\n", 1);
   if (keys->c[0] == '\n' && str == NULL)
     return (strdup(""));
   return (str);

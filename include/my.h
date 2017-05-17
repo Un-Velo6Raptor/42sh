@@ -35,9 +35,6 @@ char		*my_realloc(char *, char *);
 char		*my_realloc_sup(char *, int, int);
 char		*my_realloc_idx(char *, char *, int);
 int		my_strlen(char *);
-void		my_free(char *);
-int		my_puterror(char *);
-int		my_putstr(char *);
 
 /*
 **		Prototypes of sources files.

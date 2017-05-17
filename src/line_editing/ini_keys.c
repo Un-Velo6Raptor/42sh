@@ -11,6 +11,7 @@
 #include	<curses.h>
 #include	<term.h>
 #include	<unistd.h>
+#include	"basic.h"
 #include	"my.h"
 
 static int	check(char *str)
@@ -26,7 +27,10 @@ int		ini_keys(t_key *keys, char *term)
   int		ret;
 
   if (setupterm(term, 1, &ret) == ERR)
-    return (my_puterror("Can't set the term.\n"));
+  {
+    putstr_("Can't set the term.\n", 2);
+    return (84);
+  }
   tmp = tigetstr("smkx");
   keys->key_l = tigetstr("kcub1");
   keys->key_r = tigetstr("kcuf1");
@@ -41,6 +45,6 @@ int		ini_keys(t_key *keys, char *term)
     check(keys->cvvis) || check(keys->civis) || check(keys->bold))
     return (84);
   if (isatty(0) == 1)
-    my_putstr(tmp);
+    putstr_(tmp, 1);
   return (0);
 }

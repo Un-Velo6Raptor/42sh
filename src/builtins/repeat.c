@@ -12,7 +12,7 @@
 #include	<stdlib.h>
 #include	<stdio.h>
 #include	"basic.h"
-#include	"main.h"
+#include        "main.h"
 
 int		check_nb(char *nb, char *to_check)
 {

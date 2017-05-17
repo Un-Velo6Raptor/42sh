@@ -26,7 +26,7 @@ char		*my_realloc(char *str, char *add_str)
   if (!new_str)
     return (NULL);
   strcat(new_str, add_str);
-  my_free(str);
+  free_(str);
   return (new_str);
 }
 
@@ -56,7 +56,7 @@ char		*my_realloc_idx(char *str, char *add_str, int max)
       idx[0]++;
     }
   new_str[idx[0] + idx[1]] = '\0';
-  my_free(str);
+  free_(str);
   return (new_str);
 }
 
@@ -80,6 +80,6 @@ char		*my_realloc_sup(char *str, int tmp,
       idx++;
     }
   new_str[idx] = '\0';
-  my_free(str);
+  free_(str);
   return (new_str);
 }
