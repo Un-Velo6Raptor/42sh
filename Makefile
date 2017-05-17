@@ -5,7 +5,7 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Wed May 17 14:29:54 2017 Sahel Lucas--Saoudi
+## Last update Wed May 17 13:45:01 2017 Benoit Hoffman
 ##
 
 SRC	=	src/main.c			\
@@ -59,7 +59,8 @@ SRC	=	src/main.c			\
 		src/line_editing/is_a_key.c	\
 		src/line_editing/start_end.c	\
 		src/line_editing/ini_keys.c	\
-		src/line_editing/my_realloc.c
+		src/line_editing/my_realloc.c	\
+		src/globing/globing2.c
 
 OBJ	=	$(SRC:.c=.o)
 
