@@ -5,7 +5,7 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Tue May 16 14:08:56 2017 Thomas GRANDJEAN
+## Last update Wed May 17 14:16:56 2017 Sahel Lucas--Saoudi
 ##
 
 SRC	=	src/main.c			\
@@ -60,7 +60,8 @@ SRC	=	src/main.c			\
 		martin/src/ini_keys.c		\
 		martin/basics/my_free.c		\
 		martin/basics/my_realloc.c	\
-		martin/basics/my_putstr.c
+		martin/basics/my_putstr.c	\
+		src/builtins/source.c
 
 OBJ	=	$(SRC:.c=.o)
 
