@@ -74,22 +74,22 @@ int	        call_where(char **command, t_shell *shell)
   int		j;
   int		error;
   int		found;
+  int		stock;
 
   error = 0;
   j = 1;
+  found = 0;
   if (check_errors(command[1]) == 1)
     return (1);
   while (command[j])
     {
-      if (check_builtin_where(command[j]) == 0)
-      {
-	found = check_path_where(command[j], shell);
-	if (found < 0)
-	  return (1);
-	if (found == 0)
-	  if (check_alias_where(command[j], shell) == 0)
-	    error = 1;
-      }
+      found += check_alias_where(command[j], shell);
+      stock = found;
+      found += check_builtin_where(command[j]);
+      if (stock == found)
+	found += check_path_where(command[j], shell);
+      if (found == 0)
+	error = 1;
       j += 1;
     }
   return (error);
