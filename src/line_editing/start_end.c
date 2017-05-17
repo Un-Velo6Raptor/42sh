@@ -17,6 +17,7 @@
 #include        <curses.h>
 #include        <term.h>
 #include	"my.h"
+#include	"basic.h"
 
 char		*start_edit_line(char *term, struct termios *new,
 				struct termios *save, t_key *keys)
@@ -29,7 +30,7 @@ char		*start_edit_line(char *term, struct termios *new,
   if (tcsetattr(0, TCSANOW, new) == -1)
     return (NULL);
   if (isatty(0) == 1)
-    my_putstr(keys->civis);
+    putstr_(keys->civis, 1);
   fflush(stdout);
   return ("Ok");
 }
@@ -37,7 +38,7 @@ char		*start_edit_line(char *term, struct termios *new,
 int		end_edit_line(struct termios *save, t_key *keys)
 {
   if (isatty(0) == 1)
-    my_putstr(keys->cvvis);
+    putstr_(keys->cvvis, 1);
   fflush(stdout);
   tcsetattr(0, TCSANOW, save);
   return (0);

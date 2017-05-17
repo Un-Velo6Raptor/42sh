@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri May 12 14:39:29 2017 Sahel Lucas--Saoudi
-** Last update Wed May 17 11:55:26 2017 Benoit Hoffman
+** Last update Wed May 17 11:57:00 2017 Benoit Hoffman
 */
 
 #include <stdlib.h>
@@ -98,7 +98,8 @@ void		add_to_history(char *command, t_shell *shell)
   if (!shell->history)
     return ;
   buff = malloc(sizeof(char) * (16 + strlen_(command) + 3));
-  sprintf(buff, "%6i\t%02i:%02i\t%s", i + 1, now_tm->tm_hour, now_tm->tm_min, command);
+  sprintf(buff, "%6i\t%02i:%02i\t%s", i + 1, now_tm->tm_hour,
+	  now_tm->tm_min, command);
   shell->history[i] = strdup(buff);
   shell->history[i + 1] = NULL;
   shell->id_command = shell->idmax + 1;
