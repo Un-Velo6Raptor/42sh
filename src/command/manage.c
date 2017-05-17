@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 17:04:35 2017 Sahel Lucas--Saoudi
-** Last update Tue May 16 11:26:08 2017 Benoit Hoffman
+** Last update Wed May 17 13:36:55 2017 Sahel Lucas--Saoudi
 */
 
 #include <fcntl.h>
@@ -120,7 +120,7 @@ void	manage_command(t_shell *shell)
       return ;
     }
   tmp = epur(shell->command);
-  free_(shell->command);
+  free(shell->command);
   shell->command = tmp;
   if (!shell->command[0])
     return ;

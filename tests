@@ -919,11 +919,11 @@ TESTS=
 [100-END]
 
 [101]
-NAME="mysh"
+NAME="42sh"
 SETUP=""
 CLEAN=""
 TESTS=
-  echo 'mysh'
+  echo '42sh'
   echo 'ls'
 [101-END]
 
@@ -1072,71 +1072,3 @@ TESTS=
   echo 'unsetenv PATH'
   echo 'where ls'
 [120-END]
-
-[121]
-NAME="HISTORY 1"
-TESTS=
-  echo 'ls'
-  echo 'cat -e Makefile'
-  echo 'alias ll ls -l'
-  echo 'history'
-[121-END]
-
-[122]
-NAME="HISTORY 2"
-TESTS=
-  echo 'ls'
-  echo 'cat -e Makefile'
-  echo 'alias ll ls -l'
-  echo 'history 1'
-[122-END]
-
-[123]
-NAME="HISTORY 3"
-TESTS=
-  echo 'ls'
-  echo 'cat -e Makefile'
-  echo 'alias ll ls -l'
-  echo 'history 3'
-[123-END]
-
-[124]
-NAME="HISTORY 4"
-TESTS=
-  echo 'ls'
-  echo 'cat -e Makefile'
-  echo 'alias ll ls -l'
-  echo 'history 300'
-[124-END]
-
-[125]
-NAME="HISTORY 5"
-TESTS=
-  echo 'ls'
-  echo 'cat -e Makefile'
-  echo 'alias ll ls -l'
-  echo 'history 1 1'
-[125-END]
-
-[126]
-NAME="HISTORY 6"
-TESTS=
-  echo 'ls'
-  echo 'cat -e Makefile'
-  echo 'alias ll ls -l'
-  echo 'history a'
-[126-END]
-
-[127]
-NAME="$ ENV"
-TESTS=
-  echo 'echo $?'
-  echo 'echo $PATH'
-  echo 'echo \$lol'
-[127-END]
-
-[128]
-NAME="$LS"
-TESTS=
-  echo 'echo $LS'
-[128-END]
