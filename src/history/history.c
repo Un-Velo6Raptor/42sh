@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri May 12 14:39:29 2017 Sahel Lucas--Saoudi
-** Last update Tue May 16 17:53:53 2017 Sahel Lucas--Saoudi
+** Last update Wed May 17 11:55:26 2017 Benoit Hoffman
 */
 
 #include <stdlib.h>
@@ -89,6 +89,8 @@ void		add_to_history(char *command, t_shell *shell)
   time_t	t;
   struct tm	*now_tm;
 
+  if (!command || !*command)
+    return ;
   t = time(NULL);
   now_tm = localtime(&t);
   i = tablen_(shell->history);
