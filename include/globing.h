@@ -5,15 +5,23 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 11:44:32 2017 Sahel Lucas--Saoudi
-** Last update Wed May 10 11:44:32 2017 Sahel Lucas--Saoudi
+** Last update Wed May 17 13:05:10 2017 Benoit Hoffman
 */
 
-#ifndef GLOBING_H_
-# define GLOBING_H_
+#ifndef			GLOBING_H_
+# define		GLOBING_H_
 
-#include "main.h"
+# include		"main.h"
 
-char	*globing(char *, t_shell *);
-char	*file_globing(char *);
+typedef struct		s_globing
+{
+  char			*new_command;
+  char			*var;
+  char			*varname;
+  char			ret_value[10];
+}			t_globing;
 
-#endif /* !GLOBING_H_ */
+char			*globing(char *, t_shell *);
+char			*file_globing(char *);
+
+#endif			/* !GLOBING_H_ */

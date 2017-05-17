@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 11:26:04 2017 Sahel Lucas--Saoudi
-** Last update Wed May 17 12:24:30 2017 Benoit Hoffman
+** Last update Wed May 17 13:06:22 2017 Benoit Hoffman
 */
 
 #include <stdlib.h>
@@ -50,18 +50,15 @@ char	*add_return_value(char *new_command, int *nidx, char *ret_value, int *idx)
 
 char	*globing(char *command, t_shell *shell)
 {
-  char	*new_command;
-  int	idx;
-  int	nidx;
-  char	*var;
-  char	*varname;
-  char	ret_value[10];
+  int		idx;
+  int		nidx;
+  t_globing	globings;
 
   idx = 0;
   nidx = 0;
-  sprintf(ret_value, "%d", shell->status);
-  new_command = malloc(strlen(command) + 1);
-  if (!new_command || !command)
+  sprintf(globings.ret_value, "%d", shell->status);
+  globings.new_command = malloc(strlen(command) + 1);
+  if (!globings.new_command || !command)
     return (command);
   while (command[idx])
     {
@@ -69,33 +66,33 @@ char	*globing(char *command, t_shell *shell)
 	idx++;
       else if (!is_inhib(command, idx) && command[idx] == '$')
 	{
-	  varname = take_word(&command[idx + 1]);
-	  varname = add_char(varname, 2, "=*");
-	  var = getvar(shell->env, varname);
-	  if (var)
+	  globings.varname = take_word(&command[idx + 1]);
+	  globings.varname = add_char(globings.varname, 2, "=*");
+	  globings.var = getvar(shell->env, globings.varname);
+	  if (globings.var)
 	    {
-	      new_command[nidx] = '\0';
-	      new_command = realloc(new_command, nidx + strlen(var) + 1);
-	      strcat(new_command, var);
-	      idx += strlen(varname) - 2;
-	      nidx += strlen(var);
+	      globings.new_command[nidx] = '\0';
+	      globings.new_command = realloc(globings.new_command, nidx + strlen(globings.var) + 1);
+	      strcat(globings.new_command, globings.var);
+	      idx += strlen(globings.varname) - 2;
+	      nidx += strlen(globings.var);
 	    }
 	  else if (command[idx + 1] && command[idx + 1] == '?')
-	    new_command = add_return_value(new_command, &nidx, ret_value, &idx);
+	    globings.new_command = add_return_value(globings.new_command, &nidx, globings.ret_value, &idx);
 	  else
 	    {
-	      new_command = realloc(new_command, nidx + 2);
-	      new_command[nidx++] = '$';
+	      globings.new_command = realloc(globings.new_command, nidx + 2);
+	      globings.new_command[nidx++] = '$';
 	    }
 	}
       else
 	{
-	  new_command = realloc(new_command, nidx + 2);
-	  new_command[nidx++] = command[idx];
+	  globings.new_command = realloc(globings.new_command, nidx + 2);
+	  globings.new_command[nidx++] = command[idx];
 	}
       idx++;
     }
-  new_command[nidx] = '\0';
+  globings.new_command[nidx] = '\0';
   free(command);
-  return (new_command);
+  return (globings.new_command);
 }
