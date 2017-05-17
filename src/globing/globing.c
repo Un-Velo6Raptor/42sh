@@ -39,7 +39,6 @@ int	is_inhib(char *str, int i)
 
 char	*add_return_value(char *new_command, int *nidx, char *ret_value, int *idx)
 {
-  //need : new_command, &nidx, ret_value, &idx
   new_command = realloc(new_command, *nidx + strlen(ret_value) + 2);
   new_command[*nidx] = '\0';
   strcat(new_command, ret_value);
@@ -48,18 +47,52 @@ char	*add_return_value(char *new_command, int *nidx, char *ret_value, int *idx)
   return (new_command);
 }
 
+void	la_bonne_boucle_globing(t_globing *globings, int *nidx, int *idx,
+				    char *command)
+{
+  if (globings->var)
+  {
+    globings->new_command[*nidx] = '\0';
+    globings->new_command = realloc(globings->new_command,
+				    *nidx + strlen(globings->var) + 1);
+    strcat(globings->new_command, globings->var);
+    *idx += strlen(globings->varname) - 2;
+    *nidx += strlen(globings->var);
+  }
+  else if (command[*idx + 1] && command[*idx + 1] == '?')
+    globings->new_command = add_return_value(globings->new_command,
+					     nidx, globings->ret_value, idx);
+  else
+  {
+    globings->new_command = realloc(globings->new_command, *nidx + 2);
+    globings->new_command[(*nidx)++] = '$';
+  }
+}
+
+int	init_globing(char *command, t_globing *globings, int *idx, int *nidx)
+{
+  *idx = 0;
+  *nidx = 0;
+  globings->new_command = malloc(strlen(command) + 1);
+  if (!globings->new_command || !command)
+    return (1);
+  return (0);
+}
+
+void	cladesh(t_globing *globings, int *nidx, char *command, int *idx)
+{
+  globings->new_command = realloc(globings->new_command, *nidx + 2);
+  globings->new_command[(*nidx)++] = command[*idx];
+}
 char	*globing(char *command, t_shell *shell)
 {
   int		idx;
   int		nidx;
   t_globing	globings;
 
-  idx = 0;
-  nidx = 0;
-  sprintf(globings.ret_value, "%d", shell->status);
-  globings.new_command = malloc(strlen(command) + 1);
-  if (!globings.new_command || !command)
+  if (init_globing(command, &globings, &idx, &nidx))
     return (command);
+  sprintf(globings.ret_value, "%d", shell->status);
   while (command[idx])
     {
       if (command[idx] == '\\')
@@ -69,27 +102,10 @@ char	*globing(char *command, t_shell *shell)
 	  globings.varname = take_word(&command[idx + 1]);
 	  globings.varname = add_char(globings.varname, 2, "=*");
 	  globings.var = getvar(shell->env, globings.varname);
-	  if (globings.var)
-	    {
-	      globings.new_command[nidx] = '\0';
-	      globings.new_command = realloc(globings.new_command, nidx + strlen(globings.var) + 1);
-	      strcat(globings.new_command, globings.var);
-	      idx += strlen(globings.varname) - 2;
-	      nidx += strlen(globings.var);
-	    }
-	  else if (command[idx + 1] && command[idx + 1] == '?')
-	    globings.new_command = add_return_value(globings.new_command, &nidx, globings.ret_value, &idx);
-	  else
-	    {
-	      globings.new_command = realloc(globings.new_command, nidx + 2);
-	      globings.new_command[nidx++] = '$';
-	    }
+	  la_bonne_boucle_globing(&globings, &nidx, &idx, command);
 	}
       else
-	{
-	  globings.new_command = realloc(globings.new_command, nidx + 2);
-	  globings.new_command[nidx++] = command[idx];
-	}
+	cladesh(&globings, &nidx, command, &idx);
       idx++;
     }
   globings.new_command[nidx] = '\0';

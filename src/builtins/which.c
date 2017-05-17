@@ -54,12 +54,9 @@ int	        call_which(char **command, t_shell *shell)
     if (check_builtin_which(command[j]) == 0)
     {
       found = check_path_which(command[j], shell);
-      if (found < 0)
-	return (1);
-      if (found == 1)
-	return (0);
-      if (found == 0)
-	if (check_alias_which(command[j], shell) == 0)
+      if (found != 0)
+	return ((found < 0) ? (1) : (0));
+      if (check_alias_which(command[j], shell) == 0)
 	{
 	  dprintf(2, "%s: Command not found.\n", command[j]);
 	  error = 1;
