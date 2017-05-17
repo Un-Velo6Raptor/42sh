@@ -1072,3 +1072,19 @@ TESTS=
   echo 'unsetenv PATH'
   echo 'where ls'
 [120-END]
+
+[121]
+NAME="SOURCE"
+SETUP="echo 'alias ls ls -l' > .lol"
+CLEAN="rm .lol"
+TESTS=
+  echo 'source .lol'
+  echo 'ls'
+[121-END]
+
+[122]
+NAME="ECHO 1"
+TESTS=
+  echo 'echo alias ls ls -l'
+  echo 'echo $?'
+[122-END]

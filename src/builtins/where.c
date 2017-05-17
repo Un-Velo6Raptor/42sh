@@ -16,7 +16,7 @@
 #include	<stdio.h>
 #include	<string.h>
 #include	"basic.h"
-#include	"main.h"
+#include        "main.h"
 
 char		*cat_all(char *cmd, char *path)
 {

@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 15:49:05 2017 Sahel Lucas--Saoudi
-** Last update Tue May 16 16:25:27 2017 Sahel Lucas--Saoudi
+** Last update Wed May 17 14:16:39 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdio.h>
@@ -16,69 +16,6 @@
 #include <basic.h>
 #include "main.h"
 #include "alias.h"
-
-/*static int		get_rc_file(char **argv, t_shell *shell)
-{
-  int		fd;
-  char		*path;
-
-  if (tablen_(argv) > 1)
-    path = argv[1];
-  else
-  {
-    path = strdup(shell->sh);
-    path = realloc(path, strlen(path) + strlen(ALIAS_FILE) + 2);
-    path = strcat(path, "/");
-    path = strcat(path, ALIAS_FILE);
-  }
-  fd = open(path, O_RDONLY);
-  if (fd == -1)
-    return (-1);
-  path[strrchr(path, '/') - path] = '\0';
-  free(shell->sh);
-  shell->sh = path;
-  return (fd);
-  }*/
-
-void		exec_file(const int fd)
-{
-  char		*buf;
-
-  buf = getnextline_(fd);
-  while (buf)
-    {
-
-      buf = getnextline_(fd);
-    }
-}
-
-int		source(char **argv, t_shell *shell)
-{
-  int		i;
-  int		fd;
-  int		error;
-
-  (void) shell; // a changer
-  if (!argv || tablen_(argv) == 1)
-    {
-      dprintf(2, "source: Too few arguments.\n");
-      return (1);
-    }
-  i = 1;
-  error = 0;
-  while (argv[i])
-    {
-      fd = 0;
-      //fd = get_fd();
-      if (fd != -1)
-	{
-	  //exec_file(fd);
-	}
-      else
-	error = 1;
-    }
-  return (error);
-}
 
 char		**remake_argv_with_alias(char *alias, char **argv)
 {

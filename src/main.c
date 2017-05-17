@@ -5,12 +5,12 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Wed May 17 13:37:13 2017 Sahel Lucas--Saoudi
+** Last update Wed May 17 11:59:38 2017 Benoit Hoffman
 */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <signal.h>
+#include	<unistd.h>
+#include	<stdlib.h>
+#include	<signal.h>
 #include	<sys/ioctl.h>
 #include	<termios.h>
 #include	<unistd.h>
@@ -20,11 +20,11 @@
 #include	<curses.h>
 #include	<term.h>
 #include	"my.h"
-#include "main.h"
-#include "basic.h"
-#include "globing.h"
-#include "alias.h"
-#include "history.h"
+#include	"main.h"
+#include	"basic.h"
+#include	"globing.h"
+#include	"alias.h"
+#include	"history.h"
 
 static void	prompt(int nb)
 {

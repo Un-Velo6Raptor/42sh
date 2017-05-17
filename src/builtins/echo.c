@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 14:27:18 2017 Sahel Lucas--Saoudi
-** Last update Wed May 10 14:27:18 2017 Sahel Lucas--Saoudi
+** Last update Wed May 17 14:31:24 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdio.h>
@@ -19,6 +19,8 @@ int	call_echo(char **argv, __attribute__ ((unused)) t_shell *shell)
   while (argv && argv[i])
   {
     printf("%s", argv[i]);
+    if (argv[i + 1])
+      printf(" ");
     i++;
   }
   printf("\n");

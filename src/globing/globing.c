@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 11:26:04 2017 Sahel Lucas--Saoudi
-** Last update Sat May 13 10:33:34 2017 Sahel Lucas--Saoudi
+** Last update Wed May 17 12:24:30 2017 Benoit Hoffman
 */
 
 #include <stdlib.h>
@@ -37,6 +37,17 @@ int	is_inhib(char *str, int i)
   return (0);
 }
 
+char	*add_return_value(char *new_command, int *nidx, char *ret_value, int *idx)
+{
+  //need : new_command, &nidx, ret_value, &idx
+  new_command = realloc(new_command, *nidx + strlen(ret_value) + 2);
+  new_command[*nidx] = '\0';
+  strcat(new_command, ret_value);
+  *nidx += strlen(ret_value);
+  *idx += 1;
+  return (new_command);
+}
+
 char	*globing(char *command, t_shell *shell)
 {
   char	*new_command;
@@ -53,50 +64,38 @@ char	*globing(char *command, t_shell *shell)
   if (!new_command || !command)
     return (command);
   while (command[idx])
-  {
-    if (command[idx] == '\\')
+    {
+      if (command[idx] == '\\')
+	idx++;
+      else if (!is_inhib(command, idx) && command[idx] == '$')
+	{
+	  varname = take_word(&command[idx + 1]);
+	  varname = add_char(varname, 2, "=*");
+	  var = getvar(shell->env, varname);
+	  if (var)
+	    {
+	      new_command[nidx] = '\0';
+	      new_command = realloc(new_command, nidx + strlen(var) + 1);
+	      strcat(new_command, var);
+	      idx += strlen(varname) - 2;
+	      nidx += strlen(var);
+	    }
+	  else if (command[idx + 1] && command[idx + 1] == '?')
+	    new_command = add_return_value(new_command, &nidx, ret_value, &idx);
+	  else
+	    {
+	      new_command = realloc(new_command, nidx + 2);
+	      new_command[nidx++] = '$';
+	    }
+	}
+      else
+	{
+	  new_command = realloc(new_command, nidx + 2);
+	  new_command[nidx++] = command[idx];
+	}
       idx++;
-    else if (!is_inhib(command, idx) && command[idx] == '$')
-      {
-	varname = take_word(&command[idx + 1]);
-	    varname = add_char(varname, 2, "=*");
-	    var = getvar(shell->env, varname);
-	    if (var)
-	      {
-		new_command[nidx] = '\0';
-		new_command = realloc(new_command, nidx + strlen(var) + 1);
-		strcat(new_command, var);
-		idx += strlen(varname) - 2;
-		nidx += strlen(var);
-	      }
-	    else
-	      {
-		if (command[idx + 1] && command[idx + 1] == '?')
-		  {
-		    new_command = realloc(new_command, nidx + strlen(ret_value) + 2);
-		    new_command[nidx] = '\0';
-		    strcat(new_command, ret_value);
-		    nidx += strlen(ret_value);
-		    idx++;
-		  }
-		else
-		  {
-		    new_command = realloc(new_command, nidx + 2);
-		    new_command[nidx++] = '$';
-		  }
-
-	      }
-      }
-//    else if (command[idx] == '[' || command[idx] == '?' || command[idx] ==
-// '*')
-//      file_globing("/bin/cat/sdf/lklk*.s");
-    else
-      {
-	new_command = realloc(new_command, nidx + 2);
-	new_command[nidx++] = command[idx];
-      }
-    idx++;
-  }
+    }
   new_command[nidx] = '\0';
+  free(command);
   return (new_command);
 }

@@ -5,7 +5,7 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Wed May 17 14:16:56 2017 Sahel Lucas--Saoudi
+## Last update Wed May 17 14:29:54 2017 Sahel Lucas--Saoudi
 ##
 
 SRC	=	src/main.c			\
@@ -51,17 +51,15 @@ SRC	=	src/main.c			\
 		src/builtins/check_where.c	\
 		src/builtins/check_which.c	\
 		src/builtins/repeat.c		\
-		martin/src/main.c		\
-		martin/src/found_term.c		\
-		martin/src/check_is_key.c	\
-		martin/src/reset_line.c		\
-		martin/src/is_a_key.c		\
-		martin/src/start_end.c		\
-		martin/src/ini_keys.c		\
-		martin/basics/my_free.c		\
-		martin/basics/my_realloc.c	\
-		martin/basics/my_putstr.c	\
-		src/builtins/source.c
+		src/builtins/source.c		\
+		src/line_editing/line.c		\
+		src/line_editing/found_term.c	\
+		src/line_editing/check_is_key.c	\
+		src/line_editing/reset_line.c	\
+		src/line_editing/is_a_key.c	\
+		src/line_editing/start_end.c	\
+		src/line_editing/ini_keys.c	\
+		src/line_editing/my_realloc.c
 
 OBJ	=	$(SRC:.c=.o)
 

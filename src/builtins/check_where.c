@@ -11,7 +11,7 @@
 #include	<sys/types.h>
 #include	<stdio.h>
 #include	<string.h>
-#include	"main.h"
+#include        "main.h"
 
 int	check_path_where(char *arg, t_shell *shell)
 {

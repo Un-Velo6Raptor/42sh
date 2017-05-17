@@ -12,6 +12,7 @@
 #include	<term.h>
 #include	<unistd.h>
 #include	"my.h"
+#include	"basic.h"
 
 static void		loop_space(int nb)
 {
@@ -37,10 +38,10 @@ static int		put_line(char *str, int pos, t_key *keys)
       write(1, &str[idx], 1);
       idx++;
     }
-  my_putstr(keys->bold);
-  my_putstr("¤");
-  my_putstr("\033[0;m");
-  my_putstr(&str[idx]);
+  putstr_(keys->bold, 1);
+  putstr_("|", 1);
+  putstr_("\033[0;m", 1);
+  putstr_(&str[idx], 1);
   return (0);
 }
 
