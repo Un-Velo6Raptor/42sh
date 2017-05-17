@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 11:26:04 2017 Sahel Lucas--Saoudi
-** Last update Wed May 17 13:06:22 2017 Benoit Hoffman
+** Last update Wed May 17 13:44:43 2017 Benoit Hoffman
 */
 
 #include <stdlib.h>
@@ -69,21 +69,6 @@ void	la_bonne_boucle_globing(t_globing *globings, int *nidx, int *idx,
   }
 }
 
-int	init_globing(char *command, t_globing *globings, int *idx, int *nidx)
-{
-  *idx = 0;
-  *nidx = 0;
-  globings->new_command = malloc(strlen(command) + 1);
-  if (!globings->new_command || !command)
-    return (1);
-  return (0);
-}
-
-void	cladesh(t_globing *globings, int *nidx, char *command, int *idx)
-{
-  globings->new_command = realloc(globings->new_command, *nidx + 2);
-  globings->new_command[(*nidx)++] = command[*idx];
-}
 char	*globing(char *command, t_shell *shell)
 {
   int		idx;
@@ -105,7 +90,7 @@ char	*globing(char *command, t_shell *shell)
 	  la_bonne_boucle_globing(&globings, &nidx, &idx, command);
 	}
       else
-	cladesh(&globings, &nidx, command, &idx);
+	modif_command_globing(&globings, &nidx, command, &idx);
       idx++;
     }
   globings.new_command[nidx] = '\0';
