@@ -125,7 +125,7 @@ void	manage_command(t_shell *shell)
   if (!shell->command[0])
     return ;
   argv = parse_(shell->command, ';');
-  if ((!argv[0] || !argv) && howmany_(shell->command, '\"') != 0)
+  if (!argv[0]&& howmany_(shell->command, '\"') != 0)
     putstr_(": Command not found.\n", 2);
   if (validity(argv) || (!argv[0] && howmany_(shell->command, '\"') != 0))
     {

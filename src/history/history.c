@@ -92,7 +92,7 @@ int		add_to_history(char *command, t_shell *shell)
   struct tm	*now_tm;
 
   if (!command || !*command)
-    return (1);
+    return (0);
   t = time(NULL);
   now_tm = localtime(&t);
   i = tablen_(shell->history);

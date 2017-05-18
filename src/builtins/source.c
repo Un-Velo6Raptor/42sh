@@ -24,7 +24,7 @@ void            exec_file(const int fd, t_shell *shell)
     {
       shell->command = globing(shell->command, shell);
       if (shell->command && *(shell->command) && !check_flexibility(shell))
-        manage_command(shell);
+	manage_command(shell);
       free(shell->command);
       shell->command = getnextline_(fd);
     }
