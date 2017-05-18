@@ -1,13 +1,14 @@
 /*
 ** key_del.c for  in /home/januar_m/delivery/PSU/edit_line
-** 
+**
 ** Made by Martin Januario
 ** Login   <martin.januario@epitech.eu>
-** 
+**
 ** Started on  Wed May 17 17:32:09 2017 Martin Januario
-** Last update Thu May 18 00:06:05 2017 Martin Januario
+** Last update Thu May 18 13:30:25 2017 Sahel Lucas--Saoudi
 */
 
+#include	<stdio.h>
 #include	<curses.h>
 #include	<term.h>
 #include	<stdlib.h>
@@ -38,8 +39,9 @@ void		key_del_(t_key *keys, char *str, char *line)
   line[idx] = '\0';
   keys->idx -= 1;
   free(tmp);
-  my_putstr(tgetstr("le", NULL));
-  my_putstr(tgetstr("dc", NULL));
+  printf(tgetstr("le", NULL));
+  printf(tgetstr("dc", NULL));
+  fflush(stdout);
   (void) str;
 }
 
@@ -67,6 +69,7 @@ void		key_sup_(t_key *keys, char *str, char *line)
     }
   line[idx] = '\0';
   free(tmp);
-  my_putstr(tgetstr("dc", NULL));
+  printf(tgetstr("dc", NULL));
+  fflush(stdout);
   (void) str;
 }

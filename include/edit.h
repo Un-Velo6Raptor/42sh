@@ -1,20 +1,23 @@
 /*
 ** edit.h for  in /home/januar_m/delivery/PSU/edit_line
-** 
+**
 ** Made by Martin Januario
 ** Login   <martin.januario@epitech.eu>
-** 
+**
 ** Started on  Wed May 17 15:38:26 2017 Martin Januario
-** Last update Wed May 17 17:35:27 2017 Martin Januario
+** Last update Thu May 18 13:36:56 2017 Sahel Lucas--Saoudi
 */
 
 #ifndef		EDIT_H_
 # define	EDIT_H_
 
+# include	"main.h"
+
 typedef struct	s_key
 {
   int		idx;
   char		*key[6];
+  t_shell	*shell;
   /*
   **  char          *key_l;
   **  char          *key_r;
@@ -23,6 +26,8 @@ typedef struct	s_key
   **  char          *key_sup;
   */
 }		t_key;
+
+char		*loop_read(t_key *);
 
 /*
 **		Protoypes of files sources.

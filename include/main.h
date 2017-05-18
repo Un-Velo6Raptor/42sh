@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri Mar 24 10:58:31 2017 Sahel Lucas--Saoudi
-** Last update Thu May 18 07:24:49 2017 Benoit Hoffman
+** Last update Thu May 18 13:35:37 2017 Sahel Lucas--Saoudi
 */
 
 #ifndef MAIN_H_
@@ -65,6 +65,7 @@ int		exec_manage(char **, t_shell *);
 int		exec_pipe_manager(char **, int, t_shell *);
 void		setup_redir(char *, int *, char **);
 void		reset01(int);
+void		prompt(int);
 void		close_(int);
 void		end_manage(int *, char **, char **, char **);
 int		check_file(char *, char);

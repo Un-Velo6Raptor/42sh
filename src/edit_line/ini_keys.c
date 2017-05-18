@@ -1,13 +1,14 @@
 /*
 ** ini_keys.c for  in /home/januar_m/delivery/PSU/edit_line
-** 
+**
 ** Made by Martin Januario
 ** Login   <martin.januario@epitech.eu>
-** 
+**
 ** Started on  Wed May 17 15:50:20 2017 Martin Januario
-** Last update Wed May 17 17:27:21 2017 Martin Januario
+** Last update Thu May 18 13:27:00 2017 Sahel Lucas--Saoudi
 */
 
+#include	<stdio.h>
 #include	<curses.h>
 #include	<term.h>
 #include	<unistd.h>
@@ -28,7 +29,7 @@ int		ini_keys(t_key *keys, char *term)
 
   idx = 0;
   if (setupterm(term, 1, &ret) == ERR)
-    return (my_puterror("Can't set the term.\n"));
+    return (84);
   tmp = tigetstr("smkx");
   keys->key[0] = tigetstr("kcub1");
   keys->key[1] = tigetstr("kcuf1");
@@ -43,6 +44,6 @@ int		ini_keys(t_key *keys, char *term)
       idx++;
     }
   if (isatty(0) == 1 && !check(tmp))
-    my_putstr(tmp);
+    printf(tmp);
   return ((check(tmp) || idx != 5) ? 84 : 0);
 }
