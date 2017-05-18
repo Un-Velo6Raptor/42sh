@@ -76,6 +76,8 @@ char	**parse__redir(char *str)
 
   command = epur_redir(str, 0, 0);
   tab = parse_(command, ' ');
+  if (!tab)
+    return (NULL);
   free_(command);
   return (tab);
 }

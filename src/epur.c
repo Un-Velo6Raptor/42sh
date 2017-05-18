@@ -38,7 +38,8 @@ char	*epur(char *str)
 
   new_i = 0;
   str_i = 0;
-  if (!str || !*str || !(new = malloc(strlen_(str) + 2)))
+  new = malloc(strlen_(str) + 2);
+  if (!str || !*str || !new)
     return (NULL);
   while (str_i < strlen_(str) && str[str_i])
     {

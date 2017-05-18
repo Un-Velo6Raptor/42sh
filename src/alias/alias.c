@@ -25,15 +25,23 @@ char		**remake_argv_with_alias(char *alias, char **argv)
 
   i = 1;
   new = parse_(alias, ' ');
+  if (!new)
+    return (NULL);
   j = tablen_(new);
   while (argv && argv[i])
     {
       new = realloc(new, sizeof(char *) * (j + 1));
+      if (!new)
+	return (NULL);
       new[j] = strdup(argv[i]);
+      if (!new[j])
+	return (NULL);
       i++;
       j++;
     }
   new = realloc(new, sizeof(char *) * (j + 1));
+  if (!new)
+    return (NULL);
   new[j] = NULL;
   free_tab(argv);
   return (new);

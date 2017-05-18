@@ -137,6 +137,8 @@ int	exec_pipe_manager(char **tab, int tab_i, t_shell *shell)
   int	*pid;
 
   command = parse_(tab[tab_i], '|');
+  if (!command)
+    return (84);
   if (check_pipe(command, 0))
     {
       shell->status = 1;

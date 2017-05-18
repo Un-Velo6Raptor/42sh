@@ -116,7 +116,11 @@ int			main(int __attribute__ ((unused)) ac,
 	manage_command(shell);
       if (shell->exit == 0)
 	{
-	  add_to_history(shell->command, shell);
+	  if (add_to_history(shell->command, shell))
+	  {
+	    end_edit_line(&save, &keys);
+	    return (free_shell(shell));
+	  }
 	  free_(shell->command);
 	  prompt(shell->status % 255);
 	  if (check != NULL)

@@ -17,6 +17,6 @@
 
 char	*history(char *, t_shell *, int);
 int	call_history(char **, t_shell *);
-void	add_to_history(char *, t_shell *);
+int	add_to_history(char *, t_shell *);
 
 #endif /* !HISTORY_H_ */
