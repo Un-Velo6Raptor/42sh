@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Wed May 17 11:59:38 2017 Benoit Hoffman
+** Last update Thu May 18 07:06:43 2017 Benoit Hoffman
 */
 
 #include	<unistd.h>
@@ -48,7 +48,7 @@ t_shell		*set_shell(char **env)
 
   shell = malloc(sizeof(t_shell));
   if (!shell)
-    exit (84);
+    exit(84);
   shell->alias = NULL;
   shell->path = NULL;
   shell->history = NULL;
@@ -60,6 +60,7 @@ t_shell		*set_shell(char **env)
   shell->home = getvar(shell->env, "HOME=*");
   shell->id_command = 0;
   shell->idmax = 0;
+  shell->exit = 0;
   return (shell);
 }
 
@@ -90,6 +91,7 @@ int			main(int __attribute__ ((unused)) ac,
   int			pos;
   char			*check;
 
+  shell = set_shell(env);
   check = strdup("JE SUIS PAS NULL");
   if ((pos = found_term(env)) < 0)
     check = NULL;
@@ -99,13 +101,12 @@ int			main(int __attribute__ ((unused)) ac,
     check = start_edit_line(&env[pos][5], &new, &save, &keys);
   if (isatty(0) == 1)
     write(1, "$$$ >", 5);
-  shell = set_shell(env);
   signal(2, catch);
   if (check != NULL)
     shell->command = loop_read(&keys, NULL, NULL);
   else
     shell->command = getnextline_(0);
-  while (shell->command)
+  while (shell->command && shell->exit == 0)
     {
       shell->command = globing(shell->command, shell);
       shell->status = 0;
@@ -113,15 +114,18 @@ int			main(int __attribute__ ((unused)) ac,
 	return (84);
       if (shell->command && *(shell->command) && !check_flexibility(shell))
 	manage_command(shell);
-      add_to_history(shell->command, shell);
-      free_(shell->command);
-      prompt(shell->status % 255);
-      if (check != NULL)
-	shell->command = loop_read(&keys, NULL, NULL);
-      else
-	shell->command = getnextline_(0);
+      if (shell->exit == 0)
+	{
+	  add_to_history(shell->command, shell);
+	  free_(shell->command);
+	  prompt(shell->status % 255);
+	  if (check != NULL)
+	    shell->command = loop_read(&keys, NULL, NULL);
+	  else
+	    shell->command = getnextline_(0);
+	}
     }
-  if (isatty(0) == 1)
+  if (isatty(0) == 1 && shell->exit == 0)
     write(1, "\n", 1);
   end_edit_line(&save, &keys);
   return (free_shell(shell));

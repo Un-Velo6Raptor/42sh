@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri Mar 24 10:58:31 2017 Sahel Lucas--Saoudi
-** Last update Tue May 16 17:02:23 2017 Sahel Lucas--Saoudi
+** Last update Thu May 18 07:24:49 2017 Benoit Hoffman
 */
 
 #ifndef MAIN_H_
@@ -26,6 +26,7 @@ typedef struct	s_shell
   int		id_command;
   int		idmax;
   int		status;
+  int		exit;
 }		t_shell;
 
 char		**parse_(char *, char);
@@ -56,12 +57,12 @@ int		good_filename(char *, int *, int *);
 int		good_file(char *);
 void		free_tab(char **);
 void		manage_command(t_shell *);
-void		lexer(char **, t_shell *);
+int		lexer(char **, t_shell *);
 void		exec_manager(char **, t_shell *);
 void		error_handling(int);
 void		showtab_(char **);
-void		exec_manage(char **, t_shell *);
-void		exec_pipe_manager(char **, int, t_shell *);
+int		exec_manage(char **, t_shell *);
+int		exec_pipe_manager(char **, int, t_shell *);
 void		setup_redir(char *, int *, char **);
 void		reset01(int);
 void		close_(int);
@@ -71,7 +72,7 @@ char		**parse_and_or(char *);
 int		check_next(int , char *);
 int		*get_fd(char **, char **);
 int		*command_loop(int *, char **, int, t_shell *);
-void		check_exit_pipe(char **, int **, int *, t_shell *);
+int		check_exit_pipe(char **, int **, int *, t_shell *);
 char		*cat_all(char *, char *);
 int		check_access(const char *);
 int		do_where(char *, int *, int *);

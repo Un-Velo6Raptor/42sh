@@ -5,7 +5,7 @@
 ** Login   <thomas.grandjean@epitech.eu>
 **
 ** Started on  Thu May 11 15:04:57 2017 Thomas GRANDJEAN
-** Last update Thu May 11 15:04:57 2017 Thomas GRANDJEAN
+** Last update Thu May 18 07:15:37 2017 Benoit Hoffman
 */
 
 #include <stdio.h>
@@ -59,21 +59,21 @@ int	*get_fd(char **file_name, char **buffer)
   i = 0;
   fd = malloc(sizeof(int) * (tablen_(file_name) + 1));
   if (!fd)
-    exit(84);
+    return (NULL);
   while (i < tablen_(file_name))
-  {
-    if (match(file_name[i], ">>*"))
-      fd[i] = open(&file_name[i][2], O_CREAT | O_RDWR | O_APPEND, 00644);
-    else if (match(file_name[i], "<<*"))
     {
-      *buffer = stralloc_(*buffer, double_redir(&file_name[i][2]));
-      fd[i] = -1;
+      if (match(file_name[i], ">>*"))
+	fd[i] = open(&file_name[i][2], O_CREAT | O_RDWR | O_APPEND, 00644);
+      else if (match(file_name[i], "<<*"))
+	{
+	  *buffer = stralloc_(*buffer, double_redir(&file_name[i][2]));
+	  fd[i] = -1;
+	}
+      else if (match(file_name[i], "<*"))
+	fd[i] = open(&file_name[i][1], O_RDONLY);
+      else if (match(file_name[i], ">*"))
+	fd[i] = open(&file_name[i][1], O_CREAT | O_TRUNC | O_RDWR, 00644);
+      i++;
     }
-    else if (match(file_name[i], "<*"))
-      fd[i] = open(&file_name[i][1], O_RDONLY);
-    else if (match(file_name[i], ">*"))
-      fd[i] = open(&file_name[i][1], O_CREAT | O_TRUNC | O_RDWR, 00644);
-    i++;
-  }
   return (fd);
 }

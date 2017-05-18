@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:28 2017 Sahel Lucas--Saoudi
-** Last update Thu Apr 27 15:29:12 2017 Sahel Lucas--Saoudi
+** Last update Thu May 18 07:14:52 2017 Benoit Hoffman
 */
 
 #include <unistd.h>
@@ -24,7 +24,7 @@ char	*change_variable(char **arg, int *n, int env_i, char **env)
   var = malloc((arg[2]) ? (sp_len_(env[env_i], '=') + strlen_(arg[2]) + 2)
 	       : (sp_len_(env[env_i], '=') + 2));
   if (!var)
-    exit(84);
+    return (NULL);
   while (env[env_i][char_i] != '=')
     var[var_i++] = env[env_i][char_i++];
   char_i = 0;
@@ -47,7 +47,11 @@ char	*create_variable(char **arg, char **env, int env_i, int *n)
   var_i = 0;
   save_arg = add_str(strdup_(arg[1]), 2, "=*");
   if (match(env[env_i], save_arg) == 1)
-    var = change_variable(arg, n, env_i, env);
+    {
+      var = change_variable(arg, n, env_i, env);
+      if (!var)
+	return (NULL);
+    }
   else
     {
       var = malloc(strlen_(env[env_i]) + 1);
@@ -101,7 +105,14 @@ int	setnenv(char **arg, t_shell *shell)
   if (!nenv)
     return (1);
   while (shell->env && shell->env[env_i])
-    nenv[nenv_i++] = create_variable(arg, shell->env, env_i++, &n);
+    {
+      nenv[nenv_i++] = create_variable(arg, shell->env, env_i++, &n);
+      if (!nenv[nenv_i - 1])
+	{
+	  shell->exit = 1;
+	  return (1);
+	}
+    }
   if (n == 0)
     nenv[nenv_i++] = new_variable(arg);
   nenv[nenv_i] = 0;
