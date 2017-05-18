@@ -1088,3 +1088,45 @@ TESTS=
   echo 'echo alias ls ls -l'
   echo 'echo $?'
 [122-END]
+
+[123]
+NAME="EXIT"
+TESTS=
+  echo 'exit'
+[123-END]
+
+[124]
+NAME="EXIT NOT_A_NUMBER"
+TESTS=
+  echo 'exit banana'
+[124-END]
+
+[125]
+NAME="EXIT NORMAL"
+TESTS=
+  echo 'exit 123'
+[125-END]
+
+[126]
+NAME="EXIT TOO_MUCH_ARGUMENTS"
+TESTS=
+  echo 'exit I love banana'
+[126-END]
+
+[127]
+NAME="EXIT BAD_FORMAT"
+TESTS=
+  echo 'exit 345678RTYU'
+[127-END]
+
+[128]
+NAME="EXIT OVERFLOW"
+TESTS=
+  echo 'exit 34567456754345678765434567'
+[128-END]
+
+[129]
+NAME="EXIT NEGATIVE"
+TESTS=
+  echo 'exit -12'
+[129-END]
