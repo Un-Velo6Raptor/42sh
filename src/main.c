@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Thu May 18 07:06:43 2017 Benoit Hoffman
+** Last update Thu May 18 13:52:53 2017 Sahel Lucas--Saoudi
 */
 
 #include	<unistd.h>
@@ -19,14 +19,14 @@
 #include	<stdlib.h>
 #include	<curses.h>
 #include	<term.h>
-#include	"my.h"
+#include	"edit.h"
 #include	"main.h"
 #include	"basic.h"
 #include	"globing.h"
 #include	"alias.h"
 #include	"history.h"
 
-static void	prompt(int nb)
+void		prompt(int nb)
 {
   if (isatty(0) == 1)
     {
@@ -89,21 +89,34 @@ int			main(int __attribute__ ((unused)) ac,
   struct termios	save;
   t_key			keys;
   int			pos;
-  char			*check;
 
   shell = set_shell(env);
-  check = strdup("JE SUIS PAS NULL");
-  if ((pos = found_term(env)) < 0)
-    check = NULL;
-  if (check != NULL && ini_keys(&keys, &env[pos][5]) == 84)
-    return (84);
-  if (check != NULL)
-    check = start_edit_line(&env[pos][5], &new, &save, &keys);
-  if (isatty(0) == 1)
-    write(1, "$$$ >", 5);
+  pos = found_term(env);
+  if (isatty(0) == 1 && pos == -1)
+    {
+      dprintf(2, "No variable term set.\n");
+      return (1);
+    }
+  if (isatty(0) == 1 && (tgetent(NULL, &env[pos][5]) < 0 || tcgetattr(0, &new) < 0 || tcgetattr(0, &save) < 0))
+    {
+      dprintf(2, "Cannot set new Term.\n");
+      return (1);
+    }
+  new.c_lflag &= ~(ICANON | ECHO);
+  if (isatty(0) == 1 && tcsetattr(0, TCSANOW, &new) == -1)
+    {
+      dprintf(2, "Cannot set new attribute.\n");
+      return (1);
+    }
+  if (isatty(0) == 1 && ini_keys(&keys, &env[pos][5]) == 84)
+    {
+      dprintf(2, "Cannot get keys.\n");
+      return (1);
+    }
   signal(2, catch);
-  if (check != NULL)
-    shell->command = loop_read(&keys, NULL, NULL);
+  keys.shell = shell;
+  if (isatty(0) == 1)
+    shell->command = loop_read(&keys);
   else
     shell->command = getnextline_(0);
   while (shell->command && shell->exit == 0)
@@ -118,19 +131,20 @@ int			main(int __attribute__ ((unused)) ac,
 	{
 	  if (add_to_history(shell->command, shell))
 	  {
-	    end_edit_line(&save, &keys);
+	    tcsetattr(0, TCSANOW, &save);
+	    //end_edit_line(&save, &keys);
 	    return (free_shell(shell));
 	  }
 	  free_(shell->command);
-	  prompt(shell->status % 255);
-	  if (check != NULL)
-	    shell->command = loop_read(&keys, NULL, NULL);
+	  if (isatty(0) == 1)
+	    shell->command = loop_read(&keys);
 	  else
 	    shell->command = getnextline_(0);
 	}
     }
   if (isatty(0) == 1 && shell->exit == 0)
     write(1, "\n", 1);
-  end_edit_line(&save, &keys);
+  //  end_edit_line(&save, &keys);
+  tcsetattr(0, TCSANOW, &save);
   return (free_shell(shell));
 }

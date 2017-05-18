@@ -1,16 +1,15 @@
 /*
-** found_term.c for  in /home/januar_m/delivery/PSU/PSU_2016_42sh/martin
+** found_term.c for  in /home/januar_m/delivery/PSU/edit_line
 ** 
 ** Made by Martin Januario
 ** Login   <martin.januario@epitech.eu>
 ** 
-** Started on  Wed May 10 14:57:49 2017 Martin Januario
-** Last update Wed May 10 15:01:36 2017 Martin Januario
+** Started on  Wed May 17 15:40:14 2017 Martin Januario
+** Last update Wed May 17 15:40:37 2017 Martin Januario
 */
 
-#include	<unistd.h>
 #include	<string.h>
-#include	"my.h"
+#include	"edit.h"
 
 int		found_term(char **env)
 {
@@ -20,7 +19,7 @@ int		found_term(char **env)
   while (env[idx] != NULL)
     {
       if (strncmp(env[idx], "TERM=", 5) == 0)
-	return (idx);
+        return (idx);
       idx++;
     }
   return (-1);
