@@ -39,7 +39,8 @@ int	is_inhib(char *str, int i)
   return (0);
 }
 
-char	*add_return_value(char *new_command, int *nidx, char *ret_value, int *idx)
+char	*add_return_value(char *new_command, int *nidx,
+			      char *ret_value, int *idx)
 {
   new_command = realloc(new_command, *nidx + strlen(ret_value) + 2);
   new_command[*nidx] = '\0';

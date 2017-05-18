@@ -101,17 +101,14 @@ int	setnenv(char **arg, t_shell *shell)
   env_i = 0;
   nenv_i = 0;
   n = 0;
-  nenv = malloc(sizeof(char *) * (tablen_(shell->env) + 10));
+  nenv = malloc(sizeof(char *) * (tablen_(shell->env) + 2));
   if (!nenv)
     return (1);
   while (shell->env && shell->env[env_i])
     {
       nenv[nenv_i++] = create_variable(arg, shell->env, env_i++, &n);
       if (!nenv[nenv_i - 1])
-	{
-	  shell->exit = 1;
-	  return (1);
-	}
+	return (exit_return(shell, 1));
     }
   if (n == 0)
     nenv[nenv_i++] = new_variable(arg);

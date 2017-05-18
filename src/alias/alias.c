@@ -34,10 +34,9 @@ char		**remake_argv_with_alias(char *alias, char **argv)
       if (!new)
 	return (NULL);
       new[j] = strdup(argv[i]);
-      if (!new[j])
+      if (!new[j++])
 	return (NULL);
       i++;
-      j++;
     }
   new = realloc(new, sizeof(char *) * (j + 1));
   if (!new)
@@ -76,7 +75,9 @@ int	print_alias(char **tab, char *aliasname)
   int	idx;
 
   idx = 0;
-  while (tab && tab[idx])
+  if (!tab || !*tab)
+    return (0);
+  while (tab[idx])
     {
       alias = parse_(tab[idx], ' ');
       if (!alias)
@@ -89,11 +90,16 @@ int	print_alias(char **tab, char *aliasname)
   return (0);
 }
 
-int	new_alias(char **argv, t_shell *shell, int i)
+int	new_alias(char **argv, t_shell *shell)
 {
   char	*alias;
   int	argv_i;
+  int	i;
 
+  i = tablen_(shell->alias);
+  shell->alias = realloc(shell->alias, sizeof(char *) * (i + 2));
+  if (!shell->alias)
+    return (1);
   argv_i = 2;
   alias = strdup(argv[1]);
   if (!alias)
@@ -119,15 +125,9 @@ int	new_alias(char **argv, t_shell *shell, int i)
 
 int	call_alias(char **argv, t_shell *shell)
 {
-  int	i;
-
-  i = tablen_(shell->alias);
-  shell->alias = realloc(shell->alias, sizeof(char *) * (i + 2));
-  if (!shell->alias)
-    return (1);
-  if (tablen_(argv) == 1)
+    if (tablen_(argv) == 1)
     return (print_alias(shell->alias, NULL));
   else if (tablen_(argv) == 2)
     return (print_alias(shell->alias, argv[1]));
-  return (new_alias(argv, shell, i));
+  return (new_alias(argv, shell));
 }

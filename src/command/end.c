@@ -11,11 +11,12 @@
 #include <stdlib.h>
 #include "main.h"
 
-void	end_manage(int *fd, char **name, char **av, char **tab)
+int	end_manage(int *fd, char **name, char **av, char **tab)
 {
   reset01(1);
   free(fd);
   free_tab(name);
   free_tab(av);
   free_tab(tab);
+  return (0);
 }

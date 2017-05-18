@@ -13,49 +13,38 @@
 #include "basic.h"
 #include "main.h"
 
+int	putstr_return(char *s, int out, int exit)
+{
+  putstr_(s, out);
+  return (exit);
+}
+
 int	call_exit(char **argv, t_shell *shell)
 {
   int	i;
 
   i = 0;
   if (tablen_(argv) > 2)
-    {
-      putstr_("exit: Expression Syntax.\n", 2);
-      return (1);
-    }
+    return (putstr_return("exit: Expression Syntax.\n", 2, 1));
   if (!argv[1])
-    {
-      shell->exit = 1;
-      return (0);
-    }
+    return (exit_return(shell, 0));
   if ((argv[1][0] > '9' || argv[1][0] < '0') && argv[1][i] != '-')
-    {
-      putstr_("exit: Expression Syntax.\n", 2);
-      return (1);
-    }
+    return (putstr_return("exit: Expression Syntax.\n", 2, 1));
   while (argv[1][i] != '\0')
     {
       if ((argv[1][i] < '0' || argv[1][i] > '9') && argv[1][i] != '-')
-	{
-	  putstr_("exit: Badly formed number.\n", 2);
-	  return (1);
-	}
+	return (putstr_return("exit: Badly formed number.\n", 2, 1));
       i += 1;
     }
-  shell->exit = 1;
   shell->status = atoi(argv[1]);
-  return (shell->status % 255);
+  return (exit_return(shell, shell->status));
 }
 
-/*int	call_exit(char **argv, t_shell *shell)
+int	exit_return(t_shell *shell, int exit)
 {
-  if (tablen_(argv) != 1)
-    shell->status = getnbr_(argv[1]);
-  else
-    shell->status = 0;
   shell->exit = 1;
-  return (0);
-  }*/
+  return (exit);
+}
 
 int	check_exit_pipe(char **command, int **pipefd, int *pid, t_shell *shell)
 {

@@ -8,6 +8,8 @@
 ** Last update Wed Apr  5 20:15:53 2017 Sahel Lucas--Saoudi
 */
 
+#include "main.h"
+
 int	is_valid(char *str)
 {
   int	str_i;
@@ -23,4 +25,10 @@ int	is_valid(char *str)
       str_i++;
     }
   return (1);
+}
+
+int	*exit_return_ptr(t_shell *shell, int *exit)
+{
+  shell->exit = 1;
+  return (exit);
 }

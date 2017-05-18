@@ -36,6 +36,14 @@ static char	*take_command_in_history(char *history_line)
   return (&history_line[i]);
 }
 
+static char	*free_history(char *command, char *com,
+				 char *history_command)
+{
+  free(command);
+  free(com);
+  return (strdup(history_command));
+}
+
 char	*history(char *command, t_shell *shell, int incr)
 {
   char	*history_command;
@@ -43,7 +51,7 @@ char	*history(char *command, t_shell *shell, int incr)
   int	i;
 
   com = strdup(command);
-  com = realloc(com, strlen(com) + 2);
+  com = realloc(com, strlen_(com) + 2);
   if (!com)
     return (NULL);
   strcat(com, "*");
@@ -53,13 +61,10 @@ char	*history(char *command, t_shell *shell, int incr)
   while (i >= 0 && shell->history[i])
   {
     history_command = take_command_in_history(shell->history[i]);
-    printf("line : %s\n", history_command);
     if (match(history_command, com))
     {
-      free(command);
-      free(com);
       shell->id_command = i - 1;
-      return (strdup(history_command));
+      free_history(command, com, history_command);
     }
     i += incr;
   }
@@ -101,7 +106,7 @@ int		add_to_history(char *command, t_shell *shell)
     return (1);
   buff = malloc(sizeof(char) * (16 + strlen_(command) + 3));
   if (!buff)
-    return(1);
+    return (1);
   sprintf(buff, "%6i\t%02i:%02i\t%s", i + 1, now_tm->tm_hour,
 	  now_tm->tm_min, command);
   shell->history[i] = strdup(buff);
