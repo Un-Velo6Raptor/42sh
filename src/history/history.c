@@ -44,6 +44,8 @@ char	*history(char *command, t_shell *shell, int incr)
 
   com = strdup(command);
   com = realloc(com, strlen(com) + 2);
+  if (!com)
+    return (NULL);
   strcat(com, "*");
   i = shell->id_command;
   if (!shell->history)
@@ -82,7 +84,7 @@ int	call_history(char **argv, t_shell *shell)
   return (0);
 }
 
-void		add_to_history(char *command, t_shell *shell)
+int		add_to_history(char *command, t_shell *shell)
 {
   char		*buff;
   int		i;
@@ -90,17 +92,20 @@ void		add_to_history(char *command, t_shell *shell)
   struct tm	*now_tm;
 
   if (!command || !*command)
-    return ;
+    return (1);
   t = time(NULL);
   now_tm = localtime(&t);
   i = tablen_(shell->history);
   shell->history = realloc(shell->history, sizeof(char *) * (i + 2));
   if (!shell->history)
-    return ;
+    return (1);
   buff = malloc(sizeof(char) * (16 + strlen_(command) + 3));
+  if (!buff)
+    return(1);
   sprintf(buff, "%6i\t%02i:%02i\t%s", i + 1, now_tm->tm_hour,
 	  now_tm->tm_min, command);
   shell->history[i] = strdup(buff);
   shell->history[i + 1] = NULL;
   shell->id_command = shell->idmax + 1;
+  return (0);
 }

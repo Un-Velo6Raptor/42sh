@@ -21,6 +21,8 @@ char	*take_word(char *str)
 
   i = 0;
   word = malloc(strlen(str) + 1);
+  if (!word)
+    return (NULL);
   while (str && str[i] && str[i] != ' ')
   {
     word[i] = str[i];
