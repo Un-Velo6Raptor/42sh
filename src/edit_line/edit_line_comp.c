@@ -5,7 +5,7 @@
 ** Login   <thomas.grandjean@epitech.eu>
 **
 ** Started on  Fri May 19 15:49:18 2017 Thomas GRANDJEAN
-** Last update Fri May 19 15:49:18 2017 Thomas GRANDJEAN
+** Last update Fri May 19 21:53:38 2017 Sahel Lucas--Saoudi
 */
 
 #include	<sys/ioctl.h>
@@ -27,7 +27,7 @@ static char		*my_concat(char *line, char *str, t_key *keys)
   }
   else
   {
-    tmp = malloc(my_strlen(str) + my_strlen(line) + 1);
+    tmp = malloc(my_strlen(str) + my_strlen(line) + 2);
     if (!tmp)
       return (NULL);
   }
@@ -35,7 +35,6 @@ static char		*my_concat(char *line, char *str, t_key *keys)
   strncat(tmp, line, keys->idx);
   strcat(tmp, str);
   strcat(tmp, &line[keys->idx]);
-  free(line);
   return (tmp);
 }
 

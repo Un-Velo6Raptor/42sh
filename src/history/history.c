@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri May 12 14:39:29 2017 Sahel Lucas--Saoudi
-** Last update Fri May 19 15:58:22 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 21:54:38 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdlib.h>
@@ -50,17 +50,20 @@ char	*history(char *command, t_shell *shell, int incr)
   char	*com;
   int	i;
 
-  com = malloc(strlen_(command) + 2);
+  com = malloc(strlen_(command) + 3);
   if (!com)
     return (shell->command);
-  memset(com, 0, strlen_(command) + 2);
+  memset(com, 0, strlen_(command) + 3);
   strcat(com, command);
   strcat(com, "*");
   i = shell->id_command + incr;
   if (!shell->history)
     return (shell->command);
   if (i >= tablen_(shell->history))
-    return (command);
+    {
+      shell->id_command = shell->idmax;
+      return (command);
+    }
   while (i >= 0 && i < tablen_(shell->history))
   {
     history_command = take_command_in_history(shell->history[i]);

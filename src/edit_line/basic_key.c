@@ -5,7 +5,7 @@
 ** Login   <martin.januario@epitech.eu>
 **
 ** Started on  Wed May 17 17:30:27 2017 Martin Januario
-** Last update Fri May 19 15:55:09 2017 Martin Januario
+** Last update Fri May 19 21:56:15 2017 Sahel Lucas--Saoudi
 */
 
 #include	<stdio.h>
@@ -45,10 +45,15 @@ char		*reset_command(char *command, int st)
   if (st == 1 && com == NULL)
     {
       if (command != NULL)
-	com = strdup(command);
+	{
+	  com = strdup(command);
+	  return (command);
+	}
       else
-	com = strdup("");
-      return (command);
+	{
+	  com = strdup("");
+	  return (com);
+	}
     }
   else if (st == 2)
     {
@@ -64,7 +69,7 @@ void		key_top_(t_key *keys, char *str, char **line)
 
   command = reset_command(*line, 1);
   keys->shell->command = *line;
-  if (command == NULL)
+  if (!command)
     return ;
   *line = history(command, keys->shell, -1);
   printf(tgetstr("dl", NULL));
@@ -82,7 +87,7 @@ void		key_bottom_(t_key *keys, char *str, char **line)
 
   command = reset_command(*line, 1);
   keys->shell->command = *line;
-  if (command == NULL)
+  if (!command)
     return ;
   *line = history(command, keys->shell, 1);
   printf(tgetstr("dl", NULL));
