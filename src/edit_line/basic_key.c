@@ -5,16 +5,18 @@
 ** Login   <martin.januario@epitech.eu>
 **
 ** Started on  Wed May 17 17:30:27 2017 Martin Januario
-** Last update Thu May 18 13:31:20 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 15:06:19 2017 Martin Januario
 */
 
 #include	<stdio.h>
 #include	<curses.h>
+#include	<string.h>
 #include	<term.h>
 #include	<stdlib.h>
 #include	"edit.h"
+#include	"history.h"
 
-void		key_left_(t_key *keys, char *str, char *line)
+void		key_left_(t_key *keys, char *str, char **line)
 {
   if (keys->idx < 1)
     return ;
@@ -25,9 +27,9 @@ void		key_left_(t_key *keys, char *str, char *line)
   (void) line;
 }
 
-void		key_right_(t_key *keys, char *str, char *line)
+void		key_right_(t_key *keys, char *str, char **line)
 {
-  if (keys->idx >= my_strlen(line))
+  if (keys->idx >= my_strlen(*line))
     return ;
   keys->idx += 1;
   printf(tgetstr("nd", NULL));
@@ -36,16 +38,44 @@ void		key_right_(t_key *keys, char *str, char *line)
   (void) line;
 }
 
-void		key_top_(t_key *keys, char *str, char *line)
+char		*reset_command(char *command, int st)
 {
-  (void) keys;
-  (void) str;
-  (void) line;
+  static char	*com = NULL;
+  
+  if (st == 1 && com == NULL)
+    {
+      if (command != NULL)
+	com = strdup(command);
+      else
+	com = strdup("");
+      return (command);
+    }
+  else if (st == 2)
+    {
+      com = NULL;
+      return (command);
+    }
+  return (com);
 }
 
-void		key_bottom_(t_key *keys, char *str, char *line)
+void		key_top_(t_key *keys, char *str, char **line)
 {
-  (void) keys;
+  char		*command;
+
+  command = reset_command(*line, 1);
+  if (command == NULL)
+    return ;
+  *line = history(command, keys->shell, -1);
   (void) str;
-  (void) line;
+}
+
+void		key_bottom_(t_key *keys, char *str, char **line)
+{
+  char		*command;
+
+  command = reset_command(*line, 1);
+  if (command == NULL)
+    return ;
+  *line = history(command, keys->shell, 1);
+  (void) str;
 }

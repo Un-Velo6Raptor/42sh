@@ -5,7 +5,7 @@
 ** Login   <martin.januario@epitech.eu>
 ** 
 ** Started on  Thu May 18 14:22:24 2017 Martin Januario
-** Last update Thu May 18 14:37:39 2017 Martin Januario
+** Last update Fri May 19 14:53:26 2017 Martin Januario
 */
 
 #include	<curses.h>
@@ -15,9 +15,9 @@
 #include	<stdio.h>
 #include	"edit.h"
 
-void		key_end_(t_key *keys, char *str, char *line)
+void		key_end_(t_key *keys, char *str, char **line)
 {
-  while (keys->idx < my_strlen(line))
+  while (keys->idx < my_strlen(*line))
     {
       printf(tgetstr("nd", NULL));
       fflush(stdout);
@@ -26,7 +26,7 @@ void		key_end_(t_key *keys, char *str, char *line)
   (void) str;
 }
 
-void		key_begin_(t_key *keys, char *str, char *line)
+void		key_begin_(t_key *keys, char *str, char **line)
 {
   while (keys->idx > 0)
     {

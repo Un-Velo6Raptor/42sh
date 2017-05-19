@@ -5,23 +5,23 @@
 ** Login   <martin.januario@epitech.eu>
 ** 
 ** Started on  Wed May 17 16:52:39 2017 Martin Januario
-** Last update Thu May 18 20:46:30 2017 Martin Januario
+** Last update Fri May 19 14:50:38 2017 Martin Januario
 */
 
 #include	<stdlib.h>
 #include	<string.h>
 #include	"edit.h"
 
-static int	launch_key(t_key *keys, char *str, char *line,
-			     void (*key_code)(t_key *, char *, char *))
+static int	launch_key(t_key *keys, char *str, char **line,
+			     void (*key_code)(t_key *, char *, char **))
 {
   key_code(keys, str, line);
   return (1);
 }
 
-int		check_is_key(t_key *keys, char *str, char *line)
+int		check_is_key(t_key *keys, char *str, char **line)
 {
-  void		(*key_code[10])(t_key *, char *, char *) =
+  void		(*key_code[10])(t_key *, char *, char **) =
     {key_left_, key_right_,
      key_top_, key_bottom_,
      key_sup_, key_begin_,

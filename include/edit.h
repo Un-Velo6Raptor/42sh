@@ -5,7 +5,7 @@
 ** Login   <martin.januario@epitech.eu>
 **
 ** Started on  Wed May 17 15:38:26 2017 Martin Januario
-** Last update Fri May 19 12:20:02 2017 Benoit Hoffman
+** Last update Fri May 19 14:49:17 2017 Martin Januario
 */
 
 #ifndef		EDIT_H_
@@ -29,17 +29,17 @@ char		*loop_read(t_key *);
 
 int		found_term(char **);
 int		ini_keys(t_key *, char *);
-int		check_is_key(t_key *, char *, char *);
-void		key_left_(t_key *, char *, char *);
-void		key_right_(t_key *, char *, char *);
-void		key_top_(t_key *, char *, char *);
-void		key_bottom_(t_key *, char *, char *);
-void		key_sup_(t_key *, char *, char *);
-void		key_del_(t_key *, char *, char *);
-void		key_begin_(t_key *, char *, char *);
-void		key_end_(t_key *, char *, char *);
-void		key_sleft_(t_key *, char *, char *);
-void		key_sright_(t_key *, char *, char *);
+int		check_is_key(t_key *, char *, char **);
+void		key_left_(t_key *, char *, char **);
+void		key_right_(t_key *, char *, char **);
+void		key_top_(t_key *, char *, char **);
+void		key_bottom_(t_key *, char *, char **);
+void		key_sup_(t_key *, char *, char **);
+void		key_del_(t_key *, char *, char **);
+void		key_begin_(t_key *, char *, char **);
+void		key_end_(t_key *, char *, char **);
+void		key_sleft_(t_key *, char *, char **);
+void		key_sright_(t_key *, char *, char **);
 
 /*
 **		Protoypes of files basics.

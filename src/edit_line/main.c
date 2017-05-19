@@ -5,7 +5,7 @@
 ** Login   <martin.januario@epitech.eu>
 **
 ** Started on  Wed May 17 15:35:14 2017 Martin Januario
-** Last update Thu May 18 19:40:27 2017 Martin Januario
+** Last update Fri May 19 14:49:35 2017 Martin Januario
 */
 
 #include	<sys/ioctl.h>
@@ -76,7 +76,7 @@ char		*loop_read(t_key *keys)
 	}
       if ((my_strlen(str) == 1 && str[0] == 4 && my_strlen(line) == 0))
 	return (NULL);
-      if (check_is_key(keys, str, line) == 0 &&
+      if (check_is_key(keys, str, &line) == 0 &&
 	  my_strlen(line) + my_strlen(str) < keys->cols)
 	{
 	  line = my_concat(line, str, keys);
