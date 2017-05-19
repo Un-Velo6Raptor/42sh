@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Fri May 19 07:43:34 2017 Benoit Hoffman
+** Last update Fri May 19 13:17:09 2017 Sahel Lucas--Saoudi
 */
 
 #include	<unistd.h>
@@ -30,8 +30,8 @@ void		prompt(int nb)
 {
   if (isatty(0) == 1)
     {
-      putnbr_(nb);
-      write(1, " >", 2);
+      printf("%03i >", nb);
+      fflush(stdout);
     }
 }
 
