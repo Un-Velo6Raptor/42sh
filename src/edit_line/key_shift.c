@@ -12,6 +12,13 @@
 #include	<term.h>
 #include	"edit.h"
 
+static void	move_cursor(t_key *keys, char *str, int i)
+{
+  printf(tgetstr(str, NULL));
+  keys->idx += i;
+  fflush(stdout);
+}
+
 void		key_sleft_(t_key *keys, __attribute__ ((unused)) char *str,
 			       char **line)
 {
@@ -22,9 +29,7 @@ void		key_sleft_(t_key *keys, __attribute__ ((unused)) char *str,
   check = 0;
   save = 0;
   cpt = 0;
-  if (*line == NULL)
-    return ;
-  while (keys->idx > 0)
+  while (*line && keys->idx > 0)
     {
       if ((*line)[keys->idx] != ' ' && cpt != 0)
 	{
@@ -36,14 +41,10 @@ void		key_sleft_(t_key *keys, __attribute__ ((unused)) char *str,
 	save += 1;
       if (check >= 1 && save >= 1)
 	{
-	  printf(tgetstr("nd", NULL));
-	  keys->idx++;
-	  fflush(stdout);
+	  move_cursor(keys, "nd",1);
 	  return ;
 	}
-      printf(tgetstr("le", NULL));
-      fflush(stdout);
-      keys->idx--;
+      move_cursor(keys, "le", -1);
       cpt++;
     }
 }
