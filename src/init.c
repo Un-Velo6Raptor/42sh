@@ -5,7 +5,7 @@
 ** Login   <benoit.hoffman@epitech.eu>
 ** 
 ** Started on  Fri May 19 13:50:52 2017 Benoit Hoffman
-** Last update Fri May 19 14:01:18 2017 Benoit Hoffman
+** Last update Fri May 19 14:18:26 2017 Benoit Hoffman
 */
 
 #include		<stdio.h>
@@ -13,6 +13,12 @@
 #include		<stdlib.h>
 #include		<term.h>
 #include		"edit.h"
+
+static int		print_error_and_return(char *str)
+{
+  dprintf(2, str);
+  return (84);
+}
 
 int			initial_checks(char **env, t_key *keys,
 				       struct termios *new,
@@ -22,26 +28,14 @@ int			initial_checks(char **env, t_key *keys,
 
   pos = found_term(env);
   if (isatty(0) == 1 && pos == -1)
-    {
-      dprintf(2, "No variable term set.\n");
-      return (84);
-    }
+    return (print_error_and_return("No variable term set.\n"));
   if (isatty(0) == 1 && (tgetent(NULL, &env[pos][5]) < 0
                          || tcgetattr(0, new) < 0 || tcgetattr(0, save) < 0))
-    {
-      dprintf(2, "Cannot set new Term.\n");
-      return (84);
-    }
+    return (print_error_and_return("Cannot set new Term.\n"));
   new->c_lflag &= ~(ICANON | ECHO);
   if (isatty(0) == 1 && tcsetattr(0, TCSANOW, new) == -1)
-    {
-      dprintf(2, "Cannot set new attribute.\n");
-      return (84);
-    }
+    return (print_error_and_return("Cannot set new attribute.\n"));
   if (isatty(0) == 1 && ini_keys(keys, &env[pos][5]) == 84)
-    {
-      dprintf(2, "Cannot get keys.\n");
-      return (84);
-    }
+    return (print_error_and_return("Cannot get keys.\n"));
   return (0);
 }
