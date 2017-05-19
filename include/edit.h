@@ -5,12 +5,13 @@
 ** Login   <martin.januario@epitech.eu>
 **
 ** Started on  Wed May 17 15:38:26 2017 Martin Januario
-** Last update Fri May 19 15:43:27 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 14:07:18 2017 Benoit Hoffman
 */
 
 #ifndef		EDIT_H_
 # define	EDIT_H_
 
+# include	<termios.h>
 # include	"main.h"
 
 typedef struct	s_key
@@ -23,6 +24,9 @@ typedef struct	s_key
 
 char		*loop_read(t_key *);
 char		*reset_command(char *, int);
+int             initial_checks(char **, struct s_key *,
+                               struct termios *,
+                               struct termios *);
 
 /*
 **		Protoypes of files sources.

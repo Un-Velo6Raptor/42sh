@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Fri May 19 13:17:09 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 14:00:02 2017 Benoit Hoffman
 */
 
 #include	<unistd.h>
@@ -88,31 +88,33 @@ int			main(int __attribute__ ((unused)) ac,
   struct termios	new;
   struct termios	save;
   t_key			keys;
-  int			pos;
 
   shell = set_shell(env);
-  pos = found_term(env);
-  if (isatty(0) == 1 && pos == -1)
+  if (initial_checks(env, &keys, &new, &save) == 84)
+    return (84);
+  /*pos = found_term(env);
+    if (isatty(0) == 1 && pos == -1)
     {
-      dprintf(2, "No variable term set.\n");
-      return (1);
+    dprintf(2, "No variable term set.\n");
+    return (84);
     }
-  if (isatty(0) == 1 && (tgetent(NULL, &env[pos][5]) < 0 || tcgetattr(0, &new) < 0 || tcgetattr(0, &save) < 0))
+    if (isatty(0) == 1 && (tgetent(NULL, &env[pos][5]) < 0
+    || tcgetattr(0, &new) < 0 || tcgetattr(0, &save) < 0))
     {
-      dprintf(2, "Cannot set new Term.\n");
-      return (1);
+    dprintf(2, "Cannot set new Term.\n");
+    return (84);
     }
-  new.c_lflag &= ~(ICANON | ECHO);
-  if (isatty(0) == 1 && tcsetattr(0, TCSANOW, &new) == -1)
+    new.c_lflag &= ~(ICANON | ECHO);
+    if (isatty(0) == 1 && tcsetattr(0, TCSANOW, &new) == -1)
     {
-      dprintf(2, "Cannot set new attribute.\n");
-      return (1);
+    dprintf(2, "Cannot set new attribute.\n");
+    return (84);
     }
-  if (isatty(0) == 1 && ini_keys(&keys, &env[pos][5]) == 84)
+    if (isatty(0) == 1 && ini_keys(&keys, &env[pos][5]) == 84)
     {
-      dprintf(2, "Cannot get keys.\n");
-      return (1);
-    }
+    dprintf(2, "Cannot get keys.\n");
+    return (84);
+    }*/
   signal(2, catch);
   keys.shell = shell;
   if (isatty(0) == 1)
@@ -126,18 +128,18 @@ int			main(int __attribute__ ((unused)) ac,
       if (put_minimalist(shell) != 0)
 	return (84);
       if (shell->command && *(shell->command) && !check_flexibility(shell))
-      {
-	tcsetattr(0, TCSANOW, &save);
-	manage_command(shell);
-	tcsetattr(0, TCSANOW, &new);
-      }
-	if (shell->exit == 0)
+	{
+	  tcsetattr(0, TCSANOW, &save);
+	  manage_command(shell);
+	  tcsetattr(0, TCSANOW, &new);
+	}
+      if (shell->exit == 0)
 	{
 	  if (add_to_history(shell->command, shell))
-	  {
-	    tcsetattr(0, TCSANOW, &save);
-	    return (free_shell(shell));
-	  }
+	    {
+	      tcsetattr(0, TCSANOW, &save);
+	      return (free_shell(shell));
+	    }
 	  free(shell->command);
 	  if (isatty(0) == 1)
 	    shell->command = loop_read(&keys);
