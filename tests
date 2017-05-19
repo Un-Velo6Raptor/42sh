@@ -1125,8 +1125,8 @@ TESTS=
   echo 'exit -12'
 [128-END]
 
-[129m]
-NAME="WHERE NO ARG"
+[129]
+NAME="REPEAT 0"
 TESTS=
-  echo 'where'
+  echo 'repeat'
 [129-END]

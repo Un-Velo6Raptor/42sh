@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 15:49:05 2017 Sahel Lucas--Saoudi
-** Last update Wed May 17 22:42:08 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 14:39:25 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdio.h>
@@ -82,30 +82,25 @@ int	print_alias(char **tab, char *aliasname)
       alias = parse_(tab[idx], ' ');
       if (!alias)
 	return (1);
-      if (!aliasname || !strcmp(alias[0], aliasname))
+      if (!aliasname)
 	printf("%s\t(%s)\n", alias[0], &(tab[idx])[strlen(alias[0]) + 1]);
+      else if (!strcmp(alias[0], aliasname))
+	printf("%s\n", &(tab[idx])[strlen(alias[0]) + 1]);
       free_tab(alias);
       idx++;
     }
   return (0);
 }
 
-int	new_alias(char **argv, t_shell *shell)
+int	new_alias(char **argv, t_shell *shell, int i)
 {
   char	*alias;
   int	argv_i;
-  int	i;
 
-  i = tablen_(shell->alias);
-  shell->alias = realloc(shell->alias, sizeof(char *) * (i + 2));
-  if (!shell->alias)
-    return (1);
   argv_i = 2;
   alias = strdup(argv[1]);
-  if (!alias)
-    return (1);
-  alias = realloc(alias, strlen(alias) + 2);
-  if (!alias)
+  alias = realloc(alias, strlen_(alias) + 2);
+  if (!alias || strlen_(alias) == 0)
     return (1);
   strcat(alias, " ");
   while (argv[argv_i])
@@ -125,9 +120,15 @@ int	new_alias(char **argv, t_shell *shell)
 
 int	call_alias(char **argv, t_shell *shell)
 {
-    if (tablen_(argv) == 1)
+  int	i;
+
+  if (tablen_(argv) == 1)
     return (print_alias(shell->alias, NULL));
   else if (tablen_(argv) == 2)
     return (print_alias(shell->alias, argv[1]));
-  return (new_alias(argv, shell));
+  i = tablen_(shell->alias);
+  shell->alias = realloc(shell->alias, sizeof(char *) * (i + 2));
+  if (!shell->alias)
+    return (1);
+  return (new_alias(argv, shell, i));
 }
