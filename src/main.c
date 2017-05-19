@@ -126,8 +126,12 @@ int			main(int __attribute__ ((unused)) ac,
       if (put_minimalist(shell) != 0)
 	return (84);
       if (shell->command && *(shell->command) && !check_flexibility(shell))
+      {
+	tcsetattr(0, TCSANOW, &save);
 	manage_command(shell);
-      if (shell->exit == 0)
+	tcsetattr(0, TCSANOW, &new);
+      }
+	if (shell->exit == 0)
 	{
 	  if (add_to_history(shell->command, shell))
 	  {

@@ -15,7 +15,8 @@
 #include	<string.h>
 #include	"edit.h"
 
-void		key_del_(t_key *keys, char *str, char *line)
+void		key_del_(t_key *keys, __attribute__ ((unused)) char *str,
+			     char *line)
 {
   char		*tmp;
   int		idx;
@@ -42,10 +43,10 @@ void		key_del_(t_key *keys, char *str, char *line)
   printf(tgetstr("le", NULL));
   printf(tgetstr("dc", NULL));
   fflush(stdout);
-  (void) str;
 }
 
-void		key_sup_(t_key *keys, char *str, char *line)
+void		key_sup_(t_key *keys, __attribute__ ((unused)) char *str,
+			     char *line)
 {
   char		*tmp;
   int		idx;
@@ -54,7 +55,7 @@ void		key_sup_(t_key *keys, char *str, char *line)
   idx = 0;
   idx2 = 0;
   tmp = NULL;
-  if (keys->idx >= my_strlen(line))
+  if (!line || keys->idx >= my_strlen(line))
     return ;
   tmp = strdup(line);
   if (tmp == NULL)
@@ -71,5 +72,4 @@ void		key_sup_(t_key *keys, char *str, char *line)
   free(tmp);
   printf(tgetstr("dc", NULL));
   fflush(stdout);
-  (void) str;
 }

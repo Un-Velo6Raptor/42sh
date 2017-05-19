@@ -16,7 +16,7 @@
 
 void		key_left_(t_key *keys, char *str, char *line)
 {
-  if (keys->idx < 0)
+  if (keys->idx <= 5)
     return ;
   keys->idx -= 1;
   printf(tgetstr("le", NULL));
@@ -27,6 +27,8 @@ void		key_left_(t_key *keys, char *str, char *line)
 
 void		key_right_(t_key *keys, char *str, char *line)
 {
+  printf("%i\n", keys->idx);
+  fflush(stdout);
   if (keys->idx >= my_strlen(line))
     return ;
   keys->idx += 1;
