@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Mon Apr  3 15:31:27 2017 Sahel Lucas--Saoudi
-** Last update Thu May 18 07:27:57 2017 Benoit Hoffman
+** Last update Fri May 19 08:06:44 2017 Benoit Hoffman
 */
 
 #include <unistd.h>
@@ -22,16 +22,12 @@ int	*command_loop(int *pid, char **command, int i, t_shell *shell)
   fd = malloc(8);
   if (!fd || pipe(fd) == -1)
     {
-      putstr_("Not enought file descriptor.\n", 2);
-      shell->exit = 1;
-      return (NULL);
+      putstr_("Not enough file descriptor.\n", 2);
+      return (exit_return_ptr(shell, NULL));
     }
   pid[i] = fork();
   if (pid[i] == -1)
-    {
-      shell->exit = 1;
-      return (NULL);
-    }
+    return (exit_return_ptr(shell, NULL));
   if (pid[i] == 0)
     {
       dup2(shell->fd0, 0);
@@ -41,10 +37,7 @@ int	*command_loop(int *pid, char **command, int i, t_shell *shell)
       exec_manage(parse__redir(command[i]), shell);
       close_(fd[1]);
       free_tab(command);
-      {
-	shell->exit = 1;
-	return (NULL);
-      }
+      return (exit_return_ptr(shell, NULL));
     }
   close_(fd[1]);
   shell->fd0 = fd[0];
@@ -152,7 +145,7 @@ int	exec_pipe_manager(char **tab, int tab_i, t_shell *shell)
   if (check_exit_pipe(command, pipefd, pid, shell) == 84)
     return (84);
   pipe_end(shell, pipefd, pid, tablen_(command) - 1);
-  free(pipefd);
+  free_pipe(pipefd, tablen_(command));
   free(pid);
   free_tab(command);
   return (0);

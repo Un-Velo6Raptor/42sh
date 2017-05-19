@@ -67,7 +67,7 @@ void		setup_redir(char *, int *, char **);
 void		reset01(int);
 void		prompt(int);
 void		close_(int);
-void		end_manage(int *, char **, char **, char **);
+int		end_manage(int *, char **, char **, char **);
 int		check_file(char *, char);
 char		**parse_and_or(char *);
 int		check_next(int , char *);
@@ -85,5 +85,8 @@ int		check_path_which(char *, t_shell *);
 int		check_builtin_which(char *);
 int		check_alias_which(char *, t_shell *);
 int		free_shell(t_shell *);
+int		exit_return(t_shell *, int);
+int		*exit_return_ptr(t_shell *, int *);
+int		putstr_return(char *s, int out, int exit);
 
 #endif /* !MAIN_H_ */

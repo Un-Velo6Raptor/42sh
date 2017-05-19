@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:14:48 2017 Sahel Lucas--Saoudi
-** Last update Thu May 11 15:40:45 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 07:50:18 2017 Benoit Hoffman
 */
 
 #include <stdlib.h>
@@ -36,6 +36,6 @@ char	*concat_free(char *str1, char *str2)
       str_i[1]++;
     }
   new[str_i[0] + str_i[1]] = '\0';
-  free_(str1);
+  free(str1);
   return (new);
 }

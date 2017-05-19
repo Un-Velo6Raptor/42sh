@@ -12,13 +12,15 @@
 #include	<string.h>
 #include	"globing.h"
 
-void		modif_command_globing(t_globing *globings, int *nidx, char *command, int *idx)
+void		modif_command_globing(t_globing *globings, int *nidx,
+					  char *command, int *idx)
 {
   globings->new_command = realloc(globings->new_command, *nidx + 2);
   globings->new_command[(*nidx)++] = command[*idx];
 }
 
-int		init_globing(char *command, t_globing *globings, int *idx, int *nidx)
+int		init_globing(char *command, t_globing *globings, int *idx,
+				int *nidx)
 {
   *idx = 0;
   *nidx = 0;

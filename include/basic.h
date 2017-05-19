@@ -5,12 +5,13 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Sat Apr  8 17:22:25 2017 Sahel Lucas--Saoudi
-** Last update Sat Apr  8 17:22:26 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 07:49:39 2017 Benoit Hoffman
 */
 
 #ifndef BASIC_H_
 # define BASIC_H_
 
+void    free_pipe(int **, int);
 char	*strdup_(char *);
 char	*strndup_(char *, int);
 char	*strdupn_(char *, int);

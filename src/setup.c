@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Sat Apr  8 16:45:26 2017 Sahel Lucas--Saoudi
-** Last update Fri Apr 28 14:14:40 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 07:51:33 2017 Benoit Hoffman
 */
 
 #include <fcntl.h>
@@ -45,7 +45,7 @@ void	setup_redir(char *buffer, int *fd, char **file_name)
 	return ;
       dup2(pipefd[0], 0);
       putstr_(buffer, pipefd[1]);
-      free_(buffer);
+      free(buffer);
       close(pipefd[1]);
     }
   i = 0;

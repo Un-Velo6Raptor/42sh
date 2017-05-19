@@ -26,26 +26,20 @@ int	exec_manage(char **tab, t_shell *shell)
       shell->status = 1;
       return (0);
     }
-  av = take_redir(tab, 0);
-  av = alias(av, shell);
+  av = alias(take_redir(tab, 0), shell);
   if (!av || !*av)
     {
-      putstr_("Invalid null command.\n", 2);
       shell->status = 1;
-      return (0);
+      return (putstr_return("Invalid null command.\n", 2, 0));
     }
   reset01(0);
   buffer = NULL;
   fd = get_fd(file_name, &buffer);
   if (!fd)
-    {
-      shell->exit = 1;
-      return (84);
-    }
+    return (exit_return(shell, 84));
   setup_redir(buffer, fd, file_name);
   exec_manager(av, shell);
-  end_manage(fd, file_name, av, tab);
-  return (0);
+  return (end_manage(fd, file_name, av, tab));
 }
 
 static int	send_to_exec(char **argv, int argv_i, t_shell *shell)
@@ -78,19 +72,15 @@ int	lexer(char **argv, t_shell *shell)
       new_i = 0;
       new = parse_and_or(argv[argv_i]);
       if (!new)
-	{
-	  putstr_("Invalid null command.\n", 2);
-	  shell->status = 1;
-	  return (0);
-	}
+      {
+	shell->status = 1;
+	return (putstr_return("Invalid null command.\n", 2, 0));
+      }
       if (send_to_exec(new, new_i, shell) == 84)
 	return (84);
       new_i = 1;
-      while (check_next(shell->status, new[new_i]))
-	{
-	  new_i += 1;
-	  send_to_exec(new, new_i++, shell);
-	}
+      while (check_next(shell->status, new[new_i++]))
+	send_to_exec(new, new_i++, shell);
       free_tab(new);
       argv_i++;
     }
