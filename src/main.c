@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Thu May 18 13:52:53 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 07:43:34 2017 Benoit Hoffman
 */
 
 #include	<unistd.h>
@@ -135,7 +135,7 @@ int			main(int __attribute__ ((unused)) ac,
 	    //end_edit_line(&save, &keys);
 	    return (free_shell(shell));
 	  }
-	  free_(shell->command);
+	  free(shell->command);
 	  if (isatty(0) == 1)
 	    shell->command = loop_read(&keys);
 	  else

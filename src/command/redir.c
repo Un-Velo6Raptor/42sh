@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Sat Apr  8 15:16:30 2017 Sahel Lucas--Saoudi
-** Last update Fri Apr 28 19:30:35 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 07:50:47 2017 Benoit Hoffman
 */
 
 #include <fcntl.h>
@@ -78,7 +78,7 @@ char	**parse__redir(char *str)
   tab = parse_(command, ' ');
   if (!tab)
     return (NULL);
-  free_(command);
+  free(command);
   return (tab);
 }
 

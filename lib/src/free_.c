@@ -5,13 +5,20 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Sat Apr  8 17:16:49 2017 Sahel Lucas--Saoudi
-** Last update Sat Apr  8 17:16:52 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 08:11:14 2017 Benoit Hoffman
 */
 
 #include <stdlib.h>
 
-void	free_(void *str)
+void     free_pipe(int **pipefd, int size)
 {
-  if (str)
-    free(str);
+  int    i;
+
+  i = 0;
+  while (i != size)
+    {
+      free(pipefd[i]);
+      i += 1;
+    }
+  free(pipefd);
 }

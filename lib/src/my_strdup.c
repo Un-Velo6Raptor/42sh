@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Sat Apr  8 17:19:15 2017 Sahel Lucas--Saoudi
-** Last update Sat Apr  8 17:19:15 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 07:52:10 2017 Benoit Hoffman
 */
 
 #include <stdlib.h>
@@ -65,6 +65,6 @@ char	*strdupn_(char *str, int start)
       start++;
     }
   new[new_i] = '\0';
-  free_(str);
+  free(str);
   return (new);
 }

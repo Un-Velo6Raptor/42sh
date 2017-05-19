@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 17:04:35 2017 Sahel Lucas--Saoudi
-** Last update Thu May 18 16:04:57 2017 Lucas Sahel
+** Last update Fri May 19 08:18:05 2017 Benoit Hoffman
 */
 
 #include <fcntl.h>
@@ -122,7 +122,7 @@ void	manage_command(t_shell *shell)
   tmp = epur(shell->command);
   free(shell->command);
   shell->command = tmp;
-  if (!shell->command[0])
+  if (!shell->command || !shell->command[0])
     return ;
   argv = parse_(shell->command, ';');
   if (!argv[0]&& howmany_(shell->command, '\"') != 0)

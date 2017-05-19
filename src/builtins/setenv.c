@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:28 2017 Sahel Lucas--Saoudi
-** Last update Thu May 18 07:14:52 2017 Benoit Hoffman
+** Last update Fri May 19 07:50:09 2017 Benoit Hoffman
 */
 
 #include <unistd.h>
@@ -61,7 +61,7 @@ char	*create_variable(char **arg, char **env, int env_i, int *n)
 	var[var_i++] = env[env_i][char_i++];
       var[var_i] = '\0';
     }
-  free_(save_arg);
+  free(save_arg);
   return (var);
 }
 
