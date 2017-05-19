@@ -5,7 +5,7 @@
 ** Login   <martin.januario@epitech.eu>
 **
 ** Started on  Wed May 17 17:30:27 2017 Martin Januario
-** Last update Fri May 19 15:06:19 2017 Martin Januario
+** Last update Fri May 19 15:12:34 2017 Sahel Lucas--Saoudi
 */
 
 #include	<stdio.h>
@@ -41,7 +41,7 @@ void		key_right_(t_key *keys, char *str, char **line)
 char		*reset_command(char *command, int st)
 {
   static char	*com = NULL;
-  
+
   if (st == 1 && com == NULL)
     {
       if (command != NULL)
@@ -63,9 +63,11 @@ void		key_top_(t_key *keys, char *str, char **line)
   char		*command;
 
   command = reset_command(*line, 1);
+  keys->shell->command = *line;
   if (command == NULL)
     return ;
   *line = history(command, keys->shell, -1);
+  printf("%s\n", *line);
   (void) str;
 }
 
@@ -74,8 +76,10 @@ void		key_bottom_(t_key *keys, char *str, char **line)
   char		*command;
 
   command = reset_command(*line, 1);
+  keys->shell->command = *line;
   if (command == NULL)
     return ;
   *line = history(command, keys->shell, 1);
+  printf("%s\n", *line);
   (void) str;
 }

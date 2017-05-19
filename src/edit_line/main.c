@@ -5,7 +5,7 @@
 ** Login   <martin.januario@epitech.eu>
 **
 ** Started on  Wed May 17 15:35:14 2017 Martin Januario
-** Last update Fri May 19 14:49:35 2017 Martin Januario
+** Last update Fri May 19 15:43:02 2017 Sahel Lucas--Saoudi
 */
 
 #include	<sys/ioctl.h>
@@ -72,6 +72,7 @@ char		*loop_read(t_key *keys)
       if (strcmp(str, "\n") == 0)
 	{
 	  printf("\n");
+	  reset_command(NULL, 2);
 	  return ((line == NULL) ? strdup("") : line);
 	}
       if ((my_strlen(str) == 1 && str[0] == 4 && my_strlen(line) == 0))

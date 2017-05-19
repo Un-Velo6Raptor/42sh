@@ -5,7 +5,7 @@
 ** Login   <martin.januario@epitech.eu>
 **
 ** Started on  Wed May 17 15:38:26 2017 Martin Januario
-** Last update Fri May 19 14:49:17 2017 Martin Januario
+** Last update Fri May 19 15:43:27 2017 Sahel Lucas--Saoudi
 */
 
 #ifndef		EDIT_H_
@@ -22,6 +22,7 @@ typedef struct	s_key
 }		t_key;
 
 char		*loop_read(t_key *);
+char		*reset_command(char *, int);
 
 /*
 **		Protoypes of files sources.

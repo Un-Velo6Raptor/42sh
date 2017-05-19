@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri May 12 14:39:29 2017 Sahel Lucas--Saoudi
-** Last update Fri May 19 07:27:54 2017 Benoit Hoffman
+** Last update Fri May 19 15:39:47 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdlib.h>
@@ -36,10 +36,9 @@ static char	*take_command_in_history(char *history_line)
   return (&history_line[i]);
 }
 
-static char	*free_history(char *command, char *com,
+static char	*free_history(char *com,
 				 char *history_command)
 {
-  free(command);
   free(com);
   return (strdup(history_command));
 }
@@ -50,21 +49,24 @@ char	*history(char *command, t_shell *shell, int incr)
   char	*com;
   int	i;
 
-  com = strdup(command);
-  com = realloc(com, strlen_(com) + 2);
+  com = malloc(strlen_(command) + 2);
   if (!com)
-    return (NULL);
+    return (shell->command);
+  memset(com, 0, strlen_(command) + 2);
+  strcat(com, command);
   strcat(com, "*");
-  i = shell->id_command;
+  i = shell->id_command + incr;
   if (!shell->history)
     return (shell->command);
+  printf("JE SUIS ICI %i \n", i);
   while (i >= 0 && shell->history[i])
   {
     history_command = take_command_in_history(shell->history[i]);
+    printf("=>%s : %s\n", command, history_command);
     if (match(history_command, com))
     {
-      shell->id_command = i - 1;
-      free_history(command, com, history_command);
+      shell->id_command = i;
+      return (free_history(com, history_command));
     }
     i += incr;
   }
@@ -111,7 +113,8 @@ int		add_to_history(char *command, t_shell *shell)
 	  now_tm->tm_min, command);
   shell->history[i] = strdup(buff);
   shell->history[i + 1] = NULL;
-  shell->id_command = shell->idmax + 1;
+  shell->idmax++;
+  shell->id_command = shell->idmax;
   free(buff);
   return (0);
 }
