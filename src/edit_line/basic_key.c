@@ -5,7 +5,7 @@
 ** Login   <martin.januario@epitech.eu>
 **
 ** Started on  Wed May 17 17:30:27 2017 Martin Januario
-** Last update Fri May 19 15:12:34 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 15:55:09 2017 Martin Januario
 */
 
 #include	<stdio.h>
@@ -67,7 +67,12 @@ void		key_top_(t_key *keys, char *str, char **line)
   if (command == NULL)
     return ;
   *line = history(command, keys->shell, -1);
-  printf("%s\n", *line);
+  printf(tgetstr("dl", NULL));
+  prompt(keys->shell->status);
+  if (*line != NULL)
+    printf("%s", *line);
+  fflush(stdout);
+  keys->idx = my_strlen(*line);
   (void) str;
 }
 
@@ -80,6 +85,11 @@ void		key_bottom_(t_key *keys, char *str, char **line)
   if (command == NULL)
     return ;
   *line = history(command, keys->shell, 1);
-  printf("%s\n", *line);
+  printf(tgetstr("dl", NULL));
+  prompt(keys->shell->status);
+  if (*line != NULL)
+    printf("%s", *line);
+  fflush(stdout);
+  keys->idx = my_strlen(*line);
   (void) str;
 }

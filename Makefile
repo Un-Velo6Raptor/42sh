@@ -5,7 +5,7 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Fri May 19 13:54:48 2017 Benoit Hoffman
+## Last update Fri May 19 14:08:53 2017 Benoit Hoffman
 ##
 
 SRC	=	src/main.c			\
@@ -59,6 +59,7 @@ SRC	=	src/main.c			\
 		src/edit_line/ini_keys.c	\
 		src/edit_line/key_del.c		\
 		src/edit_line/key_pole.c	\
+		src/edit_line/edit_line_comp.c	\
 		src/edit_line/key_shift.c	\
 		src/edit_line/main.c		\
 		src/init.c
