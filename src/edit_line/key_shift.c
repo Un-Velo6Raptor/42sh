@@ -5,7 +5,7 @@
 ** Login   <martin.januario@epitech.eu>
 ** 
 ** Started on  Thu May 18 19:44:16 2017 Martin Januario
-** Last update Thu May 18 20:45:08 2017 Martin Januario
+** Last update Fri May 19 14:53:11 2017 Martin Januario
 */
 
 #include	<curses.h>
@@ -13,7 +13,7 @@
 #include	"edit.h"
 
 void		key_sleft_(t_key *keys, __attribute__ ((unused)) char *str,
-			       char *line)
+			       char **line)
 {
   unsigned int	check;
   unsigned int	save;
@@ -22,11 +22,11 @@ void		key_sleft_(t_key *keys, __attribute__ ((unused)) char *str,
   check = 0;
   save = 0;
   cpt = 0;
-  if (line == NULL)
+  if (*line == NULL)
     return ;
   while (keys->idx > 0)
     {
-      if (line[keys->idx] != ' ' && cpt != 0)
+      if ((*line)[keys->idx] != ' ' && cpt != 0)
 	{
 	  if (save == cpt)
 	    save = 0;
@@ -49,7 +49,7 @@ void		key_sleft_(t_key *keys, __attribute__ ((unused)) char *str,
 }
 
 void		key_sright_(t_key *keys, __attribute__ ((unused)) char *str,
-				char *line)
+				char **line)
 {
   unsigned int	check;
   unsigned int	save;
@@ -58,9 +58,9 @@ void		key_sright_(t_key *keys, __attribute__ ((unused)) char *str,
   check = 0;
   save = 0;
   cpt = 0;
-  while (line && line[keys->idx] != '\0')
+  while (*line && (*line)[keys->idx] != '\0')
     {
-      if (line[keys->idx] != ' ' && cpt != 0)
+      if ((*line)[keys->idx] != ' ' && cpt != 0)
 	{
 	  if (save == cpt)
 	    save = 0;
