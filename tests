@@ -1124,3 +1124,9 @@ NAME="EXIT NEGATIVE"
 TESTS=
   echo 'exit -12'
 [128-END]
+
+[129]
+NAME="REPEAT 0"
+TESTS=
+  echo 'repeat'
+[129-END]
