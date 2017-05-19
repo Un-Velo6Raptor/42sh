@@ -5,7 +5,7 @@
 ** Login   <benoit.hoffman@epitech.eu>
 **
 ** Started on  Mon May 15 12:46:54 2017 Benoit Hoffman
-** Last update Fri May 19 11:36:16 2017 Benoit Hoffman
+** Last update Fri May 19 12:15:41 2017 Benoit Hoffman
 */
 
 #include	<string.h>
@@ -26,7 +26,8 @@ static int	check_nb(char **tab)
   i = 0;
   while (tab[1][i])
     {
-      if ((tab[1][i] < '0' || tab[1][i] > '9') && (tab[1][i] != '+' && tab[1][i] != '-'))
+      if ((tab[1][i] < '0' || tab[1][i] > '9')
+	  && (tab[1][i] != '+' && tab[1][i] != '-'))
 	{
 	  dprintf(2, "repeat: Badly formed number.\n");
 	  return (-1);
@@ -49,7 +50,6 @@ int		call_repeat(char **cmd, t_shell *shell)
 
   len = 0;
   i = 2;
-  
   if (check_nb(cmd) == -1)
     return (1);
   while (cmd[i])
