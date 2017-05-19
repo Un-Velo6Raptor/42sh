@@ -5,18 +5,19 @@
 ** Login   <martin.januario@epitech.eu>
 **
 ** Started on  Wed May 17 15:38:26 2017 Martin Januario
-** Last update Thu May 18 13:36:56 2017 Sahel Lucas--Saoudi
+** Last update Thu May 18 19:43:50 2017 Martin Januario
 */
 
 #ifndef		EDIT_H_
 # define	EDIT_H_
 
 # include	"main.h"
-
+ 
 typedef struct	s_key
 {
   int		idx;
-  char		*key[6];
+  int		cols;
+  char		*key[10];
   t_shell	*shell;
   /*
   **  char          *key_l;
@@ -24,6 +25,10 @@ typedef struct	s_key
   **  char          *key_t;
   **  char          *key_b;
   **  char          *key_sup;
+  **  BEGIN
+  **  END
+  **  left shifted
+  **  right shifted
   */
 }		t_key;
 
@@ -41,6 +46,10 @@ void		key_top_(t_key *, char *, char *);
 void		key_bottom_(t_key *, char *, char *);
 void		key_sup_(t_key *, char *, char *);
 void		key_del_(t_key *, char *, char *);
+void		key_begin_(t_key *, char *, char *);
+void		key_end_(t_key *, char *, char *);
+void		key_sleft_(t_key *, char *, char *);
+void		key_sright_(t_key *, char *, char *);
 
 /*
 **		Protoypes of files basics.

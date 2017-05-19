@@ -5,7 +5,7 @@
 ** Login   <martin.januario@epitech.eu>
 **
 ** Started on  Wed May 17 15:50:20 2017 Martin Januario
-** Last update Thu May 18 13:27:00 2017 Sahel Lucas--Saoudi
+** Last update Thu May 18 19:42:34 2017 Martin Januario
 */
 
 #include	<stdio.h>
@@ -36,7 +36,11 @@ int		ini_keys(t_key *keys, char *term)
   keys->key[2] = tigetstr("kcuu1");
   keys->key[3] = tigetstr("kcud1");
   keys->key[4] = tigetstr("kdch1");
-  keys->key[5] = NULL;
+  keys->key[5] = tigetstr("khome");
+  keys->key[6] = tigetstr("kend");
+  keys->key[7] = tigetstr("kLFT");
+  keys->key[8] = tigetstr("kRIT");
+  keys->key[9] = NULL;
   while (keys->key[idx] != NULL)
     {
       if (check(keys->key[idx]) == 1)
@@ -45,5 +49,5 @@ int		ini_keys(t_key *keys, char *term)
     }
   if (isatty(0) == 1 && !check(tmp))
     printf(tmp);
-  return ((check(tmp) || idx != 5) ? 84 : 0);
+  return ((check(tmp) || idx != 9) ? 84 : 0);
 }

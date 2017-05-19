@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Thu May 18 13:52:53 2017 Sahel Lucas--Saoudi
+** Last update Thu May 18 15:50:29 2017 Martin Januario
 */
 
 #include	<unistd.h>
@@ -30,8 +30,8 @@ void		prompt(int nb)
 {
   if (isatty(0) == 1)
     {
-      putnbr_(nb);
-      write(1, " >", 2);
+      printf("%i >\n", nb % 255);
+      fflush(stdout);
     }
 }
 
@@ -130,11 +130,11 @@ int			main(int __attribute__ ((unused)) ac,
       if (shell->exit == 0)
 	{
 	  if (add_to_history(shell->command, shell))
-	  {
-	    tcsetattr(0, TCSANOW, &save);
-	    //end_edit_line(&save, &keys);
-	    return (free_shell(shell));
-	  }
+	    {
+	      tcsetattr(0, TCSANOW, &save);
+	      //end_edit_line(&save, &keys);
+	      return (free_shell(shell));
+	    }
 	  free_(shell->command);
 	  if (isatty(0) == 1)
 	    shell->command = loop_read(&keys);
