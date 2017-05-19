@@ -5,7 +5,7 @@
 ** Login   <benoit.hoffman@epitech.eu>
 **
 ** Started on  Mon May 15 12:46:54 2017 Benoit Hoffman
-** Last update Fri May 19 13:14:26 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 12:15:41 2017 Benoit Hoffman
 */
 
 #include	<string.h>
@@ -14,19 +14,20 @@
 #include	"basic.h"
 #include        "main.h"
 
-int		check_nb(char *nb, char *to_check)
+static int	check_nb(char **tab)
 {
   int		i;
 
-  if (!nb || !to_check)
+  if (!tab[1] || !tab[2])
     {
       dprintf(2, "repeat: Too few arguments.\n");
       return (-1);
     }
   i = 0;
-  while (nb[i])
+  while (tab[1][i])
     {
-      if ((nb[i] < '0' || nb[i] > '9') && (nb[i] != '+' && nb[i] != '-'))
+      if ((tab[1][i] < '0' || tab[1][i] > '9')
+	  && (tab[1][i] != '+' && tab[1][i] != '-'))
 	{
 	  dprintf(2, "repeat: Badly formed number.\n");
 	  return (-1);
@@ -36,36 +37,34 @@ int		check_nb(char *nb, char *to_check)
   return (0);
 }
 
+static void	cat_cmd(t_shell *shell, char *cmd)
+{
+  strcat(shell->command, cmd);
+  strcat(shell->command, " ");
+}
+
 int		call_repeat(char **cmd, t_shell *shell)
 {
-  int		loop;
   int		i;
   int		len;
 
   len = 0;
-  if (check_nb(cmd[1], cmd[2]) == -1)
-    return (1);
-  loop = getnbr_(cmd[1]);
   i = 2;
+  if (check_nb(cmd) == -1)
+    return (1);
   while (cmd[i])
-    {
-      len += strlen_(cmd[i]) + 1;
-      i += 1;
-    }
+    len += strlen_(cmd[i++]) + 1;
   free(shell->command);
   shell->command = malloc(sizeof(char) * (len + 1));
+  memset(shell->command, 0, len + 1);
   if (!shell->command)
     return (1);
-  memset(shell->command, 0, len + 1);
-  i = 2;
-  while (cmd[i])
-    {
-      strcat(shell->command, cmd[i]);
-      strcat(shell->command, " ");
-      i += 1;
-    }
+  len = getnbr_(cmd[1]);
+  i = 1;
+  while (cmd[++i])
+    cat_cmd(shell, cmd[i]);
   i = 0;
-  while (loop > i)
+  while (len > i)
     {
       manage_command(shell);
       i += 1;
