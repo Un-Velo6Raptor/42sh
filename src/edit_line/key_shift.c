@@ -41,7 +41,7 @@ void		key_sleft_(t_key *keys, __attribute__ ((unused)) char *str,
 	save += 1;
       if (check >= 1 && save >= 1)
 	{
-	  move_cursor(keys, "nd",1);
+	  move_cursor(keys, "nd", 1);
 	  return ;
 	}
       move_cursor(keys, "le", -1);
