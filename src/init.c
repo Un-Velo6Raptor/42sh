@@ -14,6 +14,15 @@
 #include		<term.h>
 #include		"edit.h"
 
+void		prompt(int nb)
+{
+  if (isatty(0) == 1)
+  {
+    printf("%03i >", nb);
+    fflush(stdout);
+  }
+}
+
 static int		print_error_and_return(char *str)
 {
   dprintf(2, str);

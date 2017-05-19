@@ -26,15 +26,6 @@
 #include	"alias.h"
 #include	"history.h"
 
-void		prompt(int nb)
-{
-  if (isatty(0) == 1)
-    {
-      printf("%03i >", nb);
-      fflush(stdout);
-    }
-}
-
 void		catch(int signal)
 {
   write(1, "\n", 1);
@@ -81,6 +72,35 @@ int		free_shell(t_shell *shell)
   return (return_value);
 }
 
+static int		exec_loop(t_shell *shell, struct termios *new,
+				    struct termios *save, t_key *keys)
+{
+  while (shell->command && shell->exit == 0)
+  {
+    shell->command = globing(shell->command, shell);
+    shell->status = 0;
+    if (put_minimalist(shell) != 0)
+      return (84);
+    if (shell->command && *(shell->command) && !check_flexibility(shell))
+    {
+      tcsetattr(0, TCSANOW, save);
+      manage_command(shell);
+      tcsetattr(0, TCSANOW, new);
+    }
+    if (shell->exit == 0)
+    {
+      if (add_to_history(shell->command, shell))
+      {
+	tcsetattr(0, TCSANOW, save);
+	return (free_shell(shell));
+      }
+      free(shell->command);
+      get_input(shell, keys);
+    }
+  }
+  return (0);
+}
+
 int			main(int __attribute__ ((unused)) ac,
 			     __attribute__ ((unused)) char **av, char **env)
 {
@@ -95,29 +115,8 @@ int			main(int __attribute__ ((unused)) ac,
   signal(2, catch);
   keys.shell = shell;
   get_input(shell, &keys);
-  while (shell->command && shell->exit == 0)
-    {
-      shell->command = globing(shell->command, shell);
-      shell->status = 0;
-      if (put_minimalist(shell) != 0)
-	return (84);
-      if (shell->command && *(shell->command) && !check_flexibility(shell))
-	{
-	  tcsetattr(0, TCSANOW, &save);
-	  manage_command(shell);
-	  tcsetattr(0, TCSANOW, &new);
-	}
-      if (shell->exit == 0)
-	{
-	  if (add_to_history(shell->command, shell))
-	    {
-	      tcsetattr(0, TCSANOW, &save);
-	      return (free_shell(shell));
-	    }
-	  free(shell->command);
-	  get_input(shell, &keys);
-	}
-    }
+  if (exec_loop(shell, &new, &save, &keys) == 84)
+    return (84);
   if (isatty(0) == 1 && shell->exit == 0)
     write(1, "\n", 1);
   tcsetattr(0, TCSANOW, &save);

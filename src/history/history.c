@@ -37,9 +37,10 @@ static char	*take_command_in_history(char *history_line)
 }
 
 static char	*free_history(char *com,
-				 char *history_command)
+				 char *history_command, t_shell *shell, int i)
 {
   free(com);
+  shell->id_command = i;
   return (strdup(history_command));
 }
 
@@ -64,10 +65,7 @@ char	*history(char *command, t_shell *shell, int incr)
   {
     history_command = take_command_in_history(shell->history[i]);
     if (match(history_command, com))
-    {
-      shell->id_command = i;
-      return (free_history(com, history_command));
-    }
+      return (free_history(com, history_command, shell, i));
     i += incr;
   }
   free(com);
