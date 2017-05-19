@@ -21,12 +21,16 @@ static char		*my_concat(char *line, char *str, t_key *keys)
   char			*tmp;
 
   if (line == NULL)
-    {
+  {
       tmp = strdup(str);
       return (tmp);
-    }
-  else if ((tmp = malloc(my_strlen(str) + my_strlen(line) + 1)) == NULL)
-    return (NULL);
+  }
+  else
+  {
+    tmp = malloc(my_strlen(str) + my_strlen(line) + 1);
+    if (!tmp)
+      return (NULL);
+  }
   tmp[0] = '\0';
   strncat(tmp, line, keys->idx);
   strcat(tmp, str);

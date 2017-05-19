@@ -42,11 +42,8 @@ int		ini_keys(t_key *keys, char *term)
   keys->key[8] = tigetstr("kRIT");
   keys->key[9] = NULL;
   while (keys->key[idx] != NULL)
-    {
-      if (check(keys->key[idx]) == 1)
-	return (84);
-      idx++;
-    }
+    if (check(keys->key[idx++]) == 1)
+      return (84);
   if (isatty(0) == 1 && !check(tmp))
     printf(tmp);
   return ((check(tmp) || idx != 9) ? 84 : 0);

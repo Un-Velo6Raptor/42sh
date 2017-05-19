@@ -12,7 +12,8 @@
 #include	<term.h>
 #include	"edit.h"
 
-void		key_sleft_(t_key *keys, char *str, char *line)
+void		key_sleft_(t_key *keys, __attribute__ ((unused)) char *str,
+			       char *line)
 {
   unsigned int	check;
   unsigned int	save;
@@ -45,10 +46,10 @@ void		key_sleft_(t_key *keys, char *str, char *line)
       keys->idx--;
       cpt++;
     }
-  (void) str;
 }
 
-void		key_sright_(t_key *keys, char *str, char *line)
+void		key_sright_(t_key *keys, __attribute__ ((unused)) char *str,
+				char *line)
 {
   unsigned int	check;
   unsigned int	save;
@@ -57,9 +58,7 @@ void		key_sright_(t_key *keys, char *str, char *line)
   check = 0;
   save = 0;
   cpt = 0;
-  if (line == NULL)
-    return ;
-  while (line[keys->idx] != '\0')
+  while (line && line[keys->idx] != '\0')
     {
       if (line[keys->idx] != ' ' && cpt != 0)
 	{
@@ -76,5 +75,4 @@ void		key_sright_(t_key *keys, char *str, char *line)
       keys->idx++;
       cpt++;
     }
-  (void) str;
 }

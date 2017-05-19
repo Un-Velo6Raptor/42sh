@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri Mar 24 10:58:31 2017 Sahel Lucas--Saoudi
-** Last update Thu May 18 13:35:37 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 13:51:24 2017 Thomas GRANDJEAN
 */
 
 #ifndef MAIN_H_
@@ -45,7 +45,7 @@ char		*without_before_(char *, char);
 char		*only_before(char *, char);
 char		*double_redir(char *);
 char		*stralloc_(char *, char *);
-int		put_minimalist(t_shell *shell);
+int		put_minimalist(t_shell *);
 int		set_path(char **, t_shell *);
 int		validity(char **);
 int		setnenv(char **, t_shell *);

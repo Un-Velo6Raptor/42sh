@@ -1124,3 +1124,9 @@ NAME="EXIT NEGATIVE"
 TESTS=
   echo 'exit -12'
 [128-END]
+
+[129m]
+NAME="WHERE NO ARG"
+TESTS=
+  echo 'where'
+[129-END]

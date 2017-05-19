@@ -12,13 +12,21 @@
 #include	<string.h>
 #include	"edit.h"
 
+static int	launch_key(t_key *keys, char *str, char *line,
+			     void (*key_code)(t_key *, char *, char *))
+{
+  key_code(keys, str, line);
+  return (1);
+}
+
 int		check_is_key(t_key *keys, char *str, char *line)
 {
-  void		(*key_code[10])(t_key *, char *, char *) = {key_left_, key_right_,
-							    key_top_, key_bottom_,
-							    key_sup_, key_begin_,
-							    key_end_, key_sleft_,
-							    key_sright_, key_del_};
+  void		(*key_code[10])(t_key *, char *, char *) =
+    {key_left_, key_right_,
+     key_top_, key_bottom_,
+     key_sup_, key_begin_,
+     key_end_, key_sleft_,
+     key_sright_, key_del_};
   int		idx;
 
   idx = 0;
@@ -32,16 +40,10 @@ int		check_is_key(t_key *keys, char *str, char *line)
   while (keys->key[idx] != NULL)
     {
       if (strcmp(keys->key[idx], str) == 0)
-	{
-	  key_code[idx](keys, str, line);
-	  return (1);
-	}
+	return (launch_key(keys, str, line, key_code[idx]));
       idx++;
     }
   if (my_strlen(str) == 1 && (str[0] == 127 || str[0] == 8))
-    {
-      key_code[idx](keys, str, line);
-      return (1);
-    }
+    return (launch_key(keys, str, line, key_code[idx]));
   return (0);
 }

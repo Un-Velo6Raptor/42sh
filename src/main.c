@@ -136,7 +136,6 @@ int			main(int __attribute__ ((unused)) ac,
 	  if (add_to_history(shell->command, shell))
 	  {
 	    tcsetattr(0, TCSANOW, &save);
-	    //end_edit_line(&save, &keys);
 	    return (free_shell(shell));
 	  }
 	  free(shell->command);
@@ -148,7 +147,6 @@ int			main(int __attribute__ ((unused)) ac,
     }
   if (isatty(0) == 1 && shell->exit == 0)
     write(1, "\n", 1);
-  //  end_edit_line(&save, &keys);
   tcsetattr(0, TCSANOW, &save);
   return (free_shell(shell));
 }
