@@ -16,7 +16,7 @@
 
 void		key_left_(t_key *keys, char *str, char *line)
 {
-  if (keys->idx < 0)
+  if (keys->idx < 1)
     return ;
   keys->idx -= 1;
   printf(tgetstr("le", NULL));
