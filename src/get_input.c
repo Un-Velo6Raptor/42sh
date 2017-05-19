@@ -10,6 +10,7 @@
 
 #include	<stdlib.h>
 #include	<unistd.h>
+#include	"edit.h"
 #include	"basic.h"
 
 int	my_strlen(char *str)
@@ -77,19 +78,10 @@ char		*getnextline_(int fd)
   return (result);
 }
 
-/*int	main(int ac, char **av)
+void		get_input(t_shell *shell, t_key *keys)
 {
-  int	fd;
-  char *buffer;
-
-  fd = 0;
-  if (ac == 2)
-    fd = open(av[1], O_RDONLY);
-  buffer = getnextline_(fd);
-  while (buffer)
-    {
-      printf("%s\n", buffer);
-      free(buffer);
-      buffer = getnextline_(fd);
-    }
-    }*/
+  if (isatty(0) == 1)
+    shell->command = loop_read(keys);
+  else
+    shell->command = getnextline_(0);
+}

@@ -46,6 +46,7 @@ void		key_end_(t_key *, char *, char **);
 void		key_sleft_(t_key *, char *, char **);
 void		key_sright_(t_key *, char *, char **);
 char		*move_line(char *, char *, t_key *);
+void		get_input(t_shell *, t_key *);
 
 /*
 **		Protoypes of files basics.

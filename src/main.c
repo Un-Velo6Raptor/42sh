@@ -92,35 +92,9 @@ int			main(int __attribute__ ((unused)) ac,
   shell = set_shell(env);
   if (initial_checks(env, &keys, &new, &save) == 84)
     return (84);
-  /*pos = found_term(env);
-    if (isatty(0) == 1 && pos == -1)
-    {
-    dprintf(2, "No variable term set.\n");
-    return (84);
-    }
-    if (isatty(0) == 1 && (tgetent(NULL, &env[pos][5]) < 0
-    || tcgetattr(0, &new) < 0 || tcgetattr(0, &save) < 0))
-    {
-    dprintf(2, "Cannot set new Term.\n");
-    return (84);
-    }
-    new.c_lflag &= ~(ICANON | ECHO);
-    if (isatty(0) == 1 && tcsetattr(0, TCSANOW, &new) == -1)
-    {
-    dprintf(2, "Cannot set new attribute.\n");
-    return (84);
-    }
-    if (isatty(0) == 1 && ini_keys(&keys, &env[pos][5]) == 84)
-    {
-    dprintf(2, "Cannot get keys.\n");
-    return (84);
-    }*/
   signal(2, catch);
   keys.shell = shell;
-  if (isatty(0) == 1)
-    shell->command = loop_read(&keys);
-  else
-    shell->command = getnextline_(0);
+  get_input(shell, &keys);
   while (shell->command && shell->exit == 0)
     {
       shell->command = globing(shell->command, shell);
@@ -141,10 +115,7 @@ int			main(int __attribute__ ((unused)) ac,
 	      return (free_shell(shell));
 	    }
 	  free(shell->command);
-	  if (isatty(0) == 1)
-	    shell->command = loop_read(&keys);
-	  else
-	    shell->command = getnextline_(0);
+	  get_input(shell, &keys);
 	}
     }
   if (isatty(0) == 1 && shell->exit == 0)
