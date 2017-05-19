@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Mon Apr  3 15:31:27 2017 Sahel Lucas--Saoudi
-** Last update Thu May 18 07:27:57 2017 Benoit Hoffman
+** Last update Fri May 19 08:06:44 2017 Benoit Hoffman
 */
 
 #include <unistd.h>
@@ -145,7 +145,7 @@ int	exec_pipe_manager(char **tab, int tab_i, t_shell *shell)
   if (check_exit_pipe(command, pipefd, pid, shell) == 84)
     return (84);
   pipe_end(shell, pipefd, pid, tablen_(command) - 1);
-  free(pipefd);
+  free_pipe(pipefd, tablen_(command));
   free(pid);
   free_tab(command);
   return (0);

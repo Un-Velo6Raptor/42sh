@@ -5,7 +5,7 @@
 ** Login   <benoit.hoffman@epitech.eu>
 ** 
 ** Started on  Mon May 15 12:46:54 2017 Benoit Hoffman
-** Last update Mon May 15 13:28:34 2017 Benoit Hoffman
+** Last update Fri May 19 09:22:11 2017 Benoit Hoffman
 */
 
 #include	<string.h>
@@ -40,8 +40,20 @@ int		call_repeat(char **cmd, t_shell *shell)
 {
   int		loop;
   char		**tab;
+  char		*arg;
   int		i;
+  int		len;
 
+
+  //printf("cmd is %s\n", shell->command);
+  len = 0;
+  i = 0;
+  while (cmd[i])
+    {
+      printf(":%s:\n", cmd[i]);
+      i += 1;
+    }
+  fflush(stdout);
   i = 0;
   if (check_nb(cmd[1], cmd[2]) == -1)
     return (1);
@@ -54,12 +66,34 @@ int		call_repeat(char **cmd, t_shell *shell)
       tab[i] = strdup(cmd[i + 2]);
       i += 1;
     }
+  i = 0;
+  printf("UI\n");
+  while (tab[i])
+    {
+      printf(":::%s:::\n", tab[i]);
+      len += strlen_(tab[i]) + 1;
+      i += 1;
+    }
   tab[i] = NULL;
+  free(shell->command);
+  shell->command = malloc(sizeof(char) * (len + 1));
+  if (!shell->command)
+    return (1);
+  i = 0;
+  while (tab[i])
+    {
+      strcat(shell->command, tab[i]);
+      strcat(shell->command, " ");
+      i += 1;
+    }
+  printf("je vais envoyer :%s:\n", shell->command);
   i = 0;
   while (loop > i)
     {
-      exec_manager(tab, shell);
+      manage_command(shell);
+      //exec_manager(tab, shell); //ls -l /dev a manage command au fait
       i += 1;
     }
+  free_tab(tab);
   return (shell->status);
 }

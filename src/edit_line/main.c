@@ -5,9 +5,10 @@
 ** Login   <martin.januario@epitech.eu>
 **
 ** Started on  Wed May 17 15:35:14 2017 Martin Januario
-** Last update Thu May 18 13:41:21 2017 Sahel Lucas--Saoudi
+** Last update Thu May 18 19:40:27 2017 Martin Januario
 */
 
+#include	<sys/ioctl.h>
 #include	<term.h>
 #include	<curses.h>
 #include	<stdlib.h>
@@ -42,6 +43,14 @@ static void		print_line(char *str)
   fflush(stdout);
 }
 
+static void		get_cols(t_key *keys)
+{
+  struct winsize	w;
+
+  ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+  keys->cols = w.ws_col;
+}
+
 char		*loop_read(t_key *keys)
 {
   char		str[8];
@@ -51,7 +60,8 @@ char		*loop_read(t_key *keys)
   prompt(keys->shell->status % 255);
   keys->idx = 0;
   line = NULL;
-  size = read(0, &str, 8);
+  get_cols(keys);
+  size = read(0, &str, 7);
   while (size > 0)
     {
       str[size] = '\0';
@@ -62,7 +72,8 @@ char		*loop_read(t_key *keys)
 	}
       if ((my_strlen(str) == 1 && str[0] == 4 && my_strlen(line) == 0))
 	return (NULL);
-      if (check_is_key(keys, str, line) == 0)
+      if (check_is_key(keys, str, line) == 0 &&
+	  my_strlen(line) + my_strlen(str) < keys->cols)
 	{
 	  line = my_concat(line, str, keys);
 	  if (line == NULL)
@@ -70,7 +81,8 @@ char		*loop_read(t_key *keys)
 	  keys->idx += my_strlen(str);
 	  print_line(str);
 	}
-      size = read(0, &str, 8);
+      get_cols(keys);
+      size = read(0, &str, 7);
     }
   return (line);
 }

@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:18:54 2017 Sahel Lucas--Saoudi
-** Last update Sat Apr  8 15:15:50 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 07:51:07 2017 Benoit Hoffman
 */
 
 #include <unistd.h>
@@ -53,7 +53,7 @@ char	*double_redir(char *word)
 	return (ret);
       ret = stralloc_(ret, buffer);
       ret = stralloc_(ret, "\n");
-      free_(buffer);
+      free(buffer);
       if (isatty(0) == 1)
 	putstr_("heredoc >", 1);
       buffer = getnextline_(0);

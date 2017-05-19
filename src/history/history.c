@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri May 12 14:39:29 2017 Sahel Lucas--Saoudi
-** Last update Wed May 17 11:57:00 2017 Benoit Hoffman
+** Last update Fri May 19 07:27:54 2017 Benoit Hoffman
 */
 
 #include <stdlib.h>
@@ -112,5 +112,6 @@ int		add_to_history(char *command, t_shell *shell)
   shell->history[i] = strdup(buff);
   shell->history[i + 1] = NULL;
   shell->id_command = shell->idmax + 1;
+  free(buff);
   return (0);
 }

@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 17:04:35 2017 Sahel Lucas--Saoudi
-** Last update Wed May 17 13:36:55 2017 Sahel Lucas--Saoudi
+** Last update Fri May 19 09:23:34 2017 Benoit Hoffman
 */
 
 #include <fcntl.h>
@@ -64,7 +64,7 @@ void		part2_exec(char **argv, t_shell *shell)
   struct stat	st;
 
   if (sp_len_(argv[0], '/') != strlen_(argv[0])){
-      if (lstat(argv[0], &st) == 0 && access(argv[0], X_OK) == 0 &&
+      if (stat(argv[0], &st) == 0 && access(argv[0], X_OK) == 0 &&
 	  !S_ISDIR(st.st_mode) && !S_ISLNK(st.st_mode))
 	exec(argv, shell);
       else
@@ -122,7 +122,7 @@ void	manage_command(t_shell *shell)
   tmp = epur(shell->command);
   free(shell->command);
   shell->command = tmp;
-  if (!shell->command[0])
+  if (!shell->command || !shell->command[0])
     return ;
   argv = parse_(shell->command, ';');
   if (!argv[0]&& howmany_(shell->command, '\"') != 0)

@@ -5,7 +5,7 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Thu May 18 13:03:20 2017 Sahel Lucas--Saoudi
+## Last update Thu May 18 19:43:30 2017 Martin Januario
 ##
 
 SRC	=	src/main.c			\
@@ -58,6 +58,8 @@ SRC	=	src/main.c			\
 		src/edit_line/found_term.c	\
 		src/edit_line/ini_keys.c	\
 		src/edit_line/key_del.c		\
+		src/edit_line/key_pole.c	\
+		src/edit_line/key_shift.c	\
 		src/edit_line/main.c
 
 OBJ	=	$(SRC:.c=.o)

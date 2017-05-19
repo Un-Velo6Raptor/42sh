@@ -5,7 +5,7 @@
 ** Login   <martin.januario@epitech.eu>
 ** 
 ** Started on  Wed May 17 16:52:39 2017 Martin Januario
-** Last update Thu May 18 12:48:09 2017 Martin Januario
+** Last update Thu May 18 20:46:30 2017 Martin Januario
 */
 
 #include	<stdlib.h>
@@ -14,14 +14,21 @@
 
 int		check_is_key(t_key *keys, char *str, char *line)
 {
-  void		(*key_code[7])(t_key *, char *, char *) = {key_left_, key_right_,
-							   key_top_, key_bottom_,
-							   key_sup_, key_del_};
+  void		(*key_code[10])(t_key *, char *, char *) = {key_left_, key_right_,
+							    key_top_, key_bottom_,
+							    key_sup_, key_begin_,
+							    key_end_, key_sleft_,
+							    key_sright_, key_del_};
   int		idx;
 
   idx = 0;
   if (my_strlen(str) == 1 && str[0] == 4)
     return (1);
+  if (my_strlen(str) == 1 && str[0] == '\t')
+    {
+      str[0] = ' ';
+      return (0);
+    }
   while (keys->key[idx] != NULL)
     {
       if (strcmp(keys->key[idx], str) == 0)

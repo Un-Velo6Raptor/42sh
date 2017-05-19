@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 ** 
 ** Started on  Wed Apr  5 16:48:26 2017 Sahel Lucas--Saoudi
-** Last update Thu May 18 08:12:23 2017 Benoit Hoffman
+** Last update Fri May 19 08:11:48 2017 Benoit Hoffman
 */
 
 #include <unistd.h>
@@ -55,7 +55,11 @@ int	check_exit_pipe(char **command, int **pipefd, int *pid, t_shell *shell)
     {
       if (match(command[i], "exit *"))
 	{
-	  pipefd[i] = (int[2]) {-1, -1};
+	  pipefd[i] = malloc(sizeof(int) * 2);
+	  if (pipefd[i] == NULL)
+	    return (84);
+	  pipefd[i][0] = -1;
+	  pipefd[i][1] = -1;
 	  pid[i] = -1;
 	}
       else
