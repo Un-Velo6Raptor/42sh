@@ -132,6 +132,7 @@ load_test()
     prepare_test
     $WRAPPER
     g=`$DIFF /tmp/.refer.$$ /tmp/.shell.$$ | $WC -l`
+    crash=`$CAT /tmp/.shell.$$ | $GREP "core dumped" | wc -l`
     $MKDIR -p /tmp/test.$$/$id 2>/dev/null
     $CP /tmp/.shell.$$ /tmp/test.$$/$id/42sh.out
     $CP /tmp/.refer.$$ /tmp/test.$$/$id/tcsh.out
@@ -140,8 +141,13 @@ load_test()
 	((note++))
 	echo -e "Test $id ($NAME) : \033[32mOK\033[00m"
     else
-	echo -e "Test $id ($NAME) : \033[31mKO\033[00m - Check output in /tmp/test.$$/$id/"
 	di=`$DIFF /tmp/.shell.$$ /tmp/.refer.$$`
+	if [ $crash -eq 0 ]
+	then
+	    echo -e "Test $id ($NAME) : \033[31mKO\033[00m - Check output in /tmp/test.$$/$id/"
+	else
+	    echo -e "Test $id ($NAME) : \033[41mCRASH\033[00m - Check output in /tmp/test.$$/$id/"
+	fi 
 	echo -e "\033[31m$di\033[00m"
     fi
 }
