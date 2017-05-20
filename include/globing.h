@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 10 11:44:32 2017 Sahel Lucas--Saoudi
-** Last update Wed May 17 13:45:38 2017 Benoit Hoffman
+** Last update Sat May 20 10:49:25 2017 Sahel Lucas--Saoudi
 */
 
 #ifndef			GLOBING_H_
@@ -21,11 +21,9 @@ typedef struct		s_globing
   char			ret_value[10];
 }			t_globing;
 
-int			init_globing(char *command, t_globing *globings,
-				     int *idx, int *nidx);
-void			modif_command_globing(t_globing *globings,
-					      int *nidx, char *command,
-					      int *idx);
+int			init_globing(char *, t_globing *, int *, int *);
+void			modif_command_globing(t_globing *, int *, char *,
+					      int *);
 char			*globing(char *, t_shell *);
 char			*file_globing(char *);
 
