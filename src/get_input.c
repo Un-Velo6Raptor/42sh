@@ -5,7 +5,7 @@
 ** Login   <benoit.hoffman@epitech.eu>
 **
 ** Started on  Wed Apr 26 08:26:01 2017 Benoit Hoffman
-** Last update Tue May 16 09:34:35 2017 Benoit Hoffman
+** Last update Sat May 20 14:44:47 2017 Martin Januario
 */
 
 #include	<stdlib.h>
@@ -83,5 +83,8 @@ void		get_input(t_shell *shell, t_key *keys)
   if (isatty(0) == 1 && keys->input == 0)
     shell->command = loop_read(keys);
   else
-    shell->command = getnextline_(0);
+    {
+      prompt(shell->status);
+      shell->command = getnextline_(0);
+    }
 }
