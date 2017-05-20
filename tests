@@ -1130,3 +1130,21 @@ NAME="REPEAT 0"
 TESTS=
   echo 'repeat'
 [129-END]
+
+[130]
+NAME="WHERE built-in"
+TESTS=
+  echo 'where cd'
+[130-END]
+
+[131]
+NAME="where /usr/bin/ls"
+TESTS=
+  echo 'where /usr/bin/ls'
+[131-END]
+
+[132]
+NAME="where /usr/bin/ls"
+TESTS=
+  echo 'where /usr/bin/ls ls'
+[132-END]
