@@ -83,6 +83,8 @@ int	        call_where(char **command, t_shell *shell)
     return (1);
   while (command[j])
     {
+      if (strpbrk(command[j], "/") != 0)
+	putstr_("where: / in command makes no sense\n", 2);
       found += check_alias_where(command[j], shell);
       stock = found;
       found += check_builtin_where(command[j]);
