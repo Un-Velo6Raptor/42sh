@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Sat Apr  8 15:16:30 2017 Sahel Lucas--Saoudi
-** Last update Fri May 19 07:50:47 2017 Benoit Hoffman
+** Last update Sat May 20 17:42:09 2017 Sahel Lucas--Saoudi
 */
 
 #include <fcntl.h>
@@ -29,9 +29,9 @@ int		check_file(char *real, char c)
 		": Permission denied.\n");
   if (c == '<' && st_error)
     error = 1;
-  if (!st_error && S_ISDIR(st.st_mode))
+  else if (!st_error && S_ISDIR(st.st_mode))
     error = 2;
-  if (c == '>' && st_error == 0 && access(real, W_OK))
+  else if (c == '>' && st_error == 0 && access(real, W_OK))
     error = 3;
   if (error)
     {

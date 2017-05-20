@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Mon Apr  3 15:31:27 2017 Sahel Lucas--Saoudi
-** Last update Fri May 19 08:06:44 2017 Benoit Hoffman
+** Last update Sat May 20 17:35:25 2017 Sahel Lucas--Saoudi
 */
 
 #include <unistd.h>
@@ -115,7 +115,7 @@ void	pipe_end(t_shell *shell, int **pipefd, int *pid, int i)
 	  close_(pipefd[i][1]);
 	  waitpid(pid[i], &shell->status, 0);
 	}
-      if (shell->status > 255)
+      if (shell->status > 255 && shell->status % 255 != 141)
 	st = shell->status % 255;
       i--;
     }

@@ -1148,3 +1148,15 @@ NAME="where /usr/bin/ls"
 TESTS=
   echo 'where /usr/bin/ls ls'
 [132-END]
+
+[133]
+NAME="Advanced pipe roken pipe no end"
+TESTS=
+  echo 'ls -R / | grp '
+[133-END]
+
+[134]
+NAME="Advanced redirection directory > /bin"
+TESTS=
+  echo 'ls -Rl / > /bin'
+[134-END]
