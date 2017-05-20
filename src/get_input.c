@@ -80,7 +80,7 @@ char		*getnextline_(int fd)
 
 void		get_input(t_shell *shell, t_key *keys)
 {
-  if (isatty(0) == 1)
+  if (isatty(0) == 1 && keys->input == 0)
     shell->command = loop_read(keys);
   else
     shell->command = getnextline_(0);

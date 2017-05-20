@@ -35,10 +35,14 @@ int			initial_checks(char **env, t_key *keys,
 {
   int			pos;
 
+  keys->input = 0;
   pos = found_term(env);
   if (isatty(0) == 1 && pos == -1)
-    return (print_error_and_return("No variable term set.\n"));
-  if (isatty(0) == 1 && (tgetent(NULL, &env[pos][5]) < 0
+  {
+    keys->input = 1;
+    return (0);
+  }
+    if (isatty(0) == 1 && (tgetent(NULL, &env[pos][5]) < 0
                          || tcgetattr(0, new) < 0 || tcgetattr(0, save) < 0))
     return (print_error_and_return("Cannot set new Term.\n"));
   new->c_lflag &= ~(ICANON | ECHO);

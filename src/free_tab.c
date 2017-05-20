@@ -9,6 +9,7 @@
 */
 
 #include <stdlib.h>
+#include "main.h"
 
 void	free_tab(char **tab)
 {
@@ -19,4 +20,21 @@ void	free_tab(char **tab)
     free(tab[tab_i++]);
   if (tab)
     free(tab);
+}
+
+int		free_shell(t_shell *shell)
+{
+  int		return_value;
+
+  return_value = shell->status % 255;
+  free_tab(shell->env);
+  free_tab(shell->alias);
+  free_tab(shell->path);
+  free_tab(shell->history);
+  free(shell->pwd);
+  free(shell->oldpwd);
+  free(shell->home);
+  free(shell->sh);
+  free(shell);
+  return (return_value);
 }

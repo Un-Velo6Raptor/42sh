@@ -16,10 +16,11 @@
 
 typedef struct	s_key
 {
-  int		idx;
-  int		cols;
-  char		*key[10];
-  t_shell	*shell;
+    int		idx;
+    int		input;
+    int		cols;
+    char	*key[10];
+    t_shell	*shell;
 }		t_key;
 
 char		*loop_read(t_key *);

@@ -55,21 +55,15 @@ t_shell		*set_shell(char **env)
   return (shell);
 }
 
-int		free_shell(t_shell *shell)
+static void		exec_edit_line(t_key *keys, t_shell *shell,
+					  struct termios *new,
+					  struct termios *save)
 {
-  int		return_value;
-
-  return_value = shell->status % 255;
-  free_tab(shell->env);
-  free_tab(shell->alias);
-  free_tab(shell->path);
-  free_tab(shell->history);
-  free(shell->pwd);
-  free(shell->oldpwd);
-  free(shell->home);
-  free(shell->sh);
-  free(shell);
-  return (return_value);
+  if (keys->input == 0)
+    tcsetattr(0, TCSANOW, save);
+  manage_command(shell);
+  if (keys->input == 0)
+    tcsetattr(0, TCSANOW, new);
 }
 
 static int		exec_loop(t_shell *shell, struct termios *new,
@@ -82,16 +76,13 @@ static int		exec_loop(t_shell *shell, struct termios *new,
     if (put_minimalist(shell) != 0)
       return (84);
     if (shell->command && *(shell->command) && !check_flexibility(shell))
-    {
-      tcsetattr(0, TCSANOW, save);
-      manage_command(shell);
-      tcsetattr(0, TCSANOW, new);
-    }
+      exec_edit_line(keys, shell, new, save);
     if (shell->exit == 0)
     {
       if (add_to_history(shell->command, shell))
       {
-	tcsetattr(0, TCSANOW, save);
+	if (keys->input == 0)
+	  tcsetattr(0, TCSANOW, save);
 	return (free_shell(shell));
       }
       free(shell->command);
@@ -119,6 +110,7 @@ int			main(int __attribute__ ((unused)) ac,
     return (84);
   if (isatty(0) == 1 && shell->exit == 0)
     write(1, "\n", 1);
-  tcsetattr(0, TCSANOW, &save);
+  if (keys.input == 0)
+    tcsetattr(0, TCSANOW, &save);
   return (free_shell(shell));
 }
