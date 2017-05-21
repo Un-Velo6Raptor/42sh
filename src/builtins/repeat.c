@@ -5,7 +5,7 @@
 ** Login   <benoit.hoffman@epitech.eu>
 **
 ** Started on  Mon May 15 12:46:54 2017 Benoit Hoffman
-** Last update Fri May 19 12:15:41 2017 Benoit Hoffman
+** Last update Sun May 21 10:11:52 2017 Sahel Lucas--Saoudi
 */
 
 #include	<string.h>
@@ -37,12 +37,6 @@ static int	check_nb(char **tab)
   return (0);
 }
 
-static void	cat_cmd(t_shell *shell, char *cmd)
-{
-  strcat(shell->command, cmd);
-  strcat(shell->command, " ");
-}
-
 int		call_repeat(char **cmd, t_shell *shell)
 {
   int		i;
@@ -52,21 +46,11 @@ int		call_repeat(char **cmd, t_shell *shell)
   i = 2;
   if (check_nb(cmd) == -1)
     return (1);
-  while (cmd[i])
-    len += strlen_(cmd[i++]) + 1;
-  free(shell->command);
-  shell->command = malloc(sizeof(char) * (len + 1));
-  memset(shell->command, 0, len + 1);
-  if (!shell->command)
-    return (1);
   len = getnbr_(cmd[1]);
-  i = 1;
-  while (cmd[++i])
-    cat_cmd(shell, cmd[i]);
   i = 0;
   while (len > i)
     {
-      manage_command(shell);
+      exec_manager(&cmd[2], shell);
       i += 1;
     }
   return (shell->status);

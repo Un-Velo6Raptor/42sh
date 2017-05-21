@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed May 17 14:15:39 2017 Sahel Lucas--Saoudi
-** Last update Wed May 17 14:17:54 2017 Sahel Lucas--Saoudi
+** Last update Sun May 21 10:18:49 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdlib.h>
@@ -19,6 +19,7 @@
 
 void            exec_file(const int fd, t_shell *shell)
 {
+  shell->sub = 1;
   shell->command = getnextline_(fd);
   while (shell->command)
     {
@@ -28,6 +29,7 @@ void            exec_file(const int fd, t_shell *shell)
       free(shell->command);
       shell->command = getnextline_(fd);
     }
+  shell->sub = 0;
 }
 
 int             source(char **argv, t_shell *shell)

@@ -1,11 +1,11 @@
 /*
 ** free_tab.c for minishell2 in /home/sahel/rendu/PSU/PSU_2016_minishell2
-** 
+**
 ** Made by Sahel Lucas--Saoudi
 ** Login   <sahel.lucas-saoudi@epitech.eu>
-** 
+**
 ** Started on  Wed Apr  5 20:26:32 2017 Sahel Lucas--Saoudi
-** Last update Wed Apr  5 20:26:44 2017 Sahel Lucas--Saoudi
+** Last update Sun May 21 10:32:18 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdlib.h>
@@ -34,7 +34,6 @@ int		free_shell(t_shell *shell)
   free(shell->pwd);
   free(shell->oldpwd);
   free(shell->home);
-  free(shell->sh);
   free(shell);
   return (return_value);
 }

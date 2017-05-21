@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Sat Apr  8 16:45:26 2017 Sahel Lucas--Saoudi
-** Last update Fri May 19 07:51:33 2017 Benoit Hoffman
+** Last update Sun May 21 10:17:28 2017 Sahel Lucas--Saoudi
 */
 
 #include <fcntl.h>
@@ -19,16 +19,19 @@ void		reset01(int status)
 {
   static int	fd0;
   static int	fd1;
+  static int	set;
 
   if (status == 0)
     {
       fd0 = dup(0);
       fd1 = dup(1);
+      set = 1;
     }
-  else
+  else if (set == 1)
     {
       dup2(fd1, 1);
       dup2(fd0, 0);
+      set = 0;
       close(fd0);
       close(fd1);
     }

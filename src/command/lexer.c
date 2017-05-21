@@ -5,13 +5,19 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:17:58 2017 Sahel Lucas--Saoudi
-Last update Thu May 18 07:23:02 2017 Benoit Hoffman
+** Last update Sun May 21 10:28:02 2017 Sahel Lucas--Saoudi
 */
 
 #include <stdlib.h>
 #include "main.h"
 #include "basic.h"
 #include "alias.h"
+
+int	set_status(t_shell *shell, int st)
+{
+  shell->status = st;
+  return (0);
+}
 
 int	exec_manage(char **tab, t_shell *shell)
 {
@@ -21,23 +27,23 @@ int	exec_manage(char **tab, t_shell *shell)
   char	*buffer;
 
   file_name = take_redir(tab, 1);
+  fd = NULL;
   if (check_filename(file_name))
-    {
-      shell->status = 1;
-      return (0);
-    }
+    return (set_status(shell, 1));
   av = alias(take_redir(tab, 0), shell);
   if (!av || !*av)
+    shell->status = 1;
+  if (!av || !*av)
+    return (putstr_return("Invalid null command.\n", 2, 0));
+  if (!shell->sub)
     {
-      shell->status = 1;
-      return (putstr_return("Invalid null command.\n", 2, 0));
+      reset01(0);
+      buffer = NULL;
+      fd = get_fd(file_name, &buffer);
+      if (!fd)
+	return (exit_return(shell, 84));
+      setup_redir(buffer, fd, file_name);
     }
-  reset01(0);
-  buffer = NULL;
-  fd = get_fd(file_name, &buffer);
-  if (!fd)
-    return (exit_return(shell, 84));
-  setup_redir(buffer, fd, file_name);
   exec_manager(av, shell);
   return (end_manage(fd, file_name, av, tab));
 }

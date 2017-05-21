@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Fri May 19 14:00:02 2017 Benoit Hoffman
+** Last update Sun May 21 10:32:26 2017 Sahel Lucas--Saoudi
 */
 
 #include	<unistd.h>
@@ -44,7 +44,6 @@ t_shell		*set_shell(char **env)
   shell->path = NULL;
   shell->history = NULL;
   shell->status = 0;
-  shell->sh = getcwd(NULL, 0);
   shell->env = create_env(env);
   shell->oldpwd = getvar(shell->env, "OLDPWD=*");
   shell->pwd = getvar(shell->env, "PWD=*");
@@ -52,6 +51,7 @@ t_shell		*set_shell(char **env)
   shell->id_command = 0;
   shell->idmax = 0;
   shell->exit = 0;
+  shell->sub = 0;
   return (shell);
 }
 
@@ -71,6 +71,7 @@ static int		exec_loop(t_shell *shell, struct termios *new,
 {
   while (shell->command && shell->exit == 0)
   {
+    shell->sub = 0;
     shell->command = globing(shell->command, shell);
     shell->status = 0;
     if (put_minimalist(shell) != 0)

@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Fri Mar 24 10:58:31 2017 Sahel Lucas--Saoudi
-** Last update Fri May 19 14:05:47 2017 Benoit Hoffman
+** Last update Sun May 21 10:32:39 2017 Sahel Lucas--Saoudi
 */
 
 #ifndef MAIN_H_
@@ -21,12 +21,12 @@ typedef struct	s_shell
   char		*oldpwd;
   char		*pwd;
   char		*home;
-  char		*sh;
   int		fd0;
   int		id_command;
   int		idmax;
   int		status;
   int		exit;
+  int		sub;
 }		t_shell;
 
 char		**parse_(char *, char);
