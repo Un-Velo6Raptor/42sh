@@ -5,7 +5,7 @@
 ## Login   <sahel.lucas-saoudi@epitech.eu>
 ## 
 ## Started on  Fri Apr  7 15:15:01 2017 Sahel Lucas--Saoudi
-## Last update Fri May 19 14:08:53 2017 Benoit Hoffman
+## Last update Tue May 30 12:57:11 2017 Sahel Lucas--Saoudi
 ##
 
 SRC	=	src/main.c			\
@@ -95,4 +95,8 @@ debug: CFLAGS += -ggdb3
 
 debug: fclean $(MLIB) all
 
-.PHONY:	all clean fclean re debug
+elec: CFLAGS += -lefence
+
+elec: re
+
+.PHONY:	all clean fclean re debug elec
