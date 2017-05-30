@@ -5,7 +5,7 @@
 ** Login   <sahel.lucas-saoudi@epitech.eu>
 **
 ** Started on  Wed Apr  5 20:16:13 2017 Sahel Lucas--Saoudi
-** Last update Sun May 21 10:32:26 2017 Sahel Lucas--Saoudi
+** Last update Tue May 30 10:04:31 2017 Benoit Hoffman
 */
 
 #include	<unistd.h>
@@ -105,6 +105,7 @@ int			main(int __attribute__ ((unused)) ac,
   if (initial_checks(env, &keys, &new, &save) == 84)
     return (84);
   signal(2, catch);
+  signal(SIGQUIT, catch);
   keys.shell = shell;
   get_input(shell, &keys);
   if (exec_loop(shell, &new, &save, &keys) == 84)
