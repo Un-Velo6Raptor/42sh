@@ -36,7 +36,7 @@ rm -rf /tmp/.shell.*
 rm -rf /tmp/.refer.*
 rm -rf /tmp/.tester.*
 rm -rf /tmp/.runner.*
-make elec
+make re
 clear
 cat /dev/urandom | tr -dc 'A-Za-z0-9\t ' | head -c 10000 > .tmp
 cat /dev/urandom | tr -dc '\n' | head -c 10000 > .tmp2
